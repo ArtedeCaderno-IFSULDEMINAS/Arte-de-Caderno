@@ -34,5 +34,11 @@ password | string | yes |
 
 **Response:**
 Status | Message
+----|----
+200 | return the student/professor schema
+400 | Username or password cannot be null
+400 | User not found
+400 | Wrong Password
+
 
 
