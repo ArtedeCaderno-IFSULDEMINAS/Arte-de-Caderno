@@ -19,10 +19,25 @@ Backend application for 'Arte de Caderno' website
 
 Parameter | Type | Required | Observation
 -----|------|-----|-----
-id| string | yes
 username | string | yes | corresponds to the CPF
 password | string | yes
 accessType | string | yes | can be 'professor' or 'student'
+
+###Professor
+
+Parameter | Type | Required | Observation
+-----|------|-----|-----
+name | string | yes | 
+date_of_birth | Date | yes | Using the date type from mongodb
+cpf | string | yes | unique value
+phone | string | yes | 
+cep | string | yes | 
+address | string | yes | pass the complete address with number and complement
+city | string | yes
+state | string | yes | use the acronym. Example: MG, SP
+schoold | string | yes | the id returned when registering the school or selecting one
+loginId | string | yes | the Login id
+password | string | yes
 
 ##Routes
 
@@ -52,5 +67,35 @@ Status | Message
 400 | User not found
 400 | Wrong Password
 
+###Professor
 
+####List Professor (/professor)
+Retrieves all professor in database.
+Method: get
+Response: Professors schema
 
+####Insert Professor (/professor)
+insert a professor. Detail: a professor only can be insert if his school already exist.
+Method: post
+
+**Request:**
+Parameters | Type | Required | Observation
+-----|-----|-----|-----
+name | string | yes | 
+date_of_birth | Date | yes | Using the date type from mongodb
+cpf | string | yes | unique value
+phone | string | yes | 
+cep | string | yes | 
+address | string | yes | pass the complete address with number and complement
+city | string | yes
+state | string | yes | use the acronym. Example: MG, SP
+schoold | string | yes | the id returned when registering the school or selecting one
+password | string | yes
+
+**Response:**
+Status | Message
+----|----
+200 | return the professor schema
+400 | All fields are required
+400 | User already exists
+400 | Catch error
