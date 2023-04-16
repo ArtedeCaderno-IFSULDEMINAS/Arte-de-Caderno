@@ -1,5 +1,7 @@
 import express from 'express';
-import userRouter from './userRoute.js';
+import loginRouter from './loginRoute.js';
+import schoolRoute from './schoolRoute.js';
+import professorRoute from './professorRoute.js';
 
 const routes = (app) => {
     app.route('/').get((req, res) => {
@@ -8,7 +10,9 @@ const routes = (app) => {
   
     app.use(
       express.json(),
-        userRouter
+        loginRouter,
+        schoolRoute,
+        professorRoute
     )
   }
   
