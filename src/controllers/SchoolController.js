@@ -30,7 +30,7 @@ class SchoolController {
             });
             try{
                 const newSchool = await school.save();
-                res.status(201).json(newSchool);
+                res.status(200).json(newSchool);
             }
             catch(err){
                 res.status(400).json({message: err.message});
