@@ -1,6 +1,6 @@
 import Login from '../models/login.js';
-import ProfessorController from './ProfessorController.js';
-import StudentController from './StudentController.js';
+import Professor from '../models/professor.js';
+import Student from '../models/student.js';
 
 class LoginController {
 
@@ -15,8 +15,8 @@ class LoginController {
     }
 
     logar = async (req, res) => {
-        const {username, password, accessType} = req.body;
-        if(username === null || password === null || accessType === null){
+        const {username, password} = req.body;
+        if(username === null || password === null){
             return res.status(400).json({message: 'Username or password cannot be null'});
         }
         try{
@@ -26,12 +26,46 @@ class LoginController {
             }
 
             if(userLogin.password === password){
-                return res.status(200).json({message: 'Login successful'});
+                if("professor" === userLogin.accessType){
+                    const professor = await this.getProfessorByLoginId(userLogin._id);
+                    return res.status(200).json(professor);
+                }
+                if("student" === accessType){
+                    const student = await this.getStudentByLoginId(userLogin._id);
+                    return res.status(200).json(student);
+                }
+                
             }
             return res.status(400).json({message: 'Wrong password'});
         }
         catch(err){
             res.status(500).json({message: err.message});
+        }
+    }
+
+    getProfessorByLoginId = async (loginId) => {
+        try{
+            const professor = await Professor.findOne({loginId: loginId});
+            if(professor === null){
+                return null;
+            }
+            return professor;
+        }
+        catch(err){
+            return null;
+        }
+    }
+
+    getStudentByLoginId = async (loginId) => {
+        try{
+            const student = await Student.findOne({loginId: loginId});
+            if(student === null){
+                return null;
+            }
+            return student;
+        }
+        catch(err){
+            return null;
         }
     }
 
