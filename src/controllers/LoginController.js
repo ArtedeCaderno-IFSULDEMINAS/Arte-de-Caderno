@@ -69,42 +69,6 @@ class LoginController {
         }
     }
 
-    updatePassword = async (req, res) => {
-        const {id, username, password, accessType} = req.body;
-        if(id===null || accessType === null){
-            return res.status(400).json({message: 'Id or accessType cannot be null'});
-        }
-        const login = await Login.findById(id);
-        if(login === null){
-            return res.status(400).json({message: 'User not found'});
-        }
-        login.username = username || login.username;
-        login.password = password || login.password;
-
-        if(login.accessType === 'professor'){
-            const result = await ProfessorController.updateProfessorById(id, login.username, login.password);
-            if(result === null){
-                return res.status(400).json({message: 'Professor not found'});
-            }
-            if(result === 0){
-                return res.status(400).json({message: 'Professor not updated'});
-            }
-            return res.status(200).json({message: 'Professor updated'});
-
-        }
-        else if(login.accessType === 'student'){
-            const result = await StudentController.updateStudentById(id, login.username, login.password);
-            if(result === null){
-                return res.status(400).json({message: 'Student not found'});
-            }
-            if(result === 0){
-                return res.status(400).json({message: 'Student not updated'});
-            }
-            return res.status(200).json({message: 'Student updated'});
-        }
-
-    }
-
 }
 
 export default new LoginController;
