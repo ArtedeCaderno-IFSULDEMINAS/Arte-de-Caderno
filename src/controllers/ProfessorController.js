@@ -14,7 +14,7 @@ class ProfessorController {
     }
 
     insertProfessor = async (req, res) => {
-        const {name, date_of_birth, cpf, phone, cep, address, city, state, schoolId, password} = req.body;
+        const {name, date_of_birth, cpf, phone, cep, address, city, state, schoolId, password, email} = req.body;
         if(name === null || date_of_birth === null || cpf === null || phone === null || cep === null || address === null || city === null || state === null || schoolId === null || password === null){
             return res.status(400).json({message: 'All fields are required'});
         }
@@ -40,7 +40,7 @@ class ProfessorController {
                 state: state,
                 loginId: newLogin._id,
                 schoolId: schoolId,
-                password: password
+                email: email
             });
             const newProfessor = await professor.save();
             res.status(201).json(newProfessor);
