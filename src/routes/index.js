@@ -4,6 +4,7 @@ import schoolRoute from './schoolRoute.js';
 import professorRoute from './professorRoute.js';
 import studentRouter from './studentRoute.js';
 import cepRouter from './cepRoute.js';
+import validatorCpfRouter from './validatorCpfRoute.js';
 
 const routes = (app) => {
     app.route('/').get((req, res) => {
@@ -16,7 +17,8 @@ const routes = (app) => {
         schoolRoute,
         professorRoute,
         studentRouter,
-        cepRouter
+        cepRouter,
+        validatorCpfRouter
     )
   }
   
