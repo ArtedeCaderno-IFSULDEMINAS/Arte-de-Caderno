@@ -5,7 +5,7 @@ const SchoolSchema = new mongoose.Schema(
         id: { type: String },
         name: { type: String, required: true },
         code: { type: String, required: true, unique: true },
-        state: { type: String, required: true },
+        uf: { type: String, required: true },
         city: { type: String, required: true },
         address: { type: String, required: true },
         cep: { type: String, required: true },

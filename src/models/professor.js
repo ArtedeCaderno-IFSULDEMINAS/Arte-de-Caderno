@@ -10,11 +10,11 @@ const ProfessorSchema = new mongoose.Schema(
         cep: { type: String, required: true },
         address: { type: String, required: true },
         city: { type: String, required: true },
-        state: { type: String, required: true },
+        uf: { type: String, required: true },
         schoolId: {type: mongoose.Schema.Types.ObjectId, ref: 'school'},
         studentsId: [{type: mongoose.Schema.Types.ObjectId, ref: 'student'}],
-        loginId: {type: mongoose.Schema.Types.ObjectId, ref: 'login'},
-        password: { type: String, required: true }
+        email: { type: String, required: true },
+        loginId: {type: mongoose.Schema.Types.ObjectId, ref: 'login'}
     },
     {
         versionKey: false
