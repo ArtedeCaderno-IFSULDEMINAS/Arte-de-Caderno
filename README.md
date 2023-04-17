@@ -206,3 +206,8 @@ Status | Message
 Retrieves from Viacep the address from a cep request.
 Method: get
 Response: viacep standard
+
+###Validate CPF (/cpf/:cpf)
+Retrieves if a CPF is valid or not
+Method: get
+Response: status 200 for `valid = true` or status 400 for `valid = false`
