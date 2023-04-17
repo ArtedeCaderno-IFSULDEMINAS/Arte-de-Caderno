@@ -199,3 +199,10 @@ Status | Message
 400 | All fields are required
 400 | User already exists
 400 | General errors
+
+###ViaCep
+
+####Get Cep (/cep/:cep)
+Retrieves from Viacep the address from a cep request.
+Method: get
+Response: viacep standard
