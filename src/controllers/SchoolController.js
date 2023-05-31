@@ -37,5 +37,20 @@ class SchoolController {
             }
         }
 
+        listSchoolByCity = async (req, res) => {
+            const {city} = req.body;
+            if(city === null){
+                return res.status(400).json({message: 'City is required'});
+            }
+            try{
+                const schools = await School.find({city: city});
+                res.status(200).json(schools);
+            }
+            catch(err){
+                res.status(500).json({message: err.message});
+            }
+        }
+
+
 }
 export default new SchoolController;
