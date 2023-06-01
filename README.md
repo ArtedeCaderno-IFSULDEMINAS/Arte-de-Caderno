@@ -200,6 +200,42 @@ Status | Message
 400 | User already exists
 400 | General errors
 
+####List UFs (/school/uf)
+List all distincts Ufs
+Method: get
+Response: List of cities
+
+####List Cities (/school/city)
+List all cities from an UF
+Method: post
+
+**Request:**
+Parameters | Type | Required | Observation
+-----|-----|-----|-----
+uf | string | yes | 
+
+**Response:**
+Status | Message
+----|----
+200 | return list of cities
+400 | Uf is required
+400 | Uf must have 2 characters
+
+####List Schools By City
+List schools by city
+Method: post
+
+**Request:**
+Parameters | Type | Required | Observation
+-----|-----|-----|-----
+city | string | yes | 
+
+**Response:**
+Status | Message
+----|----
+200 | return school schema
+400 | City is required
+
 ###ViaCep
 
 ####Get Cep (/cep/:cep)
