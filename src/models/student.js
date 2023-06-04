@@ -12,6 +12,7 @@ const StudentSchema = new mongoose.Schema(
         city: { type: String, required: true },
         uf: { type: String, required: true },
         email: { type: String, required: true},
+        accessType: { type: String, required: true },
         schoolId: {type: mongoose.Schema.Types.ObjectId, ref: 'school'},
         drawsId: [{type: mongoose.Schema.Types.ObjectId, ref: 'draw'}],
         loginId: {type: mongoose.Schema.Types.ObjectId, ref: 'login'}
