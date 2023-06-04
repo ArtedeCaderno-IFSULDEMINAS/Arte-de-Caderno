@@ -1,5 +1,6 @@
 import Professor from "../models/professor.js";
 import Login from "../models/login.js";
+import School from "../models/school.js";
 
 class ProfessorController {
 
@@ -40,7 +41,8 @@ class ProfessorController {
                 uf: uf,
                 loginId: newLogin._id,
                 schoolId: schoolId,
-                email: email
+                email: email,
+                accessType: 'professor'
             });
             const newProfessor = await professor.save();
             res.status(201).json(newProfessor);
@@ -49,6 +51,28 @@ class ProfessorController {
             res.status(400).json({message: err.message});
         }
 
+    }
+
+    listSchoolByProfessorId = async (req, res) => {
+        const schools = [];
+        const {professorId} = req.body;
+        if(professorId === null){
+            return res.status(400).json({message: 'Professor is required'});
+        }
+        try{
+            const professor = await Professor.findById(professorId);
+            if(professor === null){
+                return res.status(400).json({message: 'Professor not found'});
+            }
+            for(let i = 0; i < professor.schoolId.length; i++){
+                const school = await School.findById(professor.schoolId[i]);
+                schools.push(school);
+            }
+            return res.status(200).json(schools);
+        }
+        catch(err){
+            res.status(500).json({message: err.message});
+        }
     }
 
 }
