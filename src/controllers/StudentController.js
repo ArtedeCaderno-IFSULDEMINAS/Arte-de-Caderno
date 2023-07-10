@@ -58,7 +58,7 @@ class StudentController {
         const {id} = req.params;
         const studentReq = new Student(req.body);
 
-        const {name, date_of_birth, cpf, phone, cep, address, city, uf, email, schoolId} = studentReq;
+        const {name, date_of_birth, phone, cep, address, city, uf, email, schoolId} = studentReq;
 
         if( id === null){
             return res.status(400).json({message: 'Id is required'});
@@ -72,7 +72,7 @@ class StudentController {
 
             student.name = name;
             student.date_of_birth = date_of_birth;
-            student.cpf = cpf;
+            student.cpf = student.cpf;
             student.phone = phone;
             student.cep = cep;
             student.address = address;
@@ -80,6 +80,9 @@ class StudentController {
             student.uf = uf;
             student.schoolId = schoolId;
             student.email = email;
+            student.loginId = student.loginId;
+            student.drawsId = student.drawsId;
+
             await student.save();
             res.status(200).json(student);
         }

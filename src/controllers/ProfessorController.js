@@ -55,7 +55,7 @@ class ProfessorController {
         const {id} = req.params;
         const professorReq = new Professor(req.body);
 
-        const {name, date_of_birth, cpf, phone, cep, address, city, uf, email, schoolId} = professorReq;
+        const {name, date_of_birth, phone, cep, address, city, uf, schoolId, email} = professorReq;
 
         if(id === null){
             return res.status(400).json({message: 'Id is required'});
@@ -74,6 +74,10 @@ class ProfessorController {
             professor.city = city;
             professor.uf = uf;
             professor.schoolId = schoolId;
+            professor.email = email;
+            professor.loginId = professor.loginId;
+            professor.studentsId = professor.studentsId;
+            professor.cpf = professor.cpf;
             professor.email = email;
             await professor.save();
             res.status(200).json(professor);
