@@ -13,16 +13,17 @@ class StudentController {
         }
     }
 
-    insertStudent = async (req, res) => {
-        const {name, date_of_birth, cpf, phone, cep, address, city, uf, schoolId, password, email} = req.body;
-        if(name === null || date_of_birth === null || cpf === null || phone === null || cep === null || address === null || city === null || uf === null || schoolId === null || password === null){
-            return res.status(400).json({message: 'All fields are required'});
-        }
+    insertStudent = async (req, res, next) => {
+        const studentReq = new Student(req.body);
+
+        const {name, date_of_birth, cpf, phone, cep, address, city, uf, email, schoolId, password} = studentReq;
 
         const loginExists = await Login.findOne({username: cpf});
+
         if(loginExists !== null){
             return res.status(400).json({message: 'User already exists'});
         }
+
         const login = new Login({
             username: cpf,
             password: password,
@@ -50,6 +51,66 @@ class StudentController {
         }
         catch(err){
             res.status(400).json({message: err.message});
+        }
+    }
+
+    updateStudent = async (req, res, next) => {
+        const {id} = req.params;
+        const studentReq = new Student(req.body);
+
+        const {name, date_of_birth, cpf, phone, cep, address, city, uf, email, schoolId} = studentReq;
+
+        if( id === null){
+            return res.status(400).json({message: 'Id is required'});
+        }
+
+        try{
+            const student = await Student.findById(id);
+            if(student === null){
+                return res.status(400).json({message: 'Student not found'});
+            }
+
+            student.name = name;
+            student.date_of_birth = date_of_birth;
+            student.cpf = cpf;
+            student.phone = phone;
+            student.cep = cep;
+            student.address = address;
+            student.city = city;
+            student.uf = uf;
+            student.schoolId = schoolId;
+            student.email = email;
+            await student.save();
+            res.status(200).json(student);
+        }
+        catch(err){
+            next(err);
+        }
+    }
+
+    deleteStudent = async (req, res, next) => {
+        const {id} = req.params;  
+        if(id === null){
+            return res.status(400).json({message: 'Id is required'});
+        }
+
+        try{
+            const student = await Student.findById(id);
+            if(student === null){
+                return res.status(400).json({message: 'Student not found'});
+            }
+
+            await Login.deleteOne({_id: student.loginId});
+
+            const result = await Student.deleteOne({_id: id});
+            
+            if(result.deletedCount === 0){
+                return res.status(400).json({message: 'Student not found'});
+            }
+            res.status(200).json({message: 'Student deleted'});
+        }
+        catch(err){
+            next(err);
         }
     }
 
