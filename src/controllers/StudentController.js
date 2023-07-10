@@ -43,8 +43,7 @@ class StudentController {
                 uf: uf,
                 loginId: newLogin._id,
                 email: email,
-                schoolId: schoolId,
-                accessType: 'student'
+                schoolId: schoolId
             });
             const newStudent = await student.save();
             res.status(201).json(newStudent);
@@ -116,6 +115,7 @@ class StudentController {
             next(err);
         }
     }
+
 
 }
 
