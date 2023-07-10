@@ -24,7 +24,7 @@ class LoginController {
                     const professor = await this.getProfessorByLoginId(userLogin._id);
                     let response = {
                         accessType: 'professor',
-                        professor: professor
+                        user: professor
                     };
 
                     return res.status(200).json(response);
@@ -34,7 +34,7 @@ class LoginController {
 
                     let response = {
                         accessType: 'student',
-                        student: student
+                        user: student
                     };
 
                     return res.status(200).json(response);
