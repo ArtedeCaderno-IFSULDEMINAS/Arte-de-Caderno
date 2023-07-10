@@ -37,7 +37,7 @@ class SchoolController {
             }
         }
 
-        listSchoolByCity = async (req, res) => {
+        listSchoolByCity = async (req, res, next) => {
             const {city} = req.body;
             if(city === null){
                 return res.status(400).json({message: 'City is required'});
