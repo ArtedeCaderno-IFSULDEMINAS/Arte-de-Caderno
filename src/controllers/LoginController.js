@@ -4,42 +4,36 @@ import Student from '../models/student.js';
 
 class LoginController {
 
-     listLogin = async (req, res) => {
+    listLogin = async (req, res, next) => {
         try{
             const logins = await Login.find();
             res.status(200).json(logins);
         }
         catch(err){
-            res.status(500).json({message: err.message});
+            next(err);
         }
     }
 
-    logar = async (req, res) => {
-        const {username, password} = req.body;
-        if(username === null || password === null){
-            return res.status(400).json({message: 'Username or password cannot be null'});
-        }
+    logar = async (req, res, next) => {
+        const loginReq = new Login(req.body);
         try{
-            const userLogin = await Login.findOne({username: username});
-            if(userLogin === null){
-                return res.status(400).json({message: 'User not found'});
-            }
+            const userLogin = await Login.findOne({username: loginReq.username});
 
-            if(userLogin.password === password){
+            if(userLogin.password === loginReq.password){
                 if("professor" === userLogin.accessType){
                     const professor = await this.getProfessorByLoginId(userLogin._id);
-                    return res.status(200).json(professor);
+                    return res.status(200).json(professor, {accessType: 'professor'});
                 }
-                if("student" === accessType){
+                if("student" === userLogin.accessType){
                     const student = await this.getStudentByLoginId(userLogin._id);
                     return res.status(200).json(student);
                 }
                 
             }
-            return res.status(400).json({message: 'Wrong password'});
+            return res.status(400).json({message: 'Invalid password'});
         }
         catch(err){
-            res.status(500).json({message: err.message});
+            next(err);
         }
     }
 

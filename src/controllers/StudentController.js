@@ -3,13 +3,13 @@ import Student from '../models/student.js';
 
 class StudentController {
     
-    listStudent = async (req, res) => {
+    listStudent = async (req, res, next) => {
         try{
             const students = await Student.find();
             res.status(200).json(students);
         }
         catch(err){
-            res.status(500).json({message: err.message});
+            next(err);
         }
     }
 

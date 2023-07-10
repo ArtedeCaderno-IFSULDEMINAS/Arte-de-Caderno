@@ -2,17 +2,17 @@ import School from "../models/school.js";
 
 class SchoolController {
     
-        listSchool = async (req, res) => {
+        listSchool = async (req, res, next) => {
             try{
                 const schools = await School.find();
                 res.status(200).json(schools);
             }
             catch(err){
-                res.status(500).json({message: err.message});
+                next(err);
             }
         }
     
-        insertSchool = async (req, res) => {
+        insertSchool = async (req, res, next) => {
             const {name, code, uf, city, address, cep, phone, email, site} = req.body;
             if(name === null || code === null || uf === null || city === null || address === null || cep === null || phone === null){
                 return res.status(400).json({message: 'All fields are required'});
@@ -33,7 +33,7 @@ class SchoolController {
                 res.status(200).json(newSchool);
             }
             catch(err){
-                res.status(400).json({message: err.message});
+                next(err);
             }
         }
 
@@ -47,21 +47,21 @@ class SchoolController {
                 res.status(200).json(schools);
             }
             catch(err){
-                res.status(500).json({message: err.message});
+                next(err);
             }
         }
 
-        listUfs = async (req, res) => {
+        listUfs = async (req, res, next) => {
             try{
                 const ufs = await School.find().distinct('uf');
                 res.status(200).json(ufs);
             }
             catch(err){
-                res.status(500).json({message: err.message});
+                next(err);
             }
         }
 
-        listCitiesByUf = async (req, res) => {
+        listCitiesByUf = async (req, res, next) => {
             const {uf} = req.body;
             if(uf === null){
                 return res.status(400).json({message: 'Uf is required'});
@@ -74,10 +74,11 @@ class SchoolController {
                 res.status(200).json(cities);
             }
             catch(err){
-                res.status(500).json({message: err.message});
+                next(err);
             }
         }
 
+        
 
 
 }
