@@ -1,6 +1,7 @@
 import Professor from "../models/professor.js";
 import Login from "../models/login.js";
 import School from "../models/school.js";
+import Student from "../models/student.js";
 
 class ProfessorController {
 
@@ -39,8 +40,7 @@ class ProfessorController {
                 uf: uf,
                 loginId: newLogin._id,
                 schoolId: schoolId,
-                email: email,
-                accessType: 'professor'
+                email: email
             });
             const newProfessor = await professor.save();
             res.status(201).json(newProfessor);
@@ -113,12 +113,12 @@ class ProfessorController {
 
     listSchoolByProfessorId = async (req, res, next) => {
         const schools = [];
-        const {professorId} = req.body;
-        if(professorId === null){
+        const {id} = req.params;
+        if(id === null){
             return res.status(400).json({message: 'Professor is required'});
         }
         try{
-            const professor = await Professor.findById(professorId);
+            const professor = await Professor.findById(id);
             if(professor === null){
                 return res.status(400).json({message: 'Professor not found'});
             }
@@ -133,6 +133,82 @@ class ProfessorController {
         }
     }
 
+    insertStudentByProfessorId = async (req, res, next) => {
+        const {id} = req.params;
+        if(id === null){
+            return res.status(400).json({message: 'Id is required'});
+        }
+        try{
+            const studentReq = new Student(req.body);
+
+            const loginExists = await Login.findOne({username: studentReq.cpf});
+    
+            if(loginExists !== null){
+                return res.status(400).json({message: 'User already exists'});
+            }
+    
+            await studentReq.save();
+    
+            const professor = await Professor.findById(id);
+    
+            professor.studentsId.push(studentReq._id);
+
+            await professor.save();
+    
+            return res.status(201).json(studentReq);
+        }
+
+        catch(err){
+            next(err);
+        }
+        
+    }
+
+    listStudentsByProfessorId = async (req, res, next) => {
+        const {id} = req.params;
+        if(id === null){
+            return res.status(400).json({message: 'Id is required'});
+        }
+
+        try{
+            const professor = await Professor.findById(id);
+            if(professor === null){
+                return res.status(400).json({message: 'Professor not found'});
+            }
+            const students = [];
+            for(let i = 0; i < professor.studentsId.length; i++){
+                const student = await Student.findById(professor.studentsId[i]);
+                students.push(student);
+            }
+            return res.status(200).json(students);
+        }
+        catch(err){
+            next(err);
+        }
+    }
+
+    addSchoolByProfessorId = async (req, res, next) => {
+        const {id} = req.params;
+        const {schoolId} = req.body;
+        if(id === null){
+            return res.status(400).json({message: 'Id is required'});
+        }
+        if(schoolId === null){
+            return res.status(400).json({message: 'School id is required'});
+        }
+        try{
+            const professor = await Professor.findById(id);
+            if(professor === null){
+                return res.status(400).json({message: 'Professor not found'});
+            }
+            professor.schoolId.push(schoolId);
+            await professor.save();
+            return res.status(200).json(professor);
+        }
+        catch(err){
+            next(err);
+        }
+    }
 }
 
 export default new ProfessorController;
