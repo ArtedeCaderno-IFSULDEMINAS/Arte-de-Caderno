@@ -22,11 +22,22 @@ class LoginController {
             if(userLogin.password === loginReq.password){
                 if("professor" === userLogin.accessType){
                     const professor = await this.getProfessorByLoginId(userLogin._id);
-                    return res.status(200).json(professor, {accessType: 'professor'});
+                    let response = {
+                        accessType: 'professor',
+                        professor: professor
+                    };
+
+                    return res.status(200).json(response);
                 }
                 if("student" === userLogin.accessType){
                     const student = await this.getStudentByLoginId(userLogin._id);
-                    return res.status(200).json(student);
+
+                    let response = {
+                        accessType: 'student',
+                        student: student
+                    };
+
+                    return res.status(200).json(response);
                 }
                 
             }
