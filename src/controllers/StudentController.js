@@ -1,5 +1,6 @@
 import Login from '../models/login.js';
 import Student from '../models/student.js';
+import createHashWithSalt from '../middleware/hashWithSalt.js';
 
 class StudentController {
     
@@ -14,9 +15,7 @@ class StudentController {
     }
 
     insertStudent = async (req, res, next) => {
-        const studentReq = new Student(req.body);
-
-        const {name, date_of_birth, cpf, phone, cep, address, city, uf, email, schoolId, password} = studentReq;
+        const {name, date_of_birth, cpf, phone, cep, address, city, uf, email, schoolId, password} = req.body;
 
         const loginExists = await Login.findOne({username: cpf});
 
@@ -24,9 +23,10 @@ class StudentController {
             return res.status(400).json({message: 'User already exists'});
         }
 
+        const hashPassword = createHashWithSalt(password);
         const login = new Login({
             username: cpf,
-            password: password,
+            password: hashPassword,
             accessType: 'student'
         });
 
