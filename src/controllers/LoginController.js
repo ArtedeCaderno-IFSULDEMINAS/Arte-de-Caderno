@@ -1,6 +1,7 @@
 import Login from '../models/login.js';
 import Professor from '../models/professor.js';
 import Student from '../models/student.js';
+import validateLogin from '../middleware/loginVerify.js';
 
 class LoginController {
 
@@ -18,8 +19,8 @@ class LoginController {
         const loginReq = new Login(req.body);
         try{
             const userLogin = await Login.findOne({username: loginReq.username});
-
-            if(userLogin.password === loginReq.password){
+            
+            if(validateLogin(userLogin.password,loginReq.password)){
                 if("professor" === userLogin.accessType){
                     const professor = await this.getProfessorByLoginId(userLogin._id);
                     let response = {
