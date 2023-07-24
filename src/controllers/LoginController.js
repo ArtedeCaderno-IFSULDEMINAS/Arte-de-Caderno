@@ -42,7 +42,7 @@ class LoginController {
                 }
                 
             }
-            return res.status(400).json({message: 'Invalid password'});
+            return res.status(400).json({message: 'Invalid password or username'});
         }
         catch(err){
             next(err);

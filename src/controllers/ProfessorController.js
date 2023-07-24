@@ -23,7 +23,7 @@ class ProfessorController {
             return res.status(400).json({message: 'User already exists'});
         }
         
-        const hashPassword = createHashWithSalt(password);
+        const hashPassword = await createHashWithSalt(password);
         const login = new Login({
             username: cpf,
             password: hashPassword,
