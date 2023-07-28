@@ -2,12 +2,13 @@ import Login from '../models/login.js';
 import Professor from '../models/professor.js';
 import Student from '../models/student.js';
 import validateLogin from '../middleware/loginVerify.js';
+import generateToken from '../middleware/jwtUtils.js';
 
 class LoginController {
 
     listLogin = async (req, res, next) => {
         try{
-            const logins = await Login.find();
+            const logins = await Login.find().select('-password'); //removi o campo password por motivor de seguança
             res.status(200).json(logins);
         }
         catch(err){
@@ -19,13 +20,18 @@ class LoginController {
         const loginReq = new Login(req.body);
         try{
             const userLogin = await Login.findOne({username: loginReq.username});
-            
-            if(validateLogin(userLogin.password,loginReq.password)){
+            const verify = await validateLogin(userLogin.password,loginReq.password)
+
+            if(verify){
+                const tokenPayload = {loginId: userLogin._id,userName: userLogin.username,accessType: userLogin.accessType};
+                const token = generateToken(tokenPayload);
+
                 if("professor" === userLogin.accessType){
                     const professor = await this.getProfessorByLoginId(userLogin._id);
                     let response = {
                         accessType: 'professor',
-                        user: professor
+                        user: professor,
+                        token: token
                     };
 
                     return res.status(200).json(response);
@@ -35,7 +41,8 @@ class LoginController {
 
                     let response = {
                         accessType: 'student',
-                        user: student
+                        user: student,
+                        token: token
                     };
 
                     return res.status(200).json(response);
