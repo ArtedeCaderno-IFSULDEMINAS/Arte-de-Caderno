@@ -8,7 +8,7 @@ class LoginController {
 
     listLogin = async (req, res, next) => {
         try{
-            const logins = await Login.find().select('-password'); //removi o campo password por motivor de seguança
+            const logins = await Login.find().select('-password'); //I removed the password field for security reasons
             res.status(200).json(logins);
         }
         catch(err){
@@ -23,21 +23,36 @@ class LoginController {
             const verify = await validateLogin(userLogin.password,loginReq.password)
 
             if(verify){
-                const tokenPayload = {loginId: userLogin._id,userName: userLogin.username,accessType: userLogin.accessType};
-                const token = generateToken(tokenPayload);
 
                 if("professor" === userLogin.accessType){
                     const professor = await this.getProfessorByLoginId(userLogin._id);
+
+                    const tokenPayload = {
+                        userId: professor._id,
+                        userName: userLogin.username,
+                        email: professor.email,
+                        accessType: userLogin.accessType,
+                    };
+                    const token = await generateToken(tokenPayload);
+
                     let response = {
                         accessType: 'professor',
                         user: professor,
-                        token: token
+                        token: token,
                     };
 
                     return res.status(200).json(response);
                 }
                 if("student" === userLogin.accessType){
                     const student = await this.getStudentByLoginId(userLogin._id);
+                    
+                    const tokenPayload = {
+                        userId: student._id,
+                        userName: userLogin.username,
+                        email: student.email,
+                        accessType: userLogin.accessType,
+                    };
+                    const token = await generateToken(tokenPayload);
 
                     let response = {
                         accessType: 'student',
