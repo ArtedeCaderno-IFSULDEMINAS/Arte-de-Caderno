@@ -18,10 +18,9 @@ function authenticateTokenJwt (req,res,next) {
         return next();
     } 
     catch(err){
-            return res.status(401).json({message: 'Token authentication failure'})
+            return res.status(401).json({message: 'Token authentication failure'});
         }
     
-
 };
 
 export default authenticateTokenJwt;
