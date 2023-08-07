@@ -1,7 +1,9 @@
 import express from "express";
 import SchoolController from "../controllers/SchoolController.js";
+import authenticateTokenJwt from '../middleware/authMiddleware.js';
 
 const schoolRouter = express.Router();
+schoolRouter.use(authenticateTokenJwt);
 
 schoolRouter.get("/school", SchoolController.listSchool)
             .post("/school", SchoolController.insertSchool)

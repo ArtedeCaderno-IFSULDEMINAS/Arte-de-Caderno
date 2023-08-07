@@ -1,7 +1,9 @@
 import express from 'express';
 import ProfessorController from '../controllers/ProfessorController.js';
+import authenticateTokenJwt from '../middleware/authMiddleware.js';
 
 const professorRouter = express.Router();
+professorRouter.use(authenticateTokenJwt);
 
 professorRouter.get('/professor', ProfessorController.listProfessor)
     .get('/professor/school/:id', ProfessorController.listSchoolByProfessorId)
