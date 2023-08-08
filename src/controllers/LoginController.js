@@ -3,30 +3,47 @@ import Professor from '../models/professor.js';
 import Student from '../models/student.js';
 import validateLogin from '../middleware/loginVerify.js';
 import generateToken from '../middleware/jwtUtils.js';
+import transporter from '../middleware/emailConfig.js';
+import crypto from 'crypto';
 
 class LoginController {
 
     listLogin = async (req, res, next) => {
-        try{
+        try {
             const logins = await Login.find().select('-password'); //I removed the password field for security reasons
             res.status(200).json(logins);
         }
-        catch(err){
+        catch (err) {
             next(err);
         }
     }
 
     logar = async (req, res, next) => {
         const loginReq = new Login(req.body);
-        try{
-            const userLogin = await Login.findOne({username: loginReq.username});
-            const verify = await validateLogin(userLogin.password,loginReq.password)
+        try {
+            const userLogin = await Login.findOne({ username: loginReq.username });
+            const verify = await validateLogin(userLogin.password, loginReq.password)
 
-            if(verify){
+            if (verify) {
 
-                if("professor" === userLogin.accessType){
+                if ("professor" === userLogin.accessType) {
                     const professor = await this.getProfessorByLoginId(userLogin._id);
 
+                    async function sendEmail() {
+                        const code = crypto.randomBytes(4).toString('hex'); // Gere um código aleatório
+
+                        const mailSent = await transporter.sendMail({
+                            text: `Seu código de verificação é:  ${code}`,
+                            subject: 'Código de Autenticação',
+                            from: 'Equipe Arte de Caderno <artedecaderno.if@gmail.com>',
+                            to: 'testeartedecaderno@gmail.com'
+                        });
+                        
+                        console.log(mailSent);
+                    }
+
+                    sendEmail();
+                    
                     const tokenPayload = {
                         userId: professor._id,
                         userName: userLogin.username,
@@ -43,9 +60,9 @@ class LoginController {
 
                     return res.status(200).json(response);
                 }
-                if("student" === userLogin.accessType){
+                if ("student" === userLogin.accessType) {
                     const student = await this.getStudentByLoginId(userLogin._id);
-                    
+
                     const tokenPayload = {
                         userId: student._id,
                         userName: userLogin.username,
@@ -62,37 +79,37 @@ class LoginController {
 
                     return res.status(200).json(response);
                 }
-                
+
             }
-            return res.status(400).json({message: 'Invalid password or username'});
+            return res.status(400).json({ message: 'Invalid password or username' });
         }
-        catch(err){
+        catch (err) {
             next(err);
         }
     }
 
     getProfessorByLoginId = async (loginId) => {
-        try{
-            const professor = await Professor.findOne({loginId: loginId});
-            if(professor === null){
+        try {
+            const professor = await Professor.findOne({ loginId: loginId });
+            if (professor === null) {
                 return null;
             }
             return professor;
         }
-        catch(err){
+        catch (err) {
             return null;
         }
     }
 
     getStudentByLoginId = async (loginId) => {
-        try{
-            const student = await Student.findOne({loginId: loginId});
-            if(student === null){
+        try {
+            const student = await Student.findOne({ loginId: loginId });
+            if (student === null) {
                 return null;
             }
             return student;
         }
-        catch(err){
+        catch (err) {
             return null;
         }
     }

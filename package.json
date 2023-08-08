@@ -27,6 +27,7 @@
     "mongodb": "^5.2.0",
     "mongoose": "^7.0.3",
     "node-fetch": "^3.3.1",
+    "nodemailer": "^6.9.4",
     "nodemon": "^2.0.22",
     "validar-cpf": "^3.0.0"
   }
