@@ -16,6 +16,22 @@ class ProfessorController {
         }
     }
 
+    getProfessorById = async (req, res, next) => {
+        try{
+            const {id} = req.params;
+            const professor = await Professor.findById(id);
+
+            if(professor === null){
+                return res.status(404).json({message: 'Professor not found'});
+            }
+
+            res.status(200).json(professor);
+        }
+        catch(err){
+            next(err);
+        }
+    }
+
     insertProfessor = async (req, res, next) => {
         const {name, date_of_birth, cpf, phone, cep, address, city, uf, email, schoolId, password} = req.body;
         const loginExists = await Login.findOne({username: cpf});
