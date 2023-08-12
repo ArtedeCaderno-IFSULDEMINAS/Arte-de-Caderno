@@ -8,7 +8,7 @@ class LoginController {
 
     listLogin = async (req, res, next) => {
         try{
-            const logins = await Login.find().select('-password'); //I removed the password field for security reasons
+            const logins = await Login.find().select('-password'); 
             res.status(200).json(logins);
         }
         catch(err){
@@ -33,7 +33,7 @@ class LoginController {
                         email: professor.email,
                         accessType: userLogin.accessType,
                     };
-                    const token = await generateToken(tokenPayload);
+                    const token = generateToken(tokenPayload);
 
                     let response = {
                         accessType: 'professor',
@@ -52,7 +52,7 @@ class LoginController {
                         email: student.email,
                         accessType: userLogin.accessType,
                     };
-                    const token = await generateToken(tokenPayload);
+                    const token = generateToken(tokenPayload);
 
                     let response = {
                         accessType: 'student',
