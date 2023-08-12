@@ -5,7 +5,6 @@ import validateLogin from '../middleware/loginVerify.js';
 import generateToken from '../middleware/jwtUtils.js';
 import transporter from '../middleware/emailConfig.js';
 import crypto from 'crypto';
-import { Code } from 'mongodb';
 
 class LoginController {
 
