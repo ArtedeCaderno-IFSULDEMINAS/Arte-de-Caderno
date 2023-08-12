@@ -11,7 +11,7 @@ const ProfessorSchema = new mongoose.Schema(
         address: { type: String, required: true },
         city: { type: String, required: true },
         uf: { type: String, required: true },
-        schoolId: [{type: mongoose.Schema.Types.ObjectId, ref: 'school'}],
+        schoolId: [{type: mongoose.Schema.Types.ObjectId, ref: 'school', required: true}],
         studentsId: [{type: mongoose.Schema.Types.ObjectId, ref: 'student'}],
         email: { type: String, required: true },
         loginId: {type: mongoose.Schema.Types.ObjectId, ref: 'login'}
