@@ -11,6 +11,22 @@ class SchoolController {
                 next(err);
             }
         }
+
+        getSchoolById = async (req, res, next) => {
+            try{
+                const {id} = req.params;
+                const school = await School.findById(id);
+                
+                if(school === null){
+                    return res.status(404).json({message: 'School not found'});
+                }
+    
+                res.status(200).json(school);
+            }
+            catch(err){
+                next(err);
+            }
+        }
     
         insertSchool = async (req, res, next) => {
             const {name, code, uf, city, address, cep, phone, email, site} = req.body;
