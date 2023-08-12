@@ -5,6 +5,7 @@ import validateLogin from '../middleware/loginVerify.js';
 import generateToken from '../middleware/jwtUtils.js';
 import transporter from '../middleware/emailConfig.js';
 import crypto from 'crypto';
+import { Code } from 'mongodb';
 
 class LoginController {
 
@@ -36,14 +37,14 @@ class LoginController {
                             text: `Seu código de verificação é:  ${code}`,
                             subject: 'Código de Autenticação',
                             from: 'Equipe Arte de Caderno <artedecaderno.if@gmail.com>',
-                            to: 'testeartedecaderno@gmail.com'
-                        });
-                        
-                        console.log(mailSent);
+                            to: professor.email
+                        });   
+                        //console.log(mailSent);
                     }
-
                     sendEmail();
-                    
+
+                    //const providedCode = req.body.twoFactorCode; //testar aki amanha se da p pegar o 2FA desse modo
+
                     const tokenPayload = {
                         userId: professor._id,
                         userName: userLogin.username,
