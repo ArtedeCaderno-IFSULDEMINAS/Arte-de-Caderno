@@ -8,7 +8,6 @@ studentRouter.use(authenticateTokenJwt);
 studentRouter
     .get("/student", StudentController.listStudent)
     .get("/student/:id", StudentController.getStudentById)
-    .post("/student", StudentController.insertStudent)
     .post ("/student/update/:id", StudentController.updateStudent)
     .delete("/student/:id", StudentController.deleteStudent);
 

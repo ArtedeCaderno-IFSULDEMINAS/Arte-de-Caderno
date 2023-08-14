@@ -10,7 +10,6 @@ professorRouter.get('/professor', ProfessorController.listProfessor)
     .get('/professor/school/:id', ProfessorController.listSchoolByProfessorId)
     .get('/professor/student/:id', ProfessorController.listStudentsByProfessorId)
     .post('/professor/student/:id', ProfessorController.insertStudentByProfessorId)
-    .post('/professor', ProfessorController.insertProfessor)
     .post('/professor/update/:id', ProfessorController.updateProfessor) //em teste
     .delete('/professor/:id', ProfessorController.deleteProfessor);
 

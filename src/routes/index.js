@@ -3,6 +3,7 @@ import loginRouter from './loginRoute.js';
 import schoolRoute from './schoolRoute.js';
 import professorRoute from './professorRoute.js';
 import studentRouter from './studentRoute.js';
+import insertRoute from './insertRoute.js';
 import cepRouter from './cepRoute.js';
 import validatorCpfRouter from './validatorCpfRoute.js';
 
@@ -15,6 +16,7 @@ const routes = (app) => {
     express.json(),
     validatorCpfRouter,
     cepRouter,
+    insertRoute,
     loginRouter,
     schoolRoute,
     professorRoute,
