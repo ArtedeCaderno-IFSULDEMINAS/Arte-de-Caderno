@@ -1,15 +1,15 @@
 import express from 'express';
-import ProfessorController from '../controllers/ProfessorController';
-import StudentController from '../controllers/StudentController';
-import SchoolController from '../controllers/SchoolController';
+import ProfessorController from '../controllers/ProfessorController.js';
+import StudentController from '../controllers/StudentController.js';
+import SchoolController from '../controllers/SchoolController.js';
 
-const insertRoute = express.Router();
+const registerRoute = express.Router();
 
-insertRoute.post('/insertProfessor', ProfessorController.insertProfessor)
+registerRoute.post('/insertProfessor', ProfessorController.insertProfessor)
             .post('/insertStudent', StudentController.insertStudent)
             .post('/insertSchool', SchoolController.insertSchool)
             .post("/school/city", SchoolController.listCitiesByUf)
             .get("/school/uf", SchoolController.listUfs)
             .post("/school/listByCity", SchoolController.listSchoolByCity);
 
-export default insertRoute;
+export default registerRoute;
