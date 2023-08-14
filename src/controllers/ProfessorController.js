@@ -3,6 +3,7 @@ import Login from "../models/login.js";
 import School from "../models/school.js";
 import Student from "../models/student.js";
 import createHashWithSalt from "../middleware/hashWithSalt.js";
+import mongoose from "mongoose";
 
 class ProfessorController {
 
@@ -57,7 +58,7 @@ class ProfessorController {
                 city: city,
                 uf: uf,
                 loginId: newLogin._id,
-                schoolId: schoolId,
+                schoolId: mongoose.Types.ObjectId(schoolId),
                 email: email
             });
             const newProfessor = await professor.save();
