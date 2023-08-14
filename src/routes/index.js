@@ -7,19 +7,19 @@ import cepRouter from './cepRoute.js';
 import validatorCpfRouter from './validatorCpfRoute.js';
 
 const routes = (app) => {
-    app.route('/').get((req, res) => {
-        res.status(200).send('Hello World!')
-    })
-  
-    app.use(
-      express.json(),
-        loginRouter,
-        schoolRoute,
-        professorRoute,
-        studentRouter,
-        cepRouter,
-        validatorCpfRouter
-    )
-  }
-  
-  export default routes
+  app.route('/').get((req, res) => {
+    res.status(200).send('Hello World!')
+  })
+
+  app.use(
+    express.json(),
+    validatorCpfRouter,
+    cepRouter,
+    loginRouter,
+    schoolRoute,
+    professorRoute,
+    studentRouter
+  )
+}
+
+export default routes
