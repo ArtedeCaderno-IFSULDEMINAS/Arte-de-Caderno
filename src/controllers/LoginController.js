@@ -33,10 +33,16 @@ class LoginController {
                         const code = crypto.randomBytes(4).toString('hex'); // Gere um código aleatório
 
                         const mailSent = await transporter.sendMail({
-                            text: `Seu código de verificação é:  ${code}`,
+                            //text: `Seu código de verificação com validade de 10 minutos é:  ${code}`,
                             subject: 'Código de Autenticação',
                             from: 'Equipe Arte de Caderno <artedecaderno.if@gmail.com>',
-                            to: professor.email
+                            to: professor.email,
+                            html: `<p>Seu código de autenticação é:</p>
+                            <p style="color: tomato; font-size: 25px; letter-spacing: 2px;">
+                              <b>${code}</b>
+                            </p>
+                            <p><b>Código expira em 10 minutos</b>.</p>`
+                            
                         });   
                         //console.log(mailSent);
                     }
