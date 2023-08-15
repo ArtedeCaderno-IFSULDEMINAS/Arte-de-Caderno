@@ -1,7 +1,7 @@
 # arte-de-caderno-back
 Backend application for 'Arte de Caderno' website
 
-##How to run locally
+## How to run locally
  1. Clone the repository - `git clone`
  2. Install nodejs v19.3.0
  3. Install the packages - `npm init`
@@ -13,9 +13,9 @@ Backend application for 'Arte de Caderno' website
  ```
  6. Run using `npm start`
 
-##Schemas
+## Schemas
     All schemas have the _id parameter.
-###Login
+### Login
 
 Parameter | Type | Required | Observation
 -----|------|-----|-----
@@ -23,7 +23,7 @@ username | string | yes | corresponds to the CPF
 password | string | yes
 accessType | string | yes | can be 'professor' or 'student'
 
-###Professor
+### Professor
 
 Parameter | Type | Required | Observation
 -----|------|-----|-----
@@ -40,7 +40,7 @@ schoold | School Id | yes | the id returned when registering the school or selec
 studentsId | array of Students Id | no
 loginId | Login Id | yes | the Login id
 
-###School
+### School
 Parameter | Type | Required | Observation
 -----|------|-----|-----
 name | string | yes | 
@@ -53,7 +53,7 @@ uf | string | yes | use the acronym. Example: MG, SP
 site | string | no
 email | string | no
 
-###Student
+### Student
 
 Parameter | Type | Required | Observation
 -----|------|-----|-----
@@ -70,18 +70,18 @@ schoold | School Id | yes | the id returned when registering the school or selec
 drawsId | array of Draws Id | no
 loginId | Login Id | no | the Login id
 
-##Routes
-
+## Routes
 
 ### Login
 
-####List login (/login)
+#### List login (/login)
 
 Retrieves all logins in database.
 Method: get
 Response: Logins schema
 
-####Logar (/login)
+#### Logar (/login)
+
 authenticates the user to the platform
 Method: post
 
@@ -99,15 +99,61 @@ Status | Message
 400 | User not found
 400 | Wrong Password
 
-###Professor
+### Professor
 
-####List Professor (/professor)
+#### List Professor (/professor)
+
 Retrieves all professor in database.
 Method: get
-Response: Professors schema
+Response: List of Professors object
 
-####Insert Professor (/professor)
-insert a professor. Detail: a professor only can be insert if his school already exist.
+#### Get Professor By Id (/professor/:id)
+
+Retrieves a professor by id
+Method: get
+
+**Request**
+Id professor in URL
+
+**Response**
+Status | Message
+----|----
+200 | Professor object
+404 | Professor not found
+
+#### Get Schools by professor (/professor/school/:id)
+
+Retrieves all schools linked to a professor
+Method: get
+
+**Request**
+Id professor in URL
+
+**Response**
+Status | Message
+----|----
+200 | List of Schools object
+400 | Professor is required
+404 | Professor not found
+
+#### Get students by professor (/professor/student/:id)
+
+Retrieves all students linked to a professor
+Method: get
+
+**Request**
+Id professor in URL
+
+**Response**
+Status | Message
+----|----
+200 | List of Students object
+404 | Professor not found
+
+#### Insert Professor (/insertProfessor)
+
+Insert a professor. 
+Detail: a professor only can be insert if his school already exist.
 Method: post
 
 **Request:**
@@ -123,24 +169,65 @@ address | string | yes | pass the complete address with number and complement
 city | string | yes
 uf | string | yes | use the acronym. Example: MG, SP
 schoold | string | yes | the id returned when registering the school or selecting one
-password | string | yes
 
 **Response:**
 Status | Message
 ----|----
-200 | return the professor schema
-400 | All fields are required
+201 | Professor object
+400 | Bad request
 400 | User already exists
-400 | General errors
+  
+#### Insert Student by professor (/professor) 
 
-###Student
+Insert a student by professor.
+Detail: a student inserted by a professor hasn't login associated. An student only can be insert if has an school linked.
+Method: post
 
-####List Student (/professor)
+**Request:**
+Parameters | Type | Required | Observation
+-----|-----|-----|-----
+name | string | yes | 
+date_of_birth | Date | yes | Using the date type from mongodb
+cpf | string | yes | unique value
+phone | string | yes | 
+cep | string | yes | 
+email | string | yes
+address | string | yes | pass the complete address with number and complement
+city | string | yes
+uf | string | yes | use the acronym. Example: MG, SP
+schoold | string | yes | the id returned when registering the school or selecting one
+
+**Response:**
+Status | Message
+----|----
+201 | Student object
+400 | User already exists
+404 | Professor not found
+
+### Student
+
+#### List Student (/student)
+
 Retrieves all students in database.
 Method: get
-Response: Professors schema
+Response: Student object
 
-####Insert Student (/student)
+#### Get Student By Id (/student/:id)
+
+Retrieves a student by id
+Method: get
+
+**Request**
+Id student in URL
+
+**Response**
+Status | Message
+----|----
+200 | Student object
+404 | Student not found
+
+#### Insert Student (/insertStudent)
+
 insert a student. Detail: a professor only can be insert if his school already exist.
 Method: post
 
@@ -158,24 +245,36 @@ city | string | yes |
 uf | string | yes | use the acronym. Example: MG, SP
 schoold | string | yes | the id returned when registering the school or selecting one
 password | string | no |
-isFromProfessor |bool | yes | define if the student will need a login or not. 
 
 **Response:**
 Status | Message
 ----|----
-200 | return the student schema
+201 | Student object
 400 | All fields are required
 400 | User already exists
-400 | General errors
 
-###School
+### School
 
-####List School (/school)
-Retrieves all professor in database.
+#### List School (/school)
+Retrieves all schools in database.
 Method: get
-Response: Professors schema
+Response: School object
 
-####Insert School (/school)
+#### Get School By Id (/school/:id)
+
+Retrieves a school by id
+Method: get
+
+**Request**
+Id school in URL
+
+**Response**
+Status | Message
+----|----
+200 | School object
+404 | School not found
+
+#### Insert School (/insertSchool)
 insert a school.
 Method: post
 
@@ -198,14 +297,15 @@ Status | Message
 200 | return the school schema
 400 | All fields are required
 400 | User already exists
-400 | General errors
 
-####List UFs (/school/uf)
+#### List UFs (/school/uf)
+
 List all distincts Ufs
 Method: get
 Response: List of cities
 
-####List Cities (/school/city)
+#### List Cities (/school/city)
+
 List all cities from an UF
 Method: post
 
@@ -221,7 +321,8 @@ Status | Message
 400 | Uf is required
 400 | Uf must have 2 characters
 
-####List Schools By City
+#### List Schools By City
+
 List schools by city
 Method: post
 
@@ -236,14 +337,14 @@ Status | Message
 200 | return school schema
 400 | City is required
 
-###ViaCep
+### ViaCep
 
-####Get Cep (/cep/:cep)
+#### Get Cep (/cep/:cep)
 Retrieves from Viacep the address from a cep request. 
 Method: get
-Response: viacep standard
+Response: viacep object
 
-###Validate CPF (/cpf/:cpf)
+### Validate CPF (/cpf/:cpf)
 Retrieves if a CPF is valid or not. Format: only numbers
 Method: get
 Response: status 200 for `valid = true` or status 400 for `valid = false`

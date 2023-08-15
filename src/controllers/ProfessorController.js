@@ -3,6 +3,7 @@ import Login from "../models/login.js";
 import School from "../models/school.js";
 import Student from "../models/student.js";
 import createHashWithSalt from "../middleware/hashWithSalt.js";
+import mongoose from "mongoose";
 
 class ProfessorController {
 
@@ -10,6 +11,22 @@ class ProfessorController {
         try{
             const professors = await Professor.find();
             res.status(200).json(professors);
+        }
+        catch(err){
+            next(err);
+        }
+    }
+
+    getProfessorById = async (req, res, next) => {
+        try{
+            const {id} = req.params;
+            const professor = await Professor.findById(id);
+
+            if(professor === null){
+                return res.status(404).json({message: 'Professor not found'});
+            }
+
+            res.status(200).json(professor);
         }
         catch(err){
             next(err);
@@ -41,7 +58,7 @@ class ProfessorController {
                 city: city,
                 uf: uf,
                 loginId: newLogin._id,
-                schoolId: schoolId,
+                schoolId: mongoose.Types.ObjectId(schoolId),
                 email: email
             });
             const newProfessor = await professor.save();
@@ -116,13 +133,10 @@ class ProfessorController {
     listSchoolByProfessorId = async (req, res, next) => {
         const schools = [];
         const {id} = req.params;
-        if(id === null){
-            return res.status(400).json({message: 'Professor is required'});
-        }
         try{
             const professor = await Professor.findById(id);
             if(professor === null){
-                return res.status(400).json({message: 'Professor not found'});
+                return res.status(404).json({message: 'Professor not found'});
             }
             for(let i = 0; i < professor.schoolId.length; i++){
                 const school = await School.findById(professor.schoolId[i]);
@@ -137,21 +151,21 @@ class ProfessorController {
 
     insertStudentByProfessorId = async (req, res, next) => {
         const {id} = req.params;
-        if(id === null){
-            return res.status(400).json({message: 'Id is required'});
-        }
         try{
             const studentReq = new Student(req.body);
 
             const loginExists = await Login.findOne({username: studentReq.cpf});
-    
+            const professor = await Professor.findById(id);
+
+            if(professor === null){
+                return res.status(404).json({message: 'Professor not found'});
+            }
+
             if(loginExists !== null){
                 return res.status(400).json({message: 'User already exists'});
             }
     
             await studentReq.save();
-    
-            const professor = await Professor.findById(id);
     
             professor.studentsId.push(studentReq._id);
 

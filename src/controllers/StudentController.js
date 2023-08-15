@@ -14,6 +14,22 @@ class StudentController {
         }
     }
 
+    getStudentById = async (req, res, next) => {
+        try{
+            const {id} = req.params;
+            const student = await Student.findById(id);
+            
+            if(student === null){
+                return res.status(404).json({message: 'Student not found'});
+            }
+
+            res.status(200).json(student);
+        }
+        catch(err){
+            next(err);
+        }
+    }
+
     insertStudent = async (req, res, next) => {
         const {name, date_of_birth, cpf, phone, cep, address, city, uf, email, schoolId, password} = req.body;
 
@@ -43,7 +59,7 @@ class StudentController {
                 uf: uf,
                 loginId: newLogin._id,
                 email: email,
-                schoolId: schoolId
+                schoolId: mongoose.Types.ObjectId(schoolId)
             });
             const newStudent = await student.save();
             res.status(201).json(newStudent);
