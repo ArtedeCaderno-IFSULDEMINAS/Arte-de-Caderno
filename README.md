@@ -150,7 +150,7 @@ Status | Message
 200 | List of Students object
 404 | Professor not found
 
-#### Insert Professor (/professor)
+#### Insert Professor (/insertProfessor)
 
 Insert a professor. 
 Detail: a professor only can be insert if his school already exist.
@@ -226,7 +226,7 @@ Status | Message
 200 | Student object
 404 | Student not found
 
-#### Insert Student (/student)
+#### Insert Student (/insertStudent)
 
 insert a student. Detail: a professor only can be insert if his school already exist.
 Method: post
@@ -274,7 +274,7 @@ Status | Message
 200 | School object
 404 | School not found
 
-#### Insert School (/school)
+#### Insert School (/insertSchool)
 insert a school.
 Method: post
 
