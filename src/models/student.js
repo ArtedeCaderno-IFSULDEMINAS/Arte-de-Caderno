@@ -15,7 +15,7 @@ const StudentSchema = new mongoose.Schema(
         schoolId: {type: mongoose.Schema.Types.ObjectId, ref: 'school', required: true},
         drawsId: [{type: mongoose.Schema.Types.ObjectId, ref: 'draw'}],
         loginId: {type: mongoose.Schema.Types.ObjectId, ref: 'login'},
-        code2factor: {type: String},
+        code2factor: {type: String, default: 'hduahfuajk'},
         createdAt: { type: Date, default: Date.now },
     },
     {
