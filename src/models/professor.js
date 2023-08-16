@@ -15,8 +15,8 @@ const ProfessorSchema = new mongoose.Schema(
         studentsId: [{type: mongoose.Schema.Types.ObjectId, ref: 'student'}],
         email: { type: String, required: true },
         loginId: {type: mongoose.Schema.Types.ObjectId, ref: 'login'},
-        code2factor: {type: String},
-        createdAt: { type: Date, default: Date.now },
+        code2factor: {type: String, required: false},
+        createdAt: { type: Date, required: false },
     },
     {
         versionKey: false
