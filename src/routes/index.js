@@ -2,10 +2,11 @@ import express from 'express';
 import loginRouter from './loginRoute.js';
 import schoolRoute from './schoolRoute.js';
 import professorRoute from './professorRoute.js';
-import studentRouter from './studentRoute.js';
+import studentRoute from './studentRoute.js';
 import registerRoute from './registerRoute.js';
-import cepRouter from './cepRoute.js';
-import validatorCpfRouter from './validatorCpfRoute.js';
+import drawRoute from './drawRoute.js';
+import cepRoute from './cepRoute.js';
+import validatorCpfRoute from './validatorCpfRoute.js';
 
 const routes = (app) => {
   app.route('/').get((req, res) => {
@@ -14,13 +15,14 @@ const routes = (app) => {
 
   app.use(
     express.json(),
-    validatorCpfRouter,
-    cepRouter,
+    validatorCpfRoute,
+    cepRoute,
     registerRoute,
     loginRouter,
     schoolRoute,
     professorRoute,
-    studentRouter
+    studentRoute,
+    drawRoute
   )
 }
 

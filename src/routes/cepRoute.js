@@ -1,9 +1,9 @@
 import fetch from 'node-fetch';
 import express from 'express';
 
-const cepRouter = express.Router();
+const cepRoute = express.Router();
 
-cepRouter.get('/cep/:cep', async (req, res) => {
+cepRoute.get('/cep/:cep', async (req, res) => {
     const { cep } = req.params;
 
     let url = `https://viacep.com.br/ws/${cep}/json/`;
@@ -18,4 +18,4 @@ cepRouter.get('/cep/:cep', async (req, res) => {
     }
 });
 
-export default cepRouter;
+export default cepRoute;

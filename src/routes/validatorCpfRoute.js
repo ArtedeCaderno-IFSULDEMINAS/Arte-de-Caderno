@@ -1,9 +1,9 @@
 import express from 'express';
 import validarCpf from 'validar-cpf';
 
-const validatorCpfRouter = express.Router();
+const validatorCpfRoute = express.Router();
 
-validatorCpfRouter.get('/cpf/:cpf', (req, res) => {
+validatorCpfRoute.get('/cpf/:cpf', (req, res) => {
     const { cpf } = req.params;
 
     const valid = validarCpf(cpf);
@@ -15,4 +15,4 @@ validatorCpfRouter.get('/cpf/:cpf', (req, res) => {
     
 });
 
-export default validatorCpfRouter;
+export default validatorCpfRoute;
