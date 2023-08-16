@@ -114,7 +114,7 @@ class DrawController{
         const {note} = req.body;
         try{
             const filter = {_id: id};
-            const update = {classified: false, note: note};
+            const update = {classified: false, note: note, reviewFinished: true};
             const draw = await Draw.findOneAndUpdate(filter, update, {new: true});
             res.status(201).json(draw);
         }
