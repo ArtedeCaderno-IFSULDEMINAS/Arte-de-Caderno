@@ -16,8 +16,8 @@ const routes = (app) => {
     express.json(),
     validatorCpfRouter,
     cepRouter,
-    registerRoute,
     loginRouter,
+    registerRoute,
     schoolRoute,
     professorRoute,
     studentRouter

@@ -1,6 +1,7 @@
 import Login from '../models/login.js';
 import Student from '../models/student.js';
 import createHashWithSalt from '../middleware/hashWithSalt.js';
+import mongoose from "mongoose";
 
 class StudentController {
     
@@ -59,7 +60,7 @@ class StudentController {
                 uf: uf,
                 loginId: newLogin._id,
                 email: email,
-                schoolId: mongoose.Types.ObjectId(schoolId)
+                schoolId: new mongoose.Types.ObjectId(schoolId)
             });
             const newStudent = await student.save();
             res.status(201).json(newStudent);

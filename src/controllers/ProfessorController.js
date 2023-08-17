@@ -58,7 +58,7 @@ class ProfessorController {
                 city: city,
                 uf: uf,
                 loginId: newLogin._id,
-                schoolId: mongoose.Types.ObjectId(schoolId),
+                schoolId: new mongoose.Types.ObjectId(schoolId),
                 email: email
             });
             const newProfessor = await professor.save();
