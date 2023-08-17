@@ -82,8 +82,15 @@ Response: Logins schema
 
 #### Logar (/login)
 
-authenticates the user to the platform
-Method: post
+authenticates the user on the platform by generating the 2-factor code
+method: post
+response: informs the sending of the code to the registered email
+
+### login with 2 factors authentication (/login2fa) 
+
+it is necessary to pass user password and the 2-factor code containing 8 characters to perform the login
+method: post
+response: returns the data registered in the bank including the jwt token
 
 **Request:**
 Parameters | Type | Required | Observation
