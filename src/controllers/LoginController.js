@@ -113,7 +113,15 @@ class LoginController {
 
                 try {
                     if (timingSafeEqual(Buffer.from(userLogin.code2factor), Buffer.from(loginReq.code2factor))) {
-                        console.log("Passei aki");
+                        
+                        const currentDate = new Date();
+                        const userDate = new Date(userLogin.createdAt);
+                        userDate.setMinutes(userDate.getMinutes()+10);
+                        //console.log("Current Date:",currentDate);
+                        //console.log("User Expiry Date:",userDate);
+                        if(!(currentDate <= userDate)){
+                            return res.status(400).json({ message: 'Expired code' });
+                        }
                     } else {
                         return res.status(400).json({ message: 'Invalid 2FA Code' });
                     }
