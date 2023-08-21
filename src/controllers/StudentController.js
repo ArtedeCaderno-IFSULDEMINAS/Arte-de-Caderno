@@ -1,7 +1,7 @@
 import Login from '../models/login.js';
 import Student from '../models/student.js';
 import createHashWithSalt from '../middleware/hashWithSalt.js';
-import mongoose from "mongoose";
+import Draw from '../models/draw.js';
 
 class StudentController {
     
@@ -133,6 +133,20 @@ class StudentController {
         }
     }
 
+    getDrawsByStudent = async (req, res, next) => {
+        const {id} = req.params;
+        try{
+            const student = await Student.findById(id);
+            if(student === null){
+                return res.status(404).json({message: 'Student not found'});
+            }
+            const draws = await Draw.find({author: id});
+            res.status(200).json(draws);
+        }
+        catch(err){
+            next(err);
+        }
+    }
 
 }
 
