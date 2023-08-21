@@ -1,4 +1,5 @@
 import Draw from "../models/draw.js";
+import Student from "../models/student.js";
 
 class DrawController{
 
@@ -72,7 +73,16 @@ class DrawController{
     insertDraw = async (req, res, next) => {
         try{
             const draw = new Draw(req.body);
+            let student = await Student.findById(draw.author);
+            if(student === null){
+                return res.status(400).json({message: 'Student not found'});
+            }
+            student.drawsId.push(draw._id);
+            
+            await student.save();
+
             await draw.save();
+            
             res.status(201).json(draw);
         }
         catch(err){
