@@ -1,6 +1,7 @@
 import Login from '../models/login.js';
 import Student from '../models/student.js';
 import createHashWithSalt from '../middleware/hashWithSalt.js';
+import mongoose from "mongoose";
 
 class StudentController {
     

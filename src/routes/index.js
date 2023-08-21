@@ -20,6 +20,7 @@ const routes = (app) => {
     cepRoute,
     registerRoute,
     loginRouter,
+    registerRoute,
     schoolRoute,
     professorRoute,
     studentRoute,
