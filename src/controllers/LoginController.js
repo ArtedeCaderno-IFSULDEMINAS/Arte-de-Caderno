@@ -50,7 +50,7 @@ class LoginController {
                             to: email,
                             html: `<p>Seu código de autenticação é:</p>
                             <p style="color: tomato; font-size: 25px; letter-spacing: 2px;">
-                              <b>${code}</b>
+                              <b>${code.toUpperCase()}</b>
                             </p>
                             <p><b>Código expira em 10 minutos</b>.</p>`
 
