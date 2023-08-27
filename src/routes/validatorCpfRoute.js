@@ -4,10 +4,10 @@ import validarCpf from 'validar-cpf';
 
 const validatorCpfRoute = express.Router();
 
-validatorCpfRoute.get('/cpf/:cpf', (req, res) => {
+validatorCpfRoute.get('/cpf/:cpf', async (req, res) => {
     const { cpf } = req.params;
 
-    let userExists = Login.find({username: cpf});
+    const userExists = await Login.findOne({username: cpf});
 
     if(userExists !== null){
         return res.status(400).json({message: 'User already exists'});
