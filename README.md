@@ -92,6 +92,11 @@ it is necessary to pass user password and the 2-factor code containing 8 charact
 method: post
 response: returns the data registered in the bank including the jwt token
 
+### Reset Password (/forgotPassword) and (/resetPassword)
+in the first route (/forgotPassword), the email of the user who wants to change the password must be passed. in the second route (/resetPassword), email, token and password must be passed. The token will be sent by email containing 20 characters with a duration of 1 hour.
+method: post
+response: informs if the password was actually changed
+
 **Request:**
 Parameters | Type | Required | Observation
 -----|-----|-----|-----

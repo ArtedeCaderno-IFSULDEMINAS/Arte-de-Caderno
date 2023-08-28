@@ -5,6 +5,7 @@ import validateLogin from '../middleware/loginVerify.js';
 import generateToken from '../middleware/jwtUtils.js';
 import transporter from '../middleware/emailConfig.js';
 import  crypto,{ timingSafeEqual } from 'crypto';
+import createHashWithSalt from "../middleware/hashWithSalt.js";
 
 class LoginController {
 
@@ -38,7 +39,8 @@ class LoginController {
                         
                         const updateCode = { 
                             code2factor:  code, 
-                            createdAt:codeGeneratedAt
+                            createdAt:codeGeneratedAt,
+                            email:email
                          }; //modificar o codigo de 2 fatores
 
                         await Login.findOneAndUpdate({ username: loginReq.username }, updateCode); //realizar o update no banco campo codigo
@@ -70,7 +72,8 @@ class LoginController {
 
                         const updateCode = { 
                             code2factor: code,
-                            createdAt: codeGeneratedAt 
+                            createdAt: codeGeneratedAt,
+                            email:email
                         }; //modificar o codigo de 2 fatores
 
                         await Login.findOneAndUpdate({ username: userLogin.username}, updateCode);
@@ -202,6 +205,75 @@ class LoginController {
         }
     }
 
+    forgotPassword = async (req, res) => {
+        const emailReq = req.body.email;
+
+        try {
+            const user = await Login.findOne({ email: emailReq });
+            if(!user){
+                return res.status(400).json({ message: 'error user not found' });
+            }
+
+            const tokenForgotPassword = crypto.randomBytes(20).toString('hex');
+            const now = new Date();
+            now.setHours(now.getHours() + 1);
+
+            await Login.findByIdAndUpdate(user._id, {
+                '$set': {
+                    tokenForgotPassword: tokenForgotPassword,
+                    passwordResetExpires: now,
+                }
+            });
+            console.log(tokenForgotPassword,now);
+            
+            async function sendEmail() {
+                const mailSent = await transporter.sendMail({
+                    subject: 'Código para alterar senha Arte de Caderno',
+                    from: 'Equipe Arte de Caderno <artedecaderno.if@gmail.com>',
+                    to: user.email,
+                    html: `<p>Seu código para alterar sua senha é:</p>
+                    <p style="color: DarkMagenta; font-size: 25px; letter-spacing: 2px;">
+                      <b>${tokenForgotPassword}</b>
+                    </p>
+                    <p><b>Código expira em 1 hora</b>.</p>`
+
+                });
+            }
+            sendEmail();
+            return res.status(200).json({ message: 'code sent to registered email' });
+        } catch (error) {
+            return res.status(400).json({ message: 'Erro on forgot password, try again'});
+        }
+    }
+
+    resetPassword = async (req, res) => {
+        const {email, token, password} = req.body;
+
+        try {
+            const user = await Login.findOne({ email }).select('+tokenForgotPassword passwordResetExpires');
+            if(!user){
+                return res.status(400).json({ message: 'error user not found' });
+            }
+            if(token !== user.tokenForgotPassword){
+                return res.status(400).json({ message: 'Invalid Token'});
+            }
+
+            const now = Date();
+            if(now > user.passwordResetExpires){
+                return res.status(400).json({ message: 'Expired token, generate a new one'});
+            }
+
+            //encriptar nova senha antes de salvar
+            const hashPassword = await createHashWithSalt(password);
+            user.password = hashPassword;
+            await user.save();
+
+            return res.status(200).json({ message: 'password changed successfully' });
+
+        } catch (error) {
+            return res.status(400).json({ message: 'Cannot reset password, try again' + error});
+        }
+    }
 }
 
 export default new LoginController;
