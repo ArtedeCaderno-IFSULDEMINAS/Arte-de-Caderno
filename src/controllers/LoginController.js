@@ -224,7 +224,7 @@ class LoginController {
                     passwordResetExpires: now,
                 }
             });
-            console.log(tokenForgotPassword,now);
+            //console.log(tokenForgotPassword,now);
             
             async function sendEmail() {
                 const mailSent = await transporter.sendMail({
