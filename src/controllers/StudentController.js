@@ -1,5 +1,6 @@
 import Login from '../models/login.js';
 import Student from '../models/student.js';
+import Professor from '../models/professor.js';
 import createHashWithSalt from '../middleware/hashWithSalt.js';
 import Draw from '../models/draw.js';
 
@@ -38,6 +39,16 @@ class StudentController {
 
         if(loginExists !== null){
             return res.status(400).json({message: 'User already exists'});
+        }
+
+        const emailStudentExists = await Student.findOne({ email: email });
+        if (emailStudentExists !== null) {
+            return res.status(400).json({ message: 'Email account already in use' });
+        }
+    
+        const emailProfessorExists = await Professor.findOne({ email: email });
+        if (emailProfessorExists !== null) {
+            return res.status(400).json({ message: 'Email account already in use' });
         }
 
         const hashPassword = await createHashWithSalt(password);
