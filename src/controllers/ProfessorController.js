@@ -25,7 +25,7 @@ class ProfessorController {
                 return res.status(404).json({message: 'Professor not found'});
             }
 
-            res.status(200).json(professor);
+                res.status(200).json(professor, {accessType: 'professor'});
         }
         catch(err){
             next(err);

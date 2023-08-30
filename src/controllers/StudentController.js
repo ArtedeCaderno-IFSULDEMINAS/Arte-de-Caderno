@@ -24,7 +24,7 @@ class StudentController {
                 return res.status(404).json({message: 'Student not found'});
             }
 
-            res.status(200).json(student);
+            res.status(200).json(student, {accessType: 'student'});
         }
         catch(err){
             next(err);
