@@ -22,7 +22,12 @@ class EvaluatorController {
         const {id} = req.params;
         try{
             const evaluator = await Evaluator.findById(id);
-            res.status(200).json(evaluator, {accessType: 'evaluator'});
+            const response = {
+                evaluator: evaluator,
+                accessType: 'evaluator'
+            };
+            
+            res.status(200).json(response);
         }
         catch(err){
             next(err);

@@ -24,8 +24,13 @@ class ProfessorController {
             if(professor === null){
                 return res.status(404).json({message: 'Professor not found'});
             }
+            
+            const response = {
+                professor: professor,
+                accessType: 'professor'
+            };
 
-                res.status(200).json(professor, {accessType: 'professor'});
+            res.status(200).json(response);
         }
         catch(err){
             next(err);

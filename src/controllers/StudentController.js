@@ -23,8 +23,12 @@ class StudentController {
             if(student === null){
                 return res.status(404).json({message: 'Student not found'});
             }
-
-            res.status(200).json(student, {accessType: 'student'});
+            const response = {
+                student: student,
+                accessType: 'student'
+            };
+            
+            res.status(200).json(response);
         }
         catch(err){
             next(err);
