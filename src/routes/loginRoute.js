@@ -6,7 +6,8 @@ const loginRouter = express.Router();
 loginRouter.get('/login', LoginController.listLogin)
             .post('/login', LoginController.logar)
             .post('/login2fa', LoginController.Login2FAConfirmed)
-
+            .post('/forgotPassword',LoginController.forgotPassword)
+            .post('/resetPassword',LoginController.resetPassword)
             
 
 export default loginRouter;
