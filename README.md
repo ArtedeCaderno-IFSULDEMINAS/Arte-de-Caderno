@@ -93,7 +93,7 @@ method: post
 response: returns the data registered in the bank including the jwt token
 
 ### Reset Password (/forgotPassword) and (/resetPassword)
-in the first route (/forgotPassword), the email of the user who wants to change the password must be passed. in the second route (/resetPassword), email, token and password must be passed. The token will be sent by email containing 20 characters with a duration of 1 hour.
+in the first route (/forgotPassword), you must pass the username you want to change the password. in the second route (/resetPassword), the user name, token and new password must be passed. The token will be sent by email containing 20 characters with duration of 1 hour.
 method: post
 response: informs if the password was actually changed
 

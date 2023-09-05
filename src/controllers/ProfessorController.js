@@ -44,21 +44,12 @@ class ProfessorController {
             return res.status(400).json({message: 'User already exists'});
         }
         
-        const emailStudentExists = await Student.findOne({ email: email });
-        if (emailStudentExists !== null) {
-            return res.status(400).json({ message: 'Email account already in use' });
-        }
-    
-        const emailProfessorExists = await Professor.findOne({ email: email });
-        if (emailProfessorExists !== null) {
-            return res.status(400).json({ message: 'Email account already in use' });
-        }
-
         const hashPassword = await createHashWithSalt(password);
         const login = new Login({
             username: cpf,
             password: hashPassword,
-            accessType: 'professor'
+            accessType: 'professor',
+            email: email
         });
         try{
             const newLogin = await login.save();

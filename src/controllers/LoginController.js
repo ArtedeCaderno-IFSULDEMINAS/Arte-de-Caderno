@@ -33,7 +33,7 @@ class LoginController {
                     //const { email } = await this.getStudentByLoginId(userLogin._id);
 
                     async function sendEmail() {
-                        const code = crypto.randomBytes(4).toString('hex');
+                        const code = crypto.randomBytes(4).toString('hex').toUpperCase();
                         const codeGeneratedAt = new Date();
 
                         
@@ -67,13 +67,13 @@ class LoginController {
                     const { email } = await this.getStudentByLoginId(userLogin._id);
 
                     async function sendEmail() {
-                        const code = crypto.randomBytes(4).toString('hex');
+                        const code = crypto.randomBytes(4).toString('hex').toUpperCase();
                         const codeGeneratedAt = new Date();
 
                         const updateCode = { 
                             code2factor: code,
                             createdAt: codeGeneratedAt,
-                            email:email
+                            //email:email
                         }; //modificar o codigo de 2 fatores
 
                         await Login.findOneAndUpdate({ username: userLogin.username}, updateCode);
@@ -120,8 +120,6 @@ class LoginController {
                         const currentDate = new Date();
                         const userDate = new Date(userLogin.createdAt);
                         userDate.setMinutes(userDate.getMinutes()+10);
-                        //console.log("Current Date:",currentDate);
-                        //console.log("User Expiry Date:",userDate);
                         if(!(currentDate <= userDate)){
                             return res.status(400).json({ message: 'Expired code' });
                         }
@@ -206,15 +204,15 @@ class LoginController {
     }
 
     forgotPassword = async (req, res) => {
-        const emailReq = req.body.email;
-
+        const userReq = req.body.username;
         try {
-            const user = await Login.findOne({ email: emailReq });
+            
+                const user = await Login.findOne({ username: userReq });
             if(!user){
                 return res.status(400).json({ message: 'error user not found' });
             }
 
-            const tokenForgotPassword = crypto.randomBytes(20).toString('hex');
+            const tokenForgotPassword = crypto.randomBytes(20).toString('hex').toUpperCase();
             const now = new Date();
             now.setHours(now.getHours() + 1);
 
@@ -247,10 +245,10 @@ class LoginController {
     }
 
     resetPassword = async (req, res) => {
-        const {email, token, password} = req.body;
+        const {username, token, password} = req.body;
 
         try {
-            const user = await Login.findOne({ email }).select('+tokenForgotPassword passwordResetExpires');
+            const user = await Login.findOne({ username }).select('+tokenForgotPassword passwordResetExpires');
             if(!user){
                 return res.status(400).json({ message: 'error user not found' });
             }
