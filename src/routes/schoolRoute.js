@@ -6,7 +6,6 @@ const schoolRouter = express.Router();
 schoolRouter.use(authenticateTokenJwt);
 
 schoolRouter.get("/school", SchoolController.listSchool)
-            .get("/school/:id", SchoolController.getSchoolById)
-            .post("/school", SchoolController.insertSchool);
+            .get("/school/:id", SchoolController.getSchoolById);
 
 export default schoolRouter;

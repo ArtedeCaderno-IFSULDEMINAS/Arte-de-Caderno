@@ -6,8 +6,8 @@ const validatorCpfRoute = express.Router();
 
 validatorCpfRoute.get('/cpf/:cpf', async (req, res) => {
     const { cpf } = req.params;
-
-    const userExists = await Login.findOne({username: cpf});
+    
+    const userExists = await Login.findOne({username: cpf.replace(/\D/g, "")});
 
     if(userExists !== null){
         return res.status(400).json({message: 'User already exists'});

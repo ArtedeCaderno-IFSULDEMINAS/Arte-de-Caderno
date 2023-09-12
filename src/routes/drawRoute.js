@@ -6,7 +6,6 @@ const drawRoute = express.Router();
 drawRoute.use(authenticateTokenJwt);
 
 drawRoute.get('/draw/all', DrawController.listAllDraws)
-        .get('/draw/allClassified', DrawController.listClassifiedDraws)
         .get('/draw/:id', DrawController.getDrawById)
         .get('/draw/student/:id', DrawController.getDrawByStudent)
         .get('/draw/allDesclassified', DrawController.listDesclassifiedDraws)
