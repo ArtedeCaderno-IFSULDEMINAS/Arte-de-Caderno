@@ -10,7 +10,7 @@ const SchoolSchema = new mongoose.Schema(
         address: { type: String, required: true },
         cep: { type: String, required: true },
         phone: { type: String, required: true },
-        email: { type: String, unique: true },
+        email: { type: String, unique: false},
         site: { type: String}
     },
     {
