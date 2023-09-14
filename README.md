@@ -4,7 +4,7 @@ Backend application for 'Arte de Caderno' website
 ## How to run locally
  1. Clone the repository - `git clone`
  2. Install nodejs v19.3.0
- 3. Install the packages - `npm init`
+ 3. Install the packages - `npm install`
  4. Add a file to the root of the project called _.env_
  5. As the example below, add the infos in _.env_ file. The MONGO_URI is the url to MongoDB Atlas Database, and you can define a port. If a port is not defined, the server will run on port 3000. Replace the user and password in Mongo URI.
  ```
