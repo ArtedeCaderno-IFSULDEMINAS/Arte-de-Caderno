@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 function errorHandler (err, req, res, next){
     if(err instanceof mongoose.Error.CastError){
-        res.status(400).json("Incorrect datas");
+        res.status(400).json({message: 'invalid datas'});
     } else if(err instanceof mongoose.Error.ValidationError){
         res.status(400).json({message: err.message});
     } else{
