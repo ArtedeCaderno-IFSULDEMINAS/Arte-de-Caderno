@@ -77,34 +77,19 @@ class ProfessorController {
 
     updateProfessor = async (req, res, next) => {
         const {id} = req.params;
-        const professorReq = new Professor(req.body);
-
-        const {name, date_of_birth, phone, cep, address, city, uf, schoolId, email} = professorReq;
-
-        if(id === null){
-            return res.status(400).json({message: 'Id is required'});
-        }
-
+        const update = req.body;
         try{
-            const professor = await Professor.findById(id);
-            if(professor === null){
-                return res.status(400).json({message: 'Professor not found'});
+            const professorUpdate = await Professor.findByIdAndUpdate(
+                id,
+                {$set: update},
+                {new: true}
+            );
+    
+            if(professorUpdate === null){
+                return res.status(404).json({message: 'Professor not found'});
             }
-            professor.name = name;
-            professor.date_of_birth = date_of_birth;
-            professor.phone = phone;
-            professor.cep = cep;
-            professor.address = address;
-            professor.city = city;
-            professor.uf = uf;
-            professor.schoolId = schoolId;
-            professor.email = email;
-            professor.loginId = professor.loginId;
-            professor.studentsId = professor.studentsId;
-            professor.cpf = professor.cpf;
-            professor.email = email;
-            await professor.save();
-            res.status(200).json(professor);
+    
+            return res.status(200).json(professorUpdate);
         }
 
         catch(err){
@@ -159,14 +144,14 @@ class ProfessorController {
         try{
             const studentReq = new Student(req.body);
 
-            const loginExists = await Login.findOne({username: studentReq.cpf});
+            const studentExists = await Student.findOne({cpf: studentReq.cpf});
             const professor = await Professor.findById(id);
 
             if(professor === null){
                 return res.status(404).json({message: 'Professor not found'});
             }
 
-            if(loginExists !== null){
+            if(studentExists !== null){
                 return res.status(400).json({message: 'User already exists'});
             }
     
@@ -187,14 +172,11 @@ class ProfessorController {
 
     listStudentsByProfessorId = async (req, res, next) => {
         const {id} = req.params;
-        if(id === null){
-            return res.status(400).json({message: 'Id is required'});
-        }
 
         try{
             const professor = await Professor.findById(id);
             if(professor === null){
-                return res.status(400).json({message: 'Professor not found'});
+                return res.status(404).json({message: 'Professor not found'});
             }
             const students = [];
             for(let i = 0; i < professor.studentsId.length; i++){
