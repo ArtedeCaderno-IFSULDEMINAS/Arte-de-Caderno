@@ -78,35 +78,20 @@ class StudentController {
 
     updateStudent = async (req, res, next) => {
         const {id} = req.params;
-        const studentReq = new Student(req.body);
-
-        const {name, date_of_birth, phone, cep, address, city, uf, email, schoolId} = studentReq;
-
-        if( id === null){
-            return res.status(400).json({message: 'Id is required'});
-        }
+        const update = req.body;
 
         try{
-            const student = await Student.findById(id);
-            if(student === null){
-                return res.status(400).json({message: 'Student not found'});
+            const studentUpdate = await Student.findByIdAndUpdate(
+                id,
+                {$set: update},
+                {new: true}
+            );
+
+            if(studentUpdate === null){
+                return res.status(404).json({message: 'Student not found'});
             }
 
-            student.name = name;
-            student.date_of_birth = date_of_birth;
-            student.cpf = student.cpf;
-            student.phone = phone;
-            student.cep = cep;
-            student.address = address;
-            student.city = city;
-            student.uf = uf;
-            student.schoolId = schoolId;
-            student.email = email;
-            student.loginId = student.loginId;
-            student.drawsId = student.drawsId;
-
-            await student.save();
-            res.status(200).json(student);
+            return res.status(200).json(studentUpdate);
         }
         catch(err){
             next(err);
