@@ -13,341 +13,627 @@ Backend application for 'Arte de Caderno' website
  ```
  6. Run using `npm start`
 
-## Schemas
-    All schemas have the _id parameter.
-### Login
-
-Parameter | Type | Required | Observation
------|------|-----|-----
-username | string | yes | corresponds to the CPF
-password | string | yes
-accessType | string | yes | can be 'professor' or 'student'
-
-### Professor
-
-Parameter | Type | Required | Observation
------|------|-----|-----
-name | string | yes | 
-date_of_birth | Date | yes | Using the date type from mongodb
-cpf | string | yes | unique value
-phone | string | yes | 
-cep | string | yes | 
-email | string | yes
-address | string | yes | pass the complete address with number and complement
-city | string | yes
-uf | string | yes | use the acronym. Example: MG, SP
-schoold | School Id | yes | the id returned when registering the school or selecting one
-studentsId | array of Students Id | no
-loginId | Login Id | yes | the Login id
-
-### School
-Parameter | Type | Required | Observation
------|------|-----|-----
-name | string | yes | 
-code | string | yes | unique value
-phone | string | yes | 
-cep | string | yes | 
-address | string | yes | pass the complete address with number and complement
-city | string | yes
-uf | string | yes | use the acronym. Example: MG, SP
-site | string | no
-email | string | no
-
-### Student
-
-Parameter | Type | Required | Observation
------|------|-----|-----
-name | string | yes | 
-date_of_birth | Date | yes | Using the date type from mongodb
-cpf | string | yes | unique value
-phone | string | yes | 
-cep | string | yes | 
-address | string | yes | pass the complete address with number and complement
-city | string | yes |
-email | string | no |
-uf | string | yes | use the acronym. Example: MG, SP
-schoold | School Id | yes | the id returned when registering the school or selecting one
-drawsId | array of Draws Id | no
-loginId | Login Id | no | the Login id
-
 ## Routes
-
-### Login
-
-#### List login (/login)
-
-Retrieves all logins in database.
-Method: get
-Response: Logins schema
-
-#### Logar (/login)
-
-authenticates the user on the platform by generating the 2-factor code
-method: post
-response: informs the sending of the code to the registered email
-
-### login with 2 factors authentication (/login2fa) 
-
-it is necessary to pass user password and the 2-factor code containing 8 characters to perform the login
-method: post
-response: returns the data registered in the bank including the jwt token
-
-### Reset Password (/forgotPassword) and (/resetPassword)
-in the first route (/forgotPassword), you must pass the username you want to change the password. in the second route (/resetPassword), the user name, token and new password must be passed. The token will be sent by email containing 20 characters with duration of 1 hour.
-method: post
-response: informs if the password was actually changed
-
-**Request:**
-Parameters | Type | Required | Observation
------|-----|-----|-----
-username | string | yes | corresponds to the CPF
-password | string | yes |
-
-**Response:**
-Status | Message
-----|----
-200 | return the student/professor schema
-400 | Username or password cannot be null
-400 | User not found
-400 | Wrong Password
 
 ### Professor
 
 #### List Professor (/professor)
 
-Retrieves all professor in database.
-Method: get
-Response: List of Professors object
+**Method** : GET
+
+**Request** : -
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object Name: Professor
+500 | Message: Internal Server Error
+
+**Object Professor**:
+
+Parameter | Type
+---|---
+name | string
+email| string
+cpf| string
+uf| string
+city| string
+address| string
+cep| string
+phone| string
+date_of_birth| Date
+schoolId| Types.ObjectId[]
+studentsId| Types.ObjectId[]
+id?| string
+loginId?| Types.ObjectId
 
 #### Get Professor By Id (/professor/:id)
 
-Retrieves a professor by id
-Method: get
+**Method** : GET
 
-**Request**
-Id professor in URL
+**Request** : 
+Params: id
 
-**Response**
-Status | Message
-----|----
-200 | Professor object
-404 | Professor not found
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: Professor
+400 | Message: invalid datas
+404 | Message: Professor Not Found
+500 | Message: Internal Server Error
+
+**Object Professor**:
+
+Parameter | Type
+---|---
+name | string
+email| string
+cpf| string
+uf| string
+city| string
+address| string
+cep| string
+phone| string
+date_of_birth| Date
+schoolId| Types.ObjectId[]
+studentsId| Types.ObjectId[]
+id?| string
+loginId?| Types.ObjectId
 
 #### Get Schools by professor (/professor/school/:id)
 
-Retrieves all schools linked to a professor
-Method: get
+**Method** : GET
 
-**Request**
-Id professor in URL
+**Request** : 
+Params: id
 
-**Response**
-Status | Message
-----|----
-200 | List of Schools object
-400 | Professor is required
-404 | Professor not found
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: School
+400 | Message: invalid datas
+404 | Message: Professor Not Found
+500 | Message: Internal Server Error
+
+**Object School**:
+
+Parameter | Type
+---|---
+name| string
+code| string
+uf| string
+city| string
+address| string
+cep| string
+phone| string
+id?| string
+email?| string
+site?| string
 
 #### Get students by professor (/professor/student/:id)
 
-Retrieves all students linked to a professor
-Method: get
+**Method** : GET
 
-**Request**
-Id professor in URL
+**Request** : 
+Params: id
 
-**Response**
-Status | Message
-----|----
-200 | List of Students object
-404 | Professor not found
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: Student
+400 | Message: invalid datas
+404 | Message: Professor Not Found
+500 | Message: Internal Server Error
+
+**Object Student**:
+
+Parameter | Type
+---|---
+email| string
+name| string
+cpf| string
+uf| string
+city| string
+address| string
+cep| string
+phone| string
+date_of_birth| Date
+schoolId| Types.ObjectId
+drawsId| Types.ObjectId[]
+id?| string | undefined
+loginId?| Types.ObjectId
 
 #### Insert Professor (/insertProfessor)
 
-Insert a professor. 
-Detail: a professor only can be insert if his school already exist.
-Method: post
+**Method** : POST
 
-**Request:**
-Parameters | Type | Required | Observation
------|-----|-----|-----
-name | string | yes | 
-date_of_birth | Date | yes | Using the date type from mongodb
-cpf | string | yes | unique value
-phone | string | yes | 
-cep | string | yes | 
-email | string | yes
-address | string | yes | pass the complete address with number and complement
-city | string | yes
-uf | string | yes | use the acronym. Example: MG, SP
-schoold | string | yes | the id returned when registering the school or selecting one
+**Request** :
 
-**Response:**
-Status | Message
-----|----
-201 | Professor object
-400 | Bad request
-400 | User already exists
+Parameter | Type | Required | Unique
+---|--- | --- | ---
+name | string | true | false
+email| string | true | false
+cpf| string | true | true
+uf| string | true | false
+city| string | true| false
+address| string | true| false
+cep| string | true| false
+phone| string | true| false
+date_of_birth| Date | true| false
+schoolId| Types.ObjectId[] | true| false
+password| string | true| false
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: Professor
+400 | Message: invalid datas
+400 | Message: message from mongoose
+500 | Message: Internal Server Error
+
+**Object Professor**:
+
+Parameter | Type
+---|---
+name | string
+email| string
+cpf| string
+uf| string
+city| string
+address| string
+cep| string
+phone| string
+date_of_birth| Date
+schoolId| Types.ObjectId[]
+studentsId| Types.ObjectId[]
+id?| string
+loginId?| Types.ObjectId
   
-#### Insert Student by professor (/professor) 
+#### Update Professor (/professor/update/:id)
 
-Insert a student by professor.
-Detail: a student inserted by a professor hasn't login associated. An student only can be insert if has an school linked.
-Method: post
+**Method** : POST
 
-**Request:**
-Parameters | Type | Required | Observation
------|-----|-----|-----
-name | string | yes | 
-date_of_birth | Date | yes | Using the date type from mongodb
-cpf | string | yes | unique value
-phone | string | yes | 
-cep | string | yes | 
-email | string | yes
-address | string | yes | pass the complete address with number and complement
-city | string | yes
-uf | string | yes | use the acronym. Example: MG, SP
-schoold | string | yes | the id returned when registering the school or selecting one
+**Request** :
 
-**Response:**
-Status | Message
-----|----
-201 | Student object
-400 | User already exists
+Params: id
+
+Body:
+Parameter | Type | Required | Unique
+---|--- | --- | ---
+name | string | true | false
+email| string | true | false
+uf| string | true | false
+city| string | true| false
+address| string | true| false
+cep| string | true| false
+phone| string | true| false
+date_of_birth| Date | true| false
+schoolId| Types.ObjectId[] | true| false
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: Professor
+400 | Message: invalid datas
+400 | Message: message from mongoose
+500 | Message: Internal Server Error
+
+**Object Professor**:
+
+Parameter | Type
+---|---
+name | string
+email| string
+cpf| string
+uf| string
+city| string
+address| string
+cep| string
+phone| string
+date_of_birth| Date
+schoolId| Types.ObjectId[]
+studentsId| Types.ObjectId[]
+id?| string
+loginId?| Types.ObjectId
+
+#### Insert Student By Professor Id (/professor/student/:id)
+**Method** : POST
+
+**Request** :
+Params: id
+
+Body:
+Parameter | Type | Required | Unique
+---|--- | --- | ---
+name | string | false | false
+email| string | false | false
+cpf| string | false | true
+uf| string | false | false
+city| string | false| false
+address| string | false| false
+cep| string | false| false
+phone| string | false| false
+date_of_birth| Date | false| false
+schoolId| Types.ObjectId[] | false| false
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: Student
+400 | Message: invalid datas
+400 | Message: message from mongoose
 404 | Professor not found
+500 | Message: Internal Server Error
+
+**Object Student**:
+
+Parameter | Type
+---|---
+email| string
+name| string
+cpf| string
+uf| string
+city| string
+address| string
+cep| string
+phone| string
+date_of_birth| Date
+schoolId| Types.ObjectId
+drawsId| Types.ObjectId[]
+id?| string | undefined
+loginId?| Types.ObjectId
+
+#### Delete Professor (/professor/:id)
+**Method** : DELETE
+
+**Request** :
+Params: id
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Message: Professor deleted
+404 | Message: Professor not found
+500 | Message: Internal Server Error
+
 
 ### Student
 
 #### List Student (/student)
 
-Retrieves all students in database.
-Method: get
-Response: Student object
+**Method** : GET
+
+**Request** : -
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object Name: Student
+500 | Message: Internal Server Error
+
+**Object Student**:
+
+Parameter | Type
+---|---
+email| string
+name| string
+cpf| string
+uf| string
+city| string
+address| string
+cep| string
+phone| string
+date_of_birth| Date
+schoolId| Types.ObjectId
+drawsId| Types.ObjectId[]
+id?| string | undefined
+loginId?| Types.ObjectId
 
 #### Get Student By Id (/student/:id)
 
-Retrieves a student by id
-Method: get
+**Method** : GET
 
-**Request**
-Id student in URL
+**Request** :
+Params: id
 
-**Response**
-Status | Message
-----|----
-200 | Student object
-404 | Student not found
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: Student
+400 | Message: invalid datas
+404 | Message: Student Not Found
+500 | Message: Internal Server Error
+
+**Object Student**:
+
+Parameter | Type
+---|---
+email| string
+name| string
+cpf| string
+uf| string
+city| string
+address| string
+cep| string
+phone| string
+date_of_birth| Date
+schoolId| Types.ObjectId
+drawsId| Types.ObjectId[]
+id?| string | undefined
+loginId?| Types.ObjectId
+
+#### Get Draws By Student Id (/student/:id/draws)
+
+**Method** : GET
+
+**Request** : 
+Params: id
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: Draws
+400 | Message: invalid datas
+404 | Message: Student Not Found
+500 | Message: Internal Server Error
+
+**Object Draws**:
+
+Parameter | Type
+---|---
+title| string
+linkImage| string
+category| string
+review| date?: Date ;  evaluator?: Types.ObjectId; score?: number; note: string
 
 #### Insert Student (/insertStudent)
 
-insert a student. Detail: a professor only can be insert if his school already exist.
-Method: post
+**Method** : POST
 
-**Request:**
-Parameters | Type | Required | Observation
------|-----|-----|-----
-name | string | yes | 
-date_of_birth | Date | yes | Using the date type from mongodb
-cpf | string | yes | unique value
-phone | string | yes | 
-cep | string | yes | 
-email | string | no |
-address | string | yes | pass the complete address with number and complement
-city | string | yes |
-uf | string | yes | use the acronym. Example: MG, SP
-schoold | string | yes | the id returned when registering the school or selecting one
-password | string | no |
+**Request** :
 
-**Response:**
-Status | Message
-----|----
-201 | Student object
-400 | All fields are required
-400 | User already exists
+Parameter | Type | Required | Unique
+---|--- | --- | ---
+name | string | true | false
+email| string | true | false
+cpf| string | true | true
+uf| string | true | false
+city| string | true| false
+address| string | true| false
+cep| string | true| false
+phone| string | true| false
+date_of_birth| Date | true| false
+schoolId| Types.ObjectId[] | true| false
+password| string | true| false
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: Student
+400 | Message: invalid datas
+400 | Message: message from mongoose
+500 | Message: Internal Server Error
+
+**Object Student**:
+
+Parameter | Type
+---|---
+email| string
+name| string
+cpf| string
+uf| string
+city| string
+address| string
+cep| string
+phone| string
+date_of_birth| Date
+schoolId| Types.ObjectId
+drawsId| Types.ObjectId[]
+id?| string | undefined
+loginId?| Types.ObjectId
+  
+#### Update Student (/student/update/:id)
+
+**Method** : POST
+
+**Request** :
+
+Params: id
+
+Body:
+Parameter | Type | Required | Unique
+---|--- | --- | ---
+name | string | true | false
+cpf| string | true | true
+uf| string | true | false
+city| string | true| false
+address| string | true| false
+cep| string | true| false
+phone| string | true| false
+date_of_birth| Date | true| false
+schoolId| Types.ObjectId[] | true| false
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: Student
+400 | Message: invalid datas
+400 | Message: message from mongoose
+404 | Message: Student not found
+500 | Message: Internal Server Error
+
+**Object Professor**:
+
+Parameter | Type
+---|---
+name | string
+email| string
+cpf| string
+uf| string
+city| string
+address| string
+cep| string
+phone| string
+date_of_birth| Date
+schoolId| Types.ObjectId[]
+studentsId| Types.ObjectId[]
+id?| string
+loginId?| Types.ObjectId
+
+#### Delete Student (/student/:id)
+**Method**: DELETE
+
+**Request**:
+Params: id
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Message: Student deleted
+404 | Message: Student not found
+500 | Message: Internal Server Error
 
 ### School
+[fazendo]
 
-#### List School (/school)
-Retrieves all schools in database.
-Method: get
-Response: School object
+### Draws
+[fazendo]
 
-#### Get School By Id (/school/:id)
+### Evaluator
 
-Retrieves a school by id
-Method: get
+#### List Evaluators (/evaluator)
+**Method** : GET
 
-**Request**
-Id school in URL
+**Request** :
+Query:
 
-**Response**
-Status | Message
-----|----
-200 | School object
-404 | School not found
+Parameters | Type | Required | Default
+--- | --- | --- | ---
+page | integer | false | 1
+limit | integer | false | 10
 
-#### Insert School (/insertSchool)
-insert a school.
-Method: post
+**Response**:
 
-**Request:**
-Parameters | Type | Required | Observation
------|-----|-----|-----
-name | string | yes | 
-code | string | yes | unique value
-phone | string | yes | 
-cep | string | yes | 
-address | string | yes | pass the complete address with number and complement
-city | string | yes
-uf | string | yes | use the acronym. Example: MG, SP
-site | string | no
-email | string | no
+Status | Return
+--- | ---
+200 | Type: Object Name: Evaluators
+500 | Internal Server Error
 
-**Response:**
-Status | Message
-----|----
-200 | return the school schema
-400 | All fields are required
-400 | User already exists
+**Object Evaluator**:
 
-#### List UFs (/school/uf)
+Parameter | Type
+---|---
+name| string
+email| string
+cpf| string
+draws| Types.ObjectId[]
+id?| string
+loginId?| Types.ObjectId
 
-List all distincts Ufs
-Method: get
-Response: List of cities
+#### Get Evaluator By Id (/evaluator/:id)
+**Method** : GET
 
-#### List Cities (/school/city)
+**Request** :
+Params: id
 
-List all cities from an UF
-Method: post
+**Response**:
 
-**Request:**
-Parameters | Type | Required | Observation
------|-----|-----|-----
-uf | string | yes | 
+Status | Return
+--- | ---
+200 | Type: Object Name: Evaluator
+400 | Message: invalid datas
+404 | Message: Evaluator not found
+500 | Message: Internal Server Error
 
-**Response:**
-Status | Message
-----|----
-200 | return list of cities
-400 | Uf is required
-400 | Uf must have 2 characters
+**Object Evaluator**:
 
-#### List Schools By City
+Parameter | Type
+---|---
+name| string
+email| string
+cpf| string
+draws| Types.ObjectId[]
+id?| string
+loginId?| Types.ObjectId
 
-List schools by city
-Method: post
+#### Insert Evaluator (/insertEvaluator)
 
-**Request:**
-Parameters | Type | Required | Observation
------|-----|-----|-----
-city | string | yes | 
+**Method** : POST
 
-**Response:**
-Status | Message
-----|----
-200 | return school schema
-400 | City is required
+**Request** :
+
+Parameter | Type | Required | Unique
+---|--- | --- | ---
+name | string | true | false
+email| string | true | false
+cpf| string | true | true
+password| string | true| false
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: Evaluator
+400 | Message: invalid datas
+400 | Message: message from mongoose
+500 | Message: Internal Server Error
+
+**Object Evaluator**:
+
+Parameter | Type
+---|---
+name| string
+email| string
+cpf| string
+draws| Types.ObjectId[]
+id?| string
+loginId?| Types.ObjectId
+
+#### Get Draws By Evaluator Id (/evaluator/:id/draws)
+
+**Method** : GET
+
+**Request** : 
+Params: id
+
+Query:
+
+Parameters | Type | Required | Default
+--- | --- | --- | ---
+page | integer | false | 1
+limit | integer | false | 10
+
+**Response**:
+
+Status | Return
+--- | ---
+200 | Type: Object; Name: Draws
+400 | Message: invalid datas
+404 | Message: Evaluator Not Found
+500 | Message: Internal Server Error
+
+**Object Draws**:
+
+Parameter | Type
+---|---
+title| string
+linkImage| string
+category| string
+review| date?: Date ;  evaluator?: Types.ObjectId; score?: number; note: string
 
 ### ViaCep
 
