@@ -12,7 +12,6 @@ registerRoute.post('/insertProfessor', ProfessorController.insertProfessor)
             .post("/school/city", SchoolController.listCitiesByUf)
             .get("/school/uf", SchoolController.listUfs)
             .post("/school/listByCity", SchoolController.listSchoolByCity)
-            .post("/school/insertSchool", SchoolController.insertSchool)
             .get("/draw/classified", DrawController.listClassifiedDraws)
 
 export default registerRoute;
