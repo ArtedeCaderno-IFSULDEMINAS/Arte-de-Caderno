@@ -14,6 +14,7 @@ Backend application for 'Arte de Caderno' website
  6. Run using `npm start`
 
 <hr>
+
 ### Summary
 
 #### [Objects](#Objects)
