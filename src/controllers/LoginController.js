@@ -23,8 +23,12 @@ class LoginController {
         const loginReq = new Login(req.body);
         try {
             const userLogin = await Login.findOne({ username: loginReq.username });
-            const verify = await validateLogin(userLogin.password, loginReq.password)
 
+            if(userLogin === null){
+                return res.status(400).json({ message: 'Incorrect or not found user' });
+            }
+            const verify = await validateLogin(userLogin.password, loginReq.password);
+            
             if (verify) {
 
                 if ("professor" === userLogin.accessType) {
@@ -110,6 +114,10 @@ class LoginController {
         try {
             const userLogin = await Login.findOne({ username: loginReq.username });
 
+            if(userLogin === null){
+                return res.status(400).json({ message: 'Incorrect or not found user' });
+            }
+            
             const verify = await validateLogin(userLogin.password, loginReq.password);
 
             if (verify) {
