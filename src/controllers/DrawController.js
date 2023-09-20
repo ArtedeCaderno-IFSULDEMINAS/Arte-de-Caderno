@@ -91,23 +91,6 @@ class DrawController {
         }
     }
 
-    insertScoreDraw = async (req, res, next) => {
-        const { id } = req.params;
-        const { score } = req.body;
-        if (score == null || score == undefined) {
-            return res.status(400).json({ message: "Score is required" });
-        }
-        if (score < 0 || score > 100) {
-            return res.status(400).json({ message: "Score must be between 0 and 100" });
-        }
-        try {
-            const draw = await Draw.findOneAndUpdate({ _id: id }, { score: score, classified: true }, { new: true });
-            res.status(201).json(draw);
-        }
-        catch (err) {
-            next(err);
-        }
-    }
 
     getDrawByCategory = async (req, res, next) => {
         const { category } = req.body;
@@ -126,6 +109,20 @@ class DrawController {
         try {
             const filter = { _id: id };
             const update = { classified: false, note: note, reviewFinished: true };
+            const draw = await Draw.findOneAndUpdate(filter, update, { new: true });
+            res.status(201).json(draw);
+        }
+        catch (err) {
+            next(err);
+        }
+    }
+
+    evaluateDraw = async (req, res, next) => {
+        const { id } = req.params;
+        const { score, note } = req.body;
+        try {
+            const filter = { _id: id, "review.evaluator": req.user._id };
+            const update = { "review.$.score": score, "review.$.note": note, "review.$.date": Date.now(), "review.$.finished": true };
             const draw = await Draw.findOneAndUpdate(filter, update, { new: true });
             res.status(201).json(draw);
         }
