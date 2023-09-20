@@ -20,21 +20,6 @@ class DrawController {
         }
     }
 
-    listDesclassifiedDraws = async (req, res, next) => {
-        try {
-            const page = parseInt(req.query.page) || 1;
-            const limit = parseInt(req.query.limit) || 10;
-            const filter = { classified: false };
-            const draws = await Draw.find(filter)
-                .skip((page - 1) * limit)
-                .limit(limit);
-            res.status(200).json(draws);
-        }
-        catch (err) {
-            next(err);
-        }
-    }
-
     listAllDraws = async (req, res, next) => {
         try {
             const page = parseInt(req.query.page) || 1;
@@ -90,7 +75,6 @@ class DrawController {
             next(err);
         }
     }
-
 
     getDrawByCategory = async (req, res, next) => {
         const { category } = req.body;
