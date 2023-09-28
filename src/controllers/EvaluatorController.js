@@ -22,6 +22,9 @@ class EvaluatorController {
         const {id} = req.params;
         try{
             const evaluator = await Evaluator.findById(id);
+            if(evaluator === null){
+                return res.status(404).json({message: 'Evaluator not found'});
+            }
             const response = {
                 evaluator: evaluator,
                 accessType: 'evaluator'
