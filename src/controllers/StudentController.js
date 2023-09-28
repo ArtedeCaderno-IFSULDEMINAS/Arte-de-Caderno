@@ -2,6 +2,7 @@ import Login from '../models/login.js';
 import Student from '../models/student.js';
 import createHashWithSalt from '../middleware/hashWithSalt.js';
 import Draw from '../models/draw.js';
+import { ERROR_MESSAGE } from '../constants/ErrorMessages.js';
 
 class StudentController {
     
@@ -21,7 +22,7 @@ class StudentController {
             const student = await Student.findById(id);
             
             if(student === null){
-                return res.status(404).json({message: 'Student not found'});
+                return res.status(404).json({message: ERROR_MESSAGE.STUDENT_NOT_FOUND});
             }
             const response = {
                 student: student,
@@ -41,7 +42,7 @@ class StudentController {
         const loginExists = await Login.findOne({username: cpf});
 
         if(loginExists !== null){
-            return res.status(400).json({message: 'User already exists'});
+            return res.status(400).json({message: ERROR_MESSAGE.USER_ALREADY_EXISTS});
         }
 
         const hashPassword = await createHashWithSalt(password);
@@ -87,7 +88,7 @@ class StudentController {
             );
 
             if(studentUpdate === null){
-                return res.status(404).json({message: 'Student not found'});
+                return res.status(404).json({message: ERROR_MESSAGE.STUDENT_NOT_FOUND});
             }
 
             return res.status(200).json(studentUpdate);
@@ -103,7 +104,7 @@ class StudentController {
         try{
             const student = await Student.findById(id);
             if(student === null){
-                return res.status(400).json({message: 'Student not found'});
+                return res.status(400).json({message: ERROR_MESSAGE.STUDENT_NOT_FOUND});
             }
 
             await Login.deleteOne({_id: student.loginId});
@@ -111,9 +112,9 @@ class StudentController {
             const result = await Student.deleteOne({_id: id});
             
             if(result.deletedCount === 0){
-                return res.status(400).json({message: 'Student not found'});
+                return res.status(400).json({message: ERROR_MESSAGE.STUDENT_NOT_FOUND});
             }
-            res.status(200).json({message: 'Student deleted'});
+            res.status(200).json({message: ERROR_MESSAGE.DELETED});
         }
         catch(err){
             next(err);
@@ -125,7 +126,7 @@ class StudentController {
         try{
             const student = await Student.findById(id);
             if(student === null){
-                return res.status(404).json({message: 'Student not found'});
+                return res.status(404).json({message: ERROR_MESSAGE.STUDENT_NOT_FOUND});
             }
             const draws = await Draw.find({author: id});
             res.status(200).json(draws);

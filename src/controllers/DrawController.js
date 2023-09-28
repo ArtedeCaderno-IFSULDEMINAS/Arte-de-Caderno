@@ -3,6 +3,7 @@ import Draw from "../models/draw.js";
 import Evaluator from "../models/evaluator.js";
 import Student from "../models/student.js";
 import storage from "../config/multer.js";
+import { ERROR_MESSAGE } from "../constants/ErrorMessages.js";
 
 class DrawController {
 
@@ -41,7 +42,7 @@ class DrawController {
         try {
             const draw = await Draw.findById(id);
             if(draw === null){
-                return res.status(404).json({ message: 'Draw not found' });
+                return res.status(404).json({message: ERROR_MESSAGE.DRAW_NOT_FOUND});
             }
             res.status(200).json(draw);
         }
@@ -55,7 +56,7 @@ class DrawController {
         try {
             const student = await Student.findById(id);
             if(student === null){
-                return res.status(404).json({ message: 'Student not found' });
+                return res.status(404).json({ message: ERROR_MESSAGE.STUDENT_NOT_FOUND});
             }
             const draws = await Draw.find({ author: id });
             res.status(200).json(draws);
@@ -69,17 +70,17 @@ class DrawController {
         try {
             const { title, category, author } = req.body;
             if(!title || !category || !author){
-                return res.status(400).json({ message: 'Title, category and author are required' });
+                return res.status(400).json({ message: ERROR_MESSAGE.ALL_FIELDS_REQUIRED });
             }
 
             const student = await Student.findById(author);
 
             if(student === null){
-                return res.status(404).json({ message: 'Student not found' });
+                return res.status(404).json({ message: ERROR_MESSAGE.STUDENT_NOT_FOUND});
             }
 
             if(student.draws.length >= 3){
-                return res.status(400).json({ message: 'Student already has 3 draws' });
+                return res.status(400).json({ message: ERROR_MESSAGE.STUDENT_ALREADY_HAS_THREE_DRAWS});
             }
 
             const draw = new Draw({
@@ -102,7 +103,7 @@ class DrawController {
         const { category } = req.body;
         try {
             if(category !== "ninja" && category !== "superninja"){
-                return res.status(400).json({ message: 'Category not found' });
+                return res.status(400).json({ message: ERROR_MESSAGE.CATEGORY_NOT_FOUND });
             }
             const draws = await Draw.find({ category: category });
             res.status(200).json(draws);
@@ -120,7 +121,7 @@ class DrawController {
             const update = { classified: false, note: note, reviewFinished: true };
             const draw = await Draw.findOneAndUpdate(filter, update, { new: true });
             if(draw === null){
-                return res.status(404).json({ message: 'Draw not found' });
+                return res.status(404).json({ message: ERROR_MESSAGE.DRAW_NOT_FOUND});
             }
             res.status(200).json(draw);
         }
@@ -134,23 +135,23 @@ class DrawController {
         const { score, note, evaluatorId } = req.body;
         try {
             if(evaluatorId === null){
-                return res.status(400).json({ message: 'Evaluator is required' });
+                return res.status(400).json({ message: ERROR_MESSAGE.ALL_FIELDS_REQUIRED });
             }
             const evaluator = await Evaluator.findById(evaluatorId);
             if(evaluator === null){
-                return res.status(404).json({ message: 'Evaluator not found' });
+                return res.status(404).json({ message: ERROR_MESSAGE.EVALUATOR_NOT_FOUND});
             }
             if(note === null){
-                return res.status(400).json({ message: 'Note is required' });
+                return res.status(400).json({ message: ERROR_MESSAGE.ALL_FIELDS_REQUIRED });
             }
             if(score < 0 || score > 100){
-                return res.status(400).json({ message: 'Score must be between 0 and 100' });
+                return res.status(400).json({ message: ERROR_MESSAGE.SCORE_MUST_BE_BETWEEN_0_AND_100});
             }
             const filter = { _id: id, "review.evaluator": evaluatorId };
             const update = { "review.$.score": score, "review.$.note": note, "review.$.date": Date.now(), "review.$.finished": true };
             const draw = await Draw.findOneAndUpdate(filter, update, { new: true });
             if(draw === null){
-                return res.status(404).json({ message: 'Draw not found' });
+                return res.status(404).json({ message: ERROR_MESSAGE.DRAW_NOT_FOUND});
             }
             res.status(200).json(draw);
         }

@@ -1,3 +1,4 @@
+import { ERROR_MESSAGE } from "../constants/ErrorMessages.js";
 import School from "../models/school.js";
 
 class SchoolController {
@@ -18,7 +19,7 @@ class SchoolController {
                 const school = await School.findById(id);
                 
                 if(school === null){
-                    return res.status(404).json({message: 'School not found'});
+                    return res.status(404).json({message: ERROR_MESSAGE.SCHOOL_NOT_FOUND});
                 }
     
                 res.status(200).json(school);
@@ -56,7 +57,7 @@ class SchoolController {
         listSchoolByCity = async (req, res, next) => {
             const {city} = req.body;
             if(city === null){
-                return res.status(400).json({message: 'City is required'});
+                return res.status(400).json({message: ERROR_MESSAGE.ALL_FIELDS_REQUIRED});
             }
             try{
                 const schools = await School.find({city: city});
@@ -80,10 +81,10 @@ class SchoolController {
         listCitiesByUf = async (req, res, next) => {
             const {uf} = req.body;
             if(uf === null){
-                return res.status(400).json({message: 'Uf is required'});
+                return res.status(400).json({message: ERROR_MESSAGE.ALL_FIELDS_REQUIRED});
             }
             if(uf.length !== 2){
-                return res.status(400).json({message: 'Uf must have 2 characters'});
+                return res.status(400).json({message: ERROR_MESSAGE.BAD_REQUEST});
             }
             try{
                 const cities = await School.find({uf: uf}).distinct('city');
