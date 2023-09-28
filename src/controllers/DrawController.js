@@ -1,9 +1,9 @@
-import multer from "multer";
 import Draw from "../models/draw.js";
 import Evaluator from "../models/evaluator.js";
 import Student from "../models/student.js";
-import storage from "../config/multer.js";
-import { ERROR_MESSAGE } from "../constants/ErrorMessages.js";
+import { ERROR_MESSAGE } from "../constants/Messages.js";
+import Log from "../models/log.js";
+import { LOG_TYPES } from "../constants/LogTypes.js";
 
 class DrawController {
 
@@ -79,7 +79,7 @@ class DrawController {
                 return res.status(404).json({ message: ERROR_MESSAGE.STUDENT_NOT_FOUND});
             }
 
-            if(student.draws.length >= 3){
+            if(student.drawsId.length >= 3){
                 return res.status(400).json({ message: ERROR_MESSAGE.STUDENT_ALREADY_HAS_THREE_DRAWS});
             }
 
@@ -124,6 +124,13 @@ class DrawController {
                 return res.status(404).json({ message: ERROR_MESSAGE.DRAW_NOT_FOUND});
             }
             res.status(200).json(draw);
+            Log.create({
+                message: `Draw ${draw.id} desclassified`,
+                stack: "",
+                date: new Date(),
+                type: LOG_TYPES.INFO
+            });
+            await Log.save();
         }
         catch (err) {
             next(err);
@@ -153,6 +160,13 @@ class DrawController {
             if(draw === null){
                 return res.status(404).json({ message: ERROR_MESSAGE.DRAW_NOT_FOUND});
             }
+            Log.create({
+                message: `Draw ${draw.id} evaluated`,
+                stack: "",
+                date: new Date(),
+                type: LOG_TYPES.INFO
+            });
+            await Log.save();
             res.status(200).json(draw);
         }
         catch (err) {
@@ -200,7 +214,13 @@ class DrawController {
                 }
 
             }
-
+            Log.create({
+                message: "Draws distributed",
+                stack: "",
+                date: new Date(),
+                type: LOG_TYPES.INFO
+            });
+            await Log.save();
             res.status(200).json({ message: "Draws distributed" });
 
         }

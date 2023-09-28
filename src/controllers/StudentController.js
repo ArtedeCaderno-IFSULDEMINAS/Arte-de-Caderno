@@ -2,7 +2,7 @@ import Login from '../models/login.js';
 import Student from '../models/student.js';
 import createHashWithSalt from '../middleware/hashWithSalt.js';
 import Draw from '../models/draw.js';
-import { ERROR_MESSAGE } from '../constants/ErrorMessages.js';
+import { ERROR_MESSAGE } from '../constants/Messages.js';
 
 class StudentController {
     

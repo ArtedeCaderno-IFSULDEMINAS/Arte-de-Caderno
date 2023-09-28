@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from "../constants/ErrorMessages.js";
+import { ERROR_MESSAGE } from "../constants/Messages.js";
 import School from "../models/school.js";
 
 class SchoolController {

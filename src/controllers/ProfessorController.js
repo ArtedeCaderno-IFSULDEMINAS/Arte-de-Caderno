@@ -3,7 +3,7 @@ import Login from "../models/login.js";
 import School from "../models/school.js";
 import Student from "../models/student.js";
 import createHashWithSalt from "../middleware/hashWithSalt.js";
-import { ERROR_MESSAGE } from "../constants/ErrorMessages.js";
+import { ERROR_MESSAGE } from "../constants/Messages.js";
 
 class ProfessorController {
 

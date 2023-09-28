@@ -14,3 +14,9 @@ export const ERROR_MESSAGE = {
     ALL_FIELDS_REQUIRED: 'All fields are required',
     SCHOOL_NOT_FOUND: 'School not found',
 }
+
+export const EVENT_MESSAGES = {
+    STUDENT_CREATED: 'Student created',
+    PROFESSOR_CREATED: 'Professor created',
+    SCHOOL_CREATED: 'School created',
+}

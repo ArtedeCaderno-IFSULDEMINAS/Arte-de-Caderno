@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from "../constants/ErrorMessages.js";
+import { ERROR_MESSAGE } from "../constants/Messages.js";
 import Draw from "../models/draw.js";
 import Evaluator from "../models/evaluator.js";
 import Login from "../models/login.js";
