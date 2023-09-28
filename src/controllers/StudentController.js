@@ -1,6 +1,5 @@
 import Login from '../models/login.js';
 import Student from '../models/student.js';
-import Professor from '../models/professor.js';
 import createHashWithSalt from '../middleware/hashWithSalt.js';
 import Draw from '../models/draw.js';
 
@@ -100,9 +99,6 @@ class StudentController {
 
     deleteStudent = async (req, res, next) => {
         const {id} = req.params;  
-        if(id === null){
-            return res.status(400).json({message: 'Id is required'});
-        }
 
         try{
             const student = await Student.findById(id);
