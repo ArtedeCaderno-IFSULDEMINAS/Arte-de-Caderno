@@ -25,7 +25,7 @@ class StudentController {
                 return res.status(404).json({message: ERROR_MESSAGE.STUDENT_NOT_FOUND});
             }
             const response = {
-                student: student,
+                user: student,
                 accessType: 'student'
             };
             

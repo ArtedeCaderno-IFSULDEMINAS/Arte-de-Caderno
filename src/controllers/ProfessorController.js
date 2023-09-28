@@ -27,7 +27,7 @@ class ProfessorController {
             }
             
             const response = {
-                professor: professor,
+                user: professor,
                 accessType: 'professor'
             };
 

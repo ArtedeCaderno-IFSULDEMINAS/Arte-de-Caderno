@@ -27,7 +27,7 @@ class EvaluatorController {
                 return res.status(404).json({message: ERROR_MESSAGE.EVALUATOR_NOT_FOUND});
             }
             const response = {
-                evaluator: evaluator,
+                user: evaluator,
                 accessType: 'evaluator'
             };
             
