@@ -1,3 +1,4 @@
+import { ERROR_MESSAGE } from "../constants/Messages.js";
 import Draw from "../models/draw.js";
 import Evaluator from "../models/evaluator.js";
 import Login from "../models/login.js";
@@ -22,8 +23,11 @@ class EvaluatorController {
         const {id} = req.params;
         try{
             const evaluator = await Evaluator.findById(id);
+            if(evaluator === null){
+                return res.status(404).json({message: ERROR_MESSAGE.EVALUATOR_NOT_FOUND});
+            }
             const response = {
-                evaluator: evaluator,
+                user: evaluator,
                 accessType: 'evaluator'
             };
             
@@ -38,7 +42,7 @@ class EvaluatorController {
         const {name, email, cpf, password} = req.body;
         const loginExists = await Login.findOne({username: cpf});
         if(loginExists !== null){
-            return res.status(400).json({message: 'User already exists'});
+            return res.status(400).json({message: ERROR_MESSAGE.USER_ALREADY_EXISTS});
         }
 
         const login = new Login({
@@ -68,7 +72,7 @@ class EvaluatorController {
         try{
             const evaluator = await Evaluator.findById(id);
             if(evaluator === null){
-                return res.status(404).json({message: 'Evaluator not found'});
+                return res.status(404).json({message: ERROR_MESSAGE.EVALUATOR_NOT_FOUND});
             }
             const draws = await Draw.find({evaluatorId: id});
             res.status(200).json(draws);

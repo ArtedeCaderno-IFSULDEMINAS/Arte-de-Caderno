@@ -1,6 +1,7 @@
 import express from 'express';
 import Login from '../models/login.js';
 import validarCpf from 'validar-cpf';
+import { ERROR_MESSAGE } from '../constants/Messages.js';
 
 const validatorCpfRoute = express.Router();
 
@@ -10,7 +11,7 @@ validatorCpfRoute.get('/cpf/:cpf', async (req, res) => {
     const userExists = await Login.findOne({username: cpf.replace(/\D/g, "")});
 
     if(userExists !== null){
-        return res.status(400).json({message: 'User already exists'});
+        return res.status(400).json({message: ERROR_MESSAGE.USER_ALREADY_EXISTS});
     }
 
     const valid = validarCpf(cpf);

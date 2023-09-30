@@ -8,6 +8,9 @@ const EvaluatorSchema = new mongoose.Schema(
         cpf: {type: String, required: true},
         draws: [{type: mongoose.Schema.Types.ObjectId, ref: 'draw'}],
         loginId: {type: mongoose.Schema.Types.ObjectId, ref: 'login'},
+    },
+    {
+        versionKey: false
     }
 )
 

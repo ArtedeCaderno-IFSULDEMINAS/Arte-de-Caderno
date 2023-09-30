@@ -9,9 +9,11 @@ const DrawSchema = new mongoose.Schema(
         score: {type: Number, required: false},
         review:[{
             evaluator: {type: mongoose.Schema.Types.ObjectId, ref: "evaluator", required: false},
+            numberOfAlertsEvaluator: {type: Number, required: false, default: 0},
             score: {type: Number, required: false},
             note: {type: String, required: false},
-            date: {type: Date, required: false}
+            date: {type: Date, required: false},
+            finished: {type: Boolean, required: false}
         }],
         reviewFinished: {type: Boolean, required: false},
         classified: {type: Boolean, required: false},

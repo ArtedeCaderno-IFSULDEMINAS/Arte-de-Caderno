@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import express from 'express';
+import Log from '../models/log';
 
 const cepRoute = express.Router();
 
@@ -14,6 +15,12 @@ cepRoute.get('/cep/:cep', async (req, res) => {
         const b = await a.json();
         res.json(b);
     } catch (error) {
+        Log.create({
+            message: error.message,
+            stack: error.stack,
+            date: new Date(),
+            type: LOG_TYPES.ERROR
+        });
         res.json(error);
     }
 });

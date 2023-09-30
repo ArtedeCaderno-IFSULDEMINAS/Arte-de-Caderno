@@ -11,7 +11,7 @@ import evaluatorRoute from './evaluatorRoute.js';
 
 const routes = (app) => {
   app.route('/').get((req, res) => {
-    res.status(200).send('Hello World!')
+    res.status(200).send('Health')
   })
 
   app.use(
@@ -20,7 +20,6 @@ const routes = (app) => {
     cepRoute,
     registerRoute,
     loginRouter,
-    registerRoute,
     schoolRoute,
     professorRoute,
     studentRoute,
