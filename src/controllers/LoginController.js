@@ -1,6 +1,7 @@
 import Login from '../models/login.js';
 import Professor from '../models/professor.js';
 import Student from '../models/student.js';
+import Evaluator from '../models/evaluator.js';
 import validateLogin from '../middleware/loginVerify.js';
 import generateToken from '../middleware/jwtUtils.js';
 import transporter from '../middleware/emailConfig.js';
@@ -101,6 +102,40 @@ class LoginController {
                     return res.status(200).json({ message: '2-factor code sent to registered email' });
                 }
 
+                if ("evaluator" === userLogin.accessType) {
+                    const { email } = await this.getEvaluatorByLoginId(userLogin._id);
+                    async function sendEmail() {
+                        const code = crypto.randomBytes(4).toString('hex').toUpperCase();
+                        const codeGeneratedAt = new Date();
+
+                        
+                        const updateCode = {
+                            code2factor:  code, 
+                            createdAt:codeGeneratedAt,
+                            email:email
+                         }; //modificar o codigo de 2 fatores
+
+                        await Login.findOneAndUpdate({ username: loginReq.username }, updateCode); //realizar o update no banco campo codigo
+
+                        const mailSent = await transporter.sendMail({
+                            //text: `Seu código de verificação é:  ${code}`,
+                            subject: 'Código de Autenticação Arte de Caderno',
+                            from: 'Equipe Arte de Caderno <artedecaderno.if@gmail.com>',
+                            to: email,
+                            html: `<p>Seu código de autenticação é:</p>
+                            <p style="color: tomato; font-size: 25px; letter-spacing: 2px;">
+                              <b>${code.toUpperCase()}</b>
+                            </p>
+                            <p><b>Código expira em 10 minutos</b>.</p>`
+
+                        });
+                        //console.log(mailSent);
+                    }
+                    sendEmail();
+
+                    return res.status(200).json({ message: '2-factor code sent to registered email' });
+                }
+
             }
             return res.status(400).json({ message: 'Invalid password or username' });
         }
@@ -177,6 +212,26 @@ class LoginController {
                     return res.status(200).json(response);
                 }
 
+                if ("evaluator" === userLogin.accessType) {
+                    const evaluator = await this.getEvaluatorByLoginId(userLogin._id);
+
+                    const tokenPayload = {
+                        userId: evaluator._id,
+                        userName: userLogin.username,
+                        email: evaluator.email,
+                        accessType: userLogin.accessType,
+                    };
+                    const token = generateToken(tokenPayload);
+
+                    let response = {
+                        accessType: 'evaluator',
+                        user: evaluator,
+                        token: token
+                    };
+
+                    return res.status(200).json(response);
+                }
+
             }
             return res.status(400).json({ message: 'Invalid password or username' });
         }
@@ -205,6 +260,19 @@ class LoginController {
                 return null;
             }
             return student;
+        }
+        catch (err) {
+            return null;
+        }
+    }
+
+    getEvaluatorByLoginId = async (loginId) => {
+        try {
+            const evaluator = await Evaluator.findOne({ loginId: loginId });
+            if (evaluator === null) {
+                return null;
+            }
+            return evaluator;
         }
         catch (err) {
             return null;

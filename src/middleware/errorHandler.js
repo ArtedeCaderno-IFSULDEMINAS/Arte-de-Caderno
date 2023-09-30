@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import Log from "../models/log";
-import { LOG_TYPES } from "../constants/LogTypes";
+import Log from "../models/log.js";
+import { LOG_TYPES } from "../constants/LogTypes.js";
 
 async function errorHandler (err, req, res, next){
     if(err instanceof mongoose.Error.CastError){
