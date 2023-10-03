@@ -58,7 +58,7 @@ const LoginView = () => {
 
   return (
     <PageContainer>
-      {redirect && <Navigate to="/dashboard" replace />}
+      {redirect && <Navigate to="/seguranca" replace />}
       <Navbar currentPage={"Login"} />
       <ContentContainer>
         <Banner img={require("src/assets/img/login/background.png")}>

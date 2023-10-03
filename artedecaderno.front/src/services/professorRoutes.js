@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import { throwToast } from "src/utils/toast";
 
 const token = Cookies.get('token')
 
@@ -80,6 +81,41 @@ export const professorRoutes = {
         const a = await fetch(`http://localhost:8080/professor/student/${id}`, requestOptions)
         const b = await a.json()
         return b
+
+    },
+    insertProfessor: async function (user, school) {
+        const url = "http://localhost:8080/insertProfessor"
+        let address = user.rua + ", " + user.numero + " " + user.complemento || null + ". " + user.bairro
+        const options = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: user.name,
+                date_of_birth: user.date_of_birth,
+                cpf: user.cpf.replace(/\D/g, ""),
+                phone: user.cel,
+                cep: user.cep,
+                email: user.email,
+                address: address,
+                city: user.city,
+                uf: user.uf,
+                schoolId: school,
+                password: user.password
+            })
+        }
+
+        try {
+            const a = await fetch(url, options)
+            if (a.ok) {
+                throwToast.success("Cadastro realizado com sucesso")
+                return true
+            } else {
+                throwToast.error("Algo deu errado. Tente novamente mais tarde")
+                return false
+            }
+        } catch (error) {
+            console.error(error)
+        }
 
     }
 }

@@ -1,14 +1,17 @@
-import { links } from "src/router/links";
+import { links, loggedLinks } from "src/router/links";
 import { MenuContainer, NavDrop, NavLink, NavbarRow } from "./components/style";
 import { Link } from "react-router-dom";
-import { faBars} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { useState } from "react";
+import Cookies from "js-cookie";
+import { Row } from "src/styles/sharedStyles";
 
 const Navbar = ({ currentPage }) => {
-  const desktop = useMediaQuery("(min-width: 768px)");
+  const desktop = useMediaQuery("(min-width: 770px)");
   const [sidebar, setSidebar] = useState(false);
+  const isLogged = Cookies.get("isLogged");
 
   return (
     <NavbarRow
@@ -30,14 +33,14 @@ const Navbar = ({ currentPage }) => {
       {desktop && (
         <>
           <MenuContainer
-            width={"40%"}
+            width={isLogged ? "70%" : "40%"}
             style={{ alignItems: "end", height: "60px" }}
           >
             {links.map((link) => {
               return (
                 <Link
-                to={link.path}
-                key={link}
+                  to={link.path}
+                  key={link}
                   style={{
                     color: "black",
                     textDecoration:
@@ -49,25 +52,24 @@ const Navbar = ({ currentPage }) => {
                 </Link>
               );
             })}
-          </MenuContainer>
-          <MenuContainer
-            width={"30%"}
-            style={{ justifyContent: "center", gap: "5px" }}
-          >
-            {/* <FontAwesomeIcon icon={faCircleUser} className="fa-xl" />
-            <Link
-              to={"/login"}
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <NavLink>Entrar</NavLink>
-            </Link>
-            /
-            <Link
-              to={"/cadastrar"}
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <NavLink>Cadastrar</NavLink>
-            </Link> */}
+            {isLogged &&
+              loggedLinks.map((link, index) => {
+                return (
+                  <Link
+                    to={link.path}
+                    key={link}
+                    style={{
+                      color: "black",
+                      textDecoration:
+                        link.text === currentPage ? "underline" : "none",
+                      opacity: link.text === currentPage ? 1 : 0.7,
+                    }}
+                  >
+                    <NavLink>{link.text}</NavLink>
+                  </Link>
+                );
+              })}
+            <NavLink>Sair</NavLink>
           </MenuContainer>
         </>
       )}
@@ -89,21 +91,81 @@ const Navbar = ({ currentPage }) => {
         <NavDrop onBlur={() => setSidebar(false)}>
           {links.map((link) => {
             return (
-              <Link
-                key={link}
-                to={link.path}
-                style={{
-                  color: "black",
-                  textDecoration:
-                    link.text === currentPage ? "underline" : "none",
-                  opacity: link.text === currentPage ? 1 : 0.7,
-                }}
-              >
-                <NavLink>{link.text}</NavLink>
-              </Link>
+              <Row style={{ padding: "0.5rem" }}>
+                <Link
+                  key={link}
+                  to={link.path}
+                  style={{
+                    color: "black",
+                    textDecoration:
+                      link.text === currentPage ? "underline" : "none",
+                    opacity: link.text === currentPage ? 1 : 0.7,
+                  }}
+                >
+                  <NavLink>{link.text}</NavLink>
+                </Link>
+              </Row>
             );
           })}
+          {!isLogged && (
+            <Row style={{ padding: "0.5rem" }}>
+              <Link
+                to={"/login"}
+                style={{
+                  color: "black",
+                  textDecoration: "none",
+                  opacity: 0.7,
+                }}
+              >
+                <NavLink>Entrar</NavLink>
+              </Link>
+            </Row>
+          )}
+          {isLogged &&
+            loggedLinks.map((link, index) => {
+              return (
+                <Row style={{ padding: "1rem" }}>
+                  <Link
+                    to={link.path}
+                    key={link}
+                    style={{
+                      color: "black",
+                      textDecoration:
+                        link.text === currentPage ? "underline" : "none",
+                      opacity: link.text === currentPage ? 1 : 0.7,
+                    }}
+                  >
+                    <NavLink>{link.text}</NavLink>
+                  </Link>
+                </Row>
+              );
+            })}
+          <Row style={{ padding: "1rem" }}>
+            <NavLink>Sair</NavLink>
+          </Row>
         </NavDrop>
+      )}
+
+      {desktop && !isLogged && (
+        <MenuContainer
+          width={"30%"}
+          style={{ justifyContent: "center", gap: "5px" }}
+        >
+          <FontAwesomeIcon icon={faCircleUser} className="fa-xl" />
+          <Link
+            to={"/login"}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <NavLink>Entrar</NavLink>
+          </Link>
+          /
+          <Link
+            to={"/cadastrar"}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <NavLink>Cadastrar</NavLink>
+          </Link>
+        </MenuContainer>
       )}
     </NavbarRow>
   );

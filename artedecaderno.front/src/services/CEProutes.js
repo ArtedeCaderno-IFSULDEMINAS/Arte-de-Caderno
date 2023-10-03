@@ -2,7 +2,7 @@ import { throwToast } from 'src/utils/toast';
 
 export const CEProutes = {
     viacep: async function (cep) {
-        const url = `http://localhost:8080/cep/${cep}`;
+        const url = `http://localhost:8080/cep/${cep.replace(/\D/g, "")}`;
         const a = await fetch(url);
         const b = await a.json();
 

@@ -15,6 +15,11 @@ const Row = styled.div`
   justify-content: space-evenly;
   width: ${(p) => p.width || "100%"};
   gap: ${(p) => p.gap || "5px"};
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column
+  }
+
 `;
 
 const PageContainer = styled(Column)`

@@ -14,16 +14,16 @@ export const studentRoutes = {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 name: `${student.nome}`,
-                date_of_birth: `${student.bday}`,
+                date_of_birth: `${student.date_of_birth}`,
                 cpf: `${student.cpf.replace(/\D/g, "")}`,
                 phone: `${student.cel}`,
                 cep: `${student.cep}`,
                 email: `${student.email}`,
                 address: `${address}`,
-                city: `${student.cidade}`,
+                city: `${student.city}`,
                 uf: `${student.uf}`,
                 schoolId: `${school.trim()}`,
-                password: `${student.senha}`,
+                password: `${student.password}`,
                 isFromProfessor: false,
             }),
         };
@@ -44,7 +44,7 @@ export const studentRoutes = {
         }
     },
     getUserById: async function (student_id) {
-        console.log(":: ",student_id)
+        console.log(":: ", student_id)
         const url = `http://localhost:8080/student/${student_id}`
         const options = {
             method: 'GET',

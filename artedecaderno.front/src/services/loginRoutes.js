@@ -17,10 +17,11 @@ export const loginRoutes = {
         if (a.status !== 200) {
             return false
         } else {
+            throwToast.info("Um código foi enviado para o seu e-mail!")
             return true
         }
     },
-    
+
     logar: async function (user, pwd, code) {
         let url = "http://localhost:8080/login2fa"
         const options = {
