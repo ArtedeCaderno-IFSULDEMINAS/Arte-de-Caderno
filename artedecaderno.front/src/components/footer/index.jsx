@@ -1,8 +1,7 @@
-import { faInstagram, faTiktok } from "@fortawesome/free-brands-svg-icons";
-import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { colors, fonts } from "src/styles/constants";
+import { icons } from "src/styles/icons";
 import { BodyLink, Column, Row, Text } from "src/styles/sharedStyles";
 
 const Footer = () => {
@@ -25,7 +24,7 @@ const Footer = () => {
             >
               <BodyLink>
                 <FontAwesomeIcon
-                  icon={faInstagram}
+                  icon={icons.instagram}
                   style={{ fontSize: "20px" }}
                 />
               </BodyLink>
@@ -36,7 +35,10 @@ const Footer = () => {
               rel="noopener noreferrer"
             >
               <BodyLink>
-                <FontAwesomeIcon icon={faTiktok} style={{ fontSize: "20px" }} />
+                <FontAwesomeIcon
+                  icon={icons.tiktok}
+                  style={{ fontSize: "20px" }}
+                />
               </BodyLink>
             </a>
             <a
@@ -46,7 +48,7 @@ const Footer = () => {
               style={{ textDecoration: "none" }}
             >
               <BodyLink>
-                <FontAwesomeIcon icon={faGlobe} style={{fontSize: "20px"}} />
+                <FontAwesomeIcon icon={icons.web} style={{ fontSize: "20px" }} />
               </BodyLink>
             </a>
           </Row>

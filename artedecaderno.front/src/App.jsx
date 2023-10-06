@@ -5,7 +5,7 @@ import { userContext } from "./contexts/userContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+const App = () => {
   const [user, setUser] = useState({
     cpf: null,
     password: null,
@@ -50,6 +50,6 @@ function App() {
       />
     </>
   );
-}
+};
 
 export default App;

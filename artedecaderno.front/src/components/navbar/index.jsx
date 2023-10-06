@@ -1,12 +1,12 @@
 import { links, loggedLinks } from "src/router/links";
 import { MenuContainer, NavDrop, NavLink, NavbarRow } from "./components/style";
 import { Link } from "react-router-dom";
-import { faBars, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { useState } from "react";
 import Cookies from "js-cookie";
 import { Row } from "src/styles/sharedStyles";
+import { icons } from "src/styles/icons";
 
 const Navbar = ({ currentPage }) => {
   const desktop = useMediaQuery("(min-width: 770px)");
@@ -76,7 +76,7 @@ const Navbar = ({ currentPage }) => {
 
       {!desktop && (
         <FontAwesomeIcon
-          icon={faBars}
+          icon={icons.hamburger}
           style={{
             position: "fixed",
             top: "30px",
@@ -151,7 +151,7 @@ const Navbar = ({ currentPage }) => {
           width={"30%"}
           style={{ justifyContent: "center", gap: "5px" }}
         >
-          <FontAwesomeIcon icon={faCircleUser} className="fa-xl" />
+          <FontAwesomeIcon icon={icons.user} className="fa-xl" />
           <Link
             to={"/login"}
             style={{ textDecoration: "none", color: "black" }}
