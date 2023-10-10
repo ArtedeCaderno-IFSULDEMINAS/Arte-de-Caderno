@@ -4,6 +4,7 @@ import { throwToast } from "src/utils/toast";
 const token = Cookies.get('token')
 
 export const professorRoutes = {
+
     getStudents: async function (id) {
         const url = `http://localhost:8080/professor/student/${id}`;
         const options = {
@@ -37,6 +38,7 @@ export const professorRoutes = {
     },
     getProfById: async function (id) {
         const url = `http://localhost:8080/professor/${id}`
+        console.log(token)
         const options = {
             method: 'GET',
             headers: {

@@ -51,6 +51,7 @@ const TwoFactorView = () => {
                   value={user.twoF}
                   onChange={(e) => setCode(e.target.value)}
                   onPaste={(e) => setCode(e.target.value)}
+                  style={{ textTransform: "uppercase" }}
                 />
                 <Button onClick={logar}>enviar</Button>
               </Row>

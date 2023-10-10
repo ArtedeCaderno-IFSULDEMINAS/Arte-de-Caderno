@@ -1,6 +1,6 @@
 import { keyframes } from "styled-components";
 
-export const animateOnTop = keyframes`
+const animateOnTop = keyframes`
 0% {
     -webkit-transform: translateY(-500px);
             transform: translateY(-500px);
@@ -52,3 +52,23 @@ export const animateOnTop = keyframes`
             animation-timing-function: ease-out;
   }
 `
+
+const loading = keyframes`
+     0%{
+        width: 0%
+     }   
+     25%{
+        width: 50%
+     }
+     50%{
+        width: 75%
+     }
+     75%{
+        width: 85%
+     }
+     100%{
+        width: 100%
+     }
+`
+
+export { animateOnTop, loading }

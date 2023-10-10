@@ -1,5 +1,5 @@
 import { colors } from "src/styles/constants";
-import { animateOnTop } from "src/styles/animation";
+import { animateOnTop } from "src/styles/animations";
 import styled from "styled-components";
 
 const ModalOverlay = styled.div`

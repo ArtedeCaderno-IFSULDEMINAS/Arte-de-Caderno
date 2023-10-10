@@ -50,7 +50,6 @@ const CheckupSchool = () => {
   };
 
   useEffect(() => {
-    console.log(user.name);
     getUF();
   }, []);
 

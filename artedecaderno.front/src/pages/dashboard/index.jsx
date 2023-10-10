@@ -1,10 +1,12 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import Loading from "src/components/loading";
 import Navbar from "src/components/navbar";
 import { professorRoutes } from "src/services/professorRoutes";
 import { studentRoutes } from "src/services/studentRoutes";
 import { ContentContainer, PageContainer } from "src/styles/sharedStyles";
 import ProfessorDash from "src/views/dashboard/professor";
+import StudentDash from "src/views/dashboard/student";
 
 const Dashboard = () => {
   const access = Cookies.get("accessType");
@@ -32,6 +34,7 @@ const Dashboard = () => {
         studentsId: a.user.studentsId || null,
         drawsId: a.user.drawsId,
       });
+      setLoading(false);
     }
   };
 
@@ -55,6 +58,7 @@ const Dashboard = () => {
         studentsId: a.user.studentsId || null,
         drawsId: a.user.drawsId,
       });
+      setLoading(false);
     }
   };
 
@@ -75,14 +79,19 @@ const Dashboard = () => {
     }
   }, []);
 
-  return (
-    <PageContainer>
-      <Navbar currentPage={"Dashboard"} />
-      <ContentContainer>
-        {access === "professor" && <ProfessorDash user={user} />}
-      </ContentContainer>
-    </PageContainer>
-  );
+  if (loading) {
+    return <Loading currentPage={"Dashboard"} />;
+  } else {
+    return (
+      <PageContainer>
+        <Navbar currentPage={"Dashboard"} />
+        <ContentContainer>
+          {access === "professor" && <ProfessorDash user={user} />}
+          {access === "student" && <StudentDash user={user} />}
+        </ContentContainer>
+      </PageContainer>
+    );
+  }
 };
 
 export default Dashboard;

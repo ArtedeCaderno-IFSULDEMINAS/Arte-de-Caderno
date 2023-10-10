@@ -25,7 +25,7 @@ const AboutView = () => {
             {currentPage === "about" && (
               <>
                 <AboutText desktop={desktop} setCurrentPage={setCurrentPage} />
-                <BodyLink onClick={() => setCurrentPage("team")}>
+                <BodyLink onClick={() => setCurrentPage("team")} style={{textDecoration: "underline", opacity: 1}} >
                   Conheça nossa equipe
                 </BodyLink>
               </>

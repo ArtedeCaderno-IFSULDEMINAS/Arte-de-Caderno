@@ -13,7 +13,7 @@ export const studentRoutes = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                name: `${student.nome}`,
+                name: `${student.name}`,
                 date_of_birth: `${student.date_of_birth}`,
                 cpf: `${student.cpf.replace(/\D/g, "")}`,
                 phone: `${student.cel}`,

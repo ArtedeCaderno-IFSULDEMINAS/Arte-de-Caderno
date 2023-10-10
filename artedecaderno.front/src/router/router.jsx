@@ -9,6 +9,8 @@ import CheckupSchool from "src/views/checkup/checkup-school";
 import TwoFactor from "src/pages/two-factor";
 import ProtectedRoute from "./protected-route";
 import Dashboard from "src/pages/dashboard";
+import DrawSubmit from "src/pages/draw-submit";
+import CheckupStudent from "src/pages/checkup/checkup-student";
 
 const Rotas = () => {
   return (
@@ -21,9 +23,18 @@ const Rotas = () => {
       <Route path="/cadastrar/escola" element={<CheckupSchool />} />
       <Route path="/login" element={<Login />} />
       <Route path="/seguranca" element={<TwoFactor />} />
+
       <Route
         path="/dashboard"
         element={<ProtectedRoute Component={Dashboard} />}
+      />
+      <Route
+        path="/cadastrar-desenho"
+        element={<ProtectedRoute Component={DrawSubmit} />}
+      />
+      <Route
+        path="/cadastrar-estudante"
+        element={<ProtectedRoute Component={CheckupStudent} />}
       />
     </Routes>
   );

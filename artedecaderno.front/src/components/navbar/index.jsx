@@ -1,6 +1,6 @@
 import { links, loggedLinks } from "src/router/links";
 import { MenuContainer, NavDrop, NavLink, NavbarRow } from "./components/style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { useState } from "react";
@@ -12,6 +12,15 @@ const Navbar = ({ currentPage }) => {
   const desktop = useMediaQuery("(min-width: 770px)");
   const [sidebar, setSidebar] = useState(false);
   const isLogged = Cookies.get("isLogged");
+  const navigate = useNavigate()
+
+  const logout = () => {
+    Cookies.remove("user");
+    Cookies.remove("token");
+    Cookies.remove("isLogged");
+    Cookies.remove("accessType");
+    navigate("/login")
+  };
 
   return (
     <NavbarRow
@@ -69,7 +78,7 @@ const Navbar = ({ currentPage }) => {
                   </Link>
                 );
               })}
-            <NavLink>Sair</NavLink>
+            {isLogged && <NavLink onClick={logout}>Sair</NavLink>}
           </MenuContainer>
         </>
       )}
@@ -141,7 +150,7 @@ const Navbar = ({ currentPage }) => {
               );
             })}
           <Row style={{ padding: "1rem" }}>
-            <NavLink>Sair</NavLink>
+            {isLogged && <NavLink onClick={logout}>Sair</NavLink>}
           </Row>
         </NavDrop>
       )}
