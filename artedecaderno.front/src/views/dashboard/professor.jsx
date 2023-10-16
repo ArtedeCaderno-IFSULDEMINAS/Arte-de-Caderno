@@ -12,11 +12,11 @@ const ProfessorDash = ({ user }) => {
       </Row>
       <Row gap={"1rem"}>
         <DashboardCard
-          value={0}
+          value={user.studentsId.length}
           icon={"user_group"}
           title={"Alunos cadastrados"}
           desktop={desktop}
-          path={"#"}
+          path={`/meus-alunos`}
         />
         <DashboardCard
           value={0}

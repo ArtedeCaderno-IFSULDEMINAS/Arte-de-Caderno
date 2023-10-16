@@ -117,6 +117,7 @@ const Select = styled.select`
 
 const Option = styled.option`
   padding: 5px;
+  height: 30px;
 `;
 
 const InputColumn = styled(Column)`

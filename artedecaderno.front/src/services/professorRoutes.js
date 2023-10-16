@@ -48,11 +48,16 @@ export const professorRoutes = {
 
         const a = await fetch(url, options)
         const b = await a.json()
-        return await b
+        if (a.ok) {
+            return b
+        } else {
+            throwToast.error("Algo deu errado. Tente novamente mais tarde")
+            return false
+        }
     },
-    postStudent: async function (aluno, id) {
+    insertStudent: async function (aluno, id) {
         let address =
-            "Rua " + aluno.rua + ", " + aluno.numero + " " + aluno?.complemento ||
+            "Rua " + aluno.rua + ", " + aluno.number + " " + aluno?.complemento ||
             null + ", " + aluno.bairro + ". " + aluno.city;
 
         var myHeaders = new Headers();
@@ -60,16 +65,16 @@ export const professorRoutes = {
         myHeaders.append("Authorization", `Bearer ${token}`);
 
         var raw = JSON.stringify({
-            "name": aluno.name,
+            "name": aluno.nome,
             "date_of_birth": aluno.date_of_birth,
             "cpf": aluno.cpf.replace(/\D/g, ""),
-            "phone": aluno.phone,
+            "phone": aluno.cel,
             "cep": aluno.cep,
             "address": address,
             "city": aluno.city,
             "uf": aluno.uf,
             "email": aluno.email,
-            "schoolId": aluno.school,
+            "schoolId": aluno.schoolId,
             "drawsId": []
         });
 
@@ -82,7 +87,13 @@ export const professorRoutes = {
 
         const a = await fetch(`http://localhost:8080/professor/student/${id}`, requestOptions)
         const b = await a.json()
-        return b
+
+        if (!a.ok) {
+            console.log(b)
+            return false
+        }
+
+        return true
 
     },
     insertProfessor: async function (user, school) {
@@ -117,6 +128,47 @@ export const professorRoutes = {
             }
         } catch (error) {
             console.error(error)
+        }
+
+    },
+    updateProfile: async function (user, updatedUser) {
+        let address = null;
+        if (!updatedUser.address) {
+            address = user.rua + ", " + user.numero + " " + user.complemento || null + ". " + user.bairro
+        }
+        console.log(updatedUser)
+        const url = `http://localhost:8080/professor/update/${user}`
+        const options = {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: updatedUser.name,
+                date_of_birth: updatedUser.date_of_birth,
+                cpf: updatedUser.cpf.replace(/\D/g, ""),
+                phone: updatedUser.cel,
+                cep: updatedUser.cep,
+                email: updatedUser.email,
+                address: user.address || address,
+                city: updatedUser.city,
+                uf: updatedUser.uf,
+            })
+        }
+
+        try {
+            const a = await fetch(url, options)
+            if (a.ok) {
+                throwToast.success("Cadastro atualizado com sucesso!")
+                const b = await a.json()
+                return b
+            } else {
+                throwToast.error("Algo deu errado. Tente novamente mais tarde")
+                return false
+            }
+        } catch (error) {
+
         }
 
     }

@@ -14,7 +14,7 @@ const arte = ["a", "r", "t", "e"];
 const de = ["d", "e"];
 const caderno = ["c", "a", "d", "e", "r", "n", "o"];
 
-const Loading = (currentPage) => {
+const Loading = ({currentPage}) => {
   const desktop = useMediaQuery("(min-width: 768px)");
 
   return (
@@ -45,6 +45,7 @@ const Loading = (currentPage) => {
             {caderno.map((letter, index) => {
               return <Letter letter={letter} key={index} />;
             })}
+            <Row width={"5px"} /> {/* margem */}
           </Row>
         </Column>
       </ContentContainer>

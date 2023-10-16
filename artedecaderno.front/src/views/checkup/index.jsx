@@ -49,14 +49,6 @@ const CheckupView = () => {
     }));
   };
 
-  const handleBday = (e) => {
-    const { value } = e.target;
-    setUser((user) => ({
-      ...user,
-      date_of_birth: format.bday(value),
-    }));
-  };
-
   const handleCel = (e) => {
     const { value } = e.target;
     setUser((user) => ({
@@ -191,8 +183,9 @@ const CheckupView = () => {
                 <Input
                   required
                   name="date_of_birth"
-                  onChange={handleBday}
+                  onChange={handleChange}
                   value={user.date_of_birth}
+                  type="date"
                 />
               </InputColumn>
               <InputColumn width={desktop ? "20%" : "100%"}>

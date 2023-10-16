@@ -11,6 +11,8 @@ import ProtectedRoute from "./protected-route";
 import Dashboard from "src/pages/dashboard";
 import DrawSubmit from "src/pages/draw-submit";
 import CheckupStudent from "src/pages/checkup/checkup-student";
+import Students from "src/pages/students";
+import Profile from "src/pages/profile";
 
 const Rotas = () => {
   return (
@@ -35,6 +37,14 @@ const Rotas = () => {
       <Route
         path="/cadastrar-estudante"
         element={<ProtectedRoute Component={CheckupStudent} />}
+      />
+      <Route
+        path="/meus-alunos"
+        element={<ProtectedRoute Component={Students} />}
+      />
+      <Route
+        path="/perfil"
+        element={<ProtectedRoute Component={Profile} />}
       />
     </Routes>
   );

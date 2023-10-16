@@ -29,7 +29,7 @@ const Navbar = ({ currentPage }) => {
       }}
     >
       <MenuContainer width={"30%"}>
-        <Link to={"/"}>
+        <Link to={"/dashboard"}>
           <img
             src={require("src/assets/img/logos/logo.png")}
             alt=""
@@ -78,7 +78,7 @@ const Navbar = ({ currentPage }) => {
                   </Link>
                 );
               })}
-            {isLogged && <NavLink onClick={logout}>Sair</NavLink>}
+            {isLogged && <NavLink onClick={logout} style={{color: "red"}} >Sair</NavLink>}
           </MenuContainer>
         </>
       )}

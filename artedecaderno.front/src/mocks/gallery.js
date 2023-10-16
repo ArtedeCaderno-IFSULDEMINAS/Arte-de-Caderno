@@ -2,7 +2,7 @@ import Img1 from 'src/assets/img/gallery/img1.jpg'
 import Img2 from 'src/assets/img/gallery/img2.jpg'
 import Img3 from 'src/assets/img/gallery/img3.jpg'
 import Img4 from 'src/assets/img/gallery/img4.jpg'
-import Img5 from 'src/assets/img/gallery/img5.jpg'
+import Img5 from 'src/assets/img/gallery/img5.jpg' 
 import Img6 from 'src/assets/img/gallery/img6.jpg'
 import Img7 from 'src/assets/img/gallery/img7.jpg'
 import Img8 from 'src/assets/img/gallery/img8.jpg'
@@ -98,14 +98,6 @@ export const draws = [
     {
         id: 15,
         img: Img15
-    },
-    {
-        id: 16,
-        img: Img16
-    },
-    {
-        id: 16,
-        img: Img16
     },
     {
         id: 16,
