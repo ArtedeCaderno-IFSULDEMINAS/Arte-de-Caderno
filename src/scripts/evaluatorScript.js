@@ -1,10 +1,12 @@
-import transporter from "../middleware/emailConfig.js";
-import Draw from "../models/draw.js";
-import Evaluator from "../models/evaluator.js";
+import transporter from "../middleware/emailConfig.js.js";
+import Draw from "../models/draw.js.js";
+import Evaluator from "../models/evaluator.js.js";
+import cron from 'node-cron';
 
 async function verifyEvaluator() {
   const draws = await Draw.find({ reviewFinished: false });
-  //verificar quais revisões faltam para cada desenho
+  console.log("oi");
+    sendEmailToEvaluator();
   draws.map(
     (draw) =>
       async function () {
@@ -27,7 +29,7 @@ async function verifyEvaluator() {
 
 async function sendEmailToEvaluator(evaluator) {
   try {
-    await sendEmail(evaluator);
+    await sendEmail(evaluator.email);
   } catch (err) {
     console.log(err);
   }
@@ -54,11 +56,11 @@ async function changeEvaluator(evaluator, draw) {
   });
 }
 
-async function sendEmail(evaluator) {
+async function sendEmail(email) {
   await transporter.sendMail({
     subject: "Lembrete de Avaliação",
     from: "Equipe Arte de Caderno <artedecaderno.if@gmail.com>",
-    to: evaluator.email,
+    to: email,
     html: `<p>Lembrete:</p>
         <p style="color: DarkMagenta; font-size: 25px; letter-spacing: 2px;">
             Você tem avaliações pendentes!
@@ -67,5 +69,13 @@ async function sendEmail(evaluator) {
   });
 }
 
-//rodar verify evaluator a cada 24h
-setInterval(verifyEvaluator, 86400000);
+const task = cron.schedule('* * * * *', () => {
+    verifyEvaluator();
+},
+    {
+        scheduled: true,
+        timezone: "America/Sao_Paulo"
+    }
+);
+
+export default task;

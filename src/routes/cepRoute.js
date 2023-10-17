@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import express from "express";
-import Log from "../models/log.js";
+import Log from "../models/log.js.js";
 
 const cepRoute = express.Router();
 
