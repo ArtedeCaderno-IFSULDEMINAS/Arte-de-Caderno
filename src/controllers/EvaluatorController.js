@@ -1,6 +1,7 @@
 import { ERROR_MESSAGE } from "../constants/Messages.js";
 import Draw from "../models/draw.js";
 import Evaluator from "../models/evaluator.js";
+import createHashWithSalt from "../middleware/hashWithSalt.js";
 import Login from "../models/login.js";
 
 class EvaluatorController {
@@ -45,9 +46,10 @@ class EvaluatorController {
             return res.status(400).json({message: ERROR_MESSAGE.USER_ALREADY_EXISTS});
         }
 
+        const hashPassword = await createHashWithSalt(password);
         const login = new Login({
             username: cpf,
-            password: password,
+            password: hashPassword,
             accessType: 'evaluator'
         });
 
