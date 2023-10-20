@@ -132,44 +132,42 @@ export const professorRoutes = {
 
     },
     updateProfile: async function (user, updatedUser) {
-        let address = null;
-        if (!updatedUser.address) {
-            address = user.rua + ", " + user.numero + " " + user.complemento || null + ". " + user.bairro
-        }
-        console.log(updatedUser)
+        //let address = user.rua + ", " + user.numero + " " + user.complemento || null + ". " + user.b   
+        console.log(updatedUser)     
+        
         const url = `http://localhost:8080/professor/update/${user}`
         const options = {
-            method: "PUT",
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: updatedUser.name,
-                date_of_birth: updatedUser.date_of_birth,
-                cpf: updatedUser.cpf.replace(/\D/g, ""),
-                phone: updatedUser.cel,
-                cep: updatedUser.cep,
-                email: updatedUser.email,
-                address: user.address || address,
-                city: updatedUser.city,
-                uf: updatedUser.uf,
-            })
-        }
+        method: "PUT",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: updatedUser.name,
+            date_of_birth: updatedUser.date_of_birth,
+            cpf: updatedUser.cpf.replace(/\D/g, ""),
+            phone: updatedUser.cel,
+            cep: updatedUser.cep,
+            email: updatedUser.email,
+            address: user.address ,
+            city: updatedUser.city,
+            uf: updatedUser.uf,
+        })
+    }
 
         try {
-            const a = await fetch(url, options)
-            if (a.ok) {
-                throwToast.success("Cadastro atualizado com sucesso!")
-                const b = await a.json()
-                return b
+        const a = await fetch(url, options)
+            if(a.ok) {
+        throwToast.success("Cadastro atualizado com sucesso!")
+const b = await a.json()
+return b
             } else {
-                throwToast.error("Algo deu errado. Tente novamente mais tarde")
-                return false
-            }
+    throwToast.error("Algo deu errado. Tente novamente mais tarde")
+    return false
+}
         } catch (error) {
 
-        }
+}
 
     }
 }

@@ -1,7 +1,7 @@
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Navbar from "src/components/navbar";
 import PasswordModal from "src/components/password-modal";
 import { userContext } from "src/contexts/userContext";
@@ -24,7 +24,7 @@ import {
   Row,
   Select,
   Text,
-  Title,
+  Title
 } from "src/styles/sharedStyles";
 import { checkPassword } from "src/utils/checkPassword";
 import { format } from "src/utils/format";
@@ -32,6 +32,7 @@ import { throwToast } from "src/utils/toast";
 
 const CheckupView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
+  const navigate = useNavigate()
   const [desabilitado, setDesabilitado] = useState({ rua: true, number: true });
   const [showPassword, setShowPassword] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -153,7 +154,6 @@ const CheckupView = () => {
           padding: desktop ? "0" : "1rem 0",
         }}
       >
-        {redirect && <Navigate to="escola" replace />}
         <Title color={colors.black} style={{ fontWeight: 500 }}>
           Cadastro de usuários
         </Title>
@@ -347,7 +347,7 @@ const CheckupView = () => {
         <BodyLink
           style={{ textDecoration: "underline" }}
           onClick={() => {
-            setShowModal(true);
+            navigate("/dicas-de-seguranca")
           }}
         >
           Como criar senhas fortes?

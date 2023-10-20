@@ -26,6 +26,7 @@ const ModalCard = styled.div`
   align-items: center;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   animation: ${animateOnTop} 1.1s;
+  border-radius: 12px;
 `;
 
 const ModalContent = styled.div`

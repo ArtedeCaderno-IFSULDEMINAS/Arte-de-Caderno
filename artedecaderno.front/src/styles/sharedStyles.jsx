@@ -71,6 +71,7 @@ const Container = styled.div`
   gap: 1rem;
   padding: 1.5rem 1rem;
   width: ${(p) => p.width || "100%"};
+  border-radius: 6px;
 `;
 
 const Text = styled.p`

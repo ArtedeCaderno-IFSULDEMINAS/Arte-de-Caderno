@@ -13,6 +13,8 @@ import DrawSubmit from "src/pages/draw-submit";
 import CheckupStudent from "src/pages/checkup/checkup-student";
 import Students from "src/pages/students";
 import Profile from "src/pages/profile";
+import EditProfileView from "src/views/profile/edit-profile";
+import PasswordTip from "src/views/checkup/password-tip";
 
 const Rotas = () => {
   return (
@@ -25,6 +27,7 @@ const Rotas = () => {
       <Route path="/cadastrar/escola" element={<CheckupSchool />} />
       <Route path="/login" element={<Login />} />
       <Route path="/seguranca" element={<TwoFactor />} />
+      <Route path="/dicas-de-seguranca" element={<PasswordTip />} />
 
       <Route
         path="/dashboard"
@@ -42,9 +45,10 @@ const Rotas = () => {
         path="/meus-alunos"
         element={<ProtectedRoute Component={Students} />}
       />
+      <Route path="/perfil" element={<ProtectedRoute Component={Profile} />} />
       <Route
-        path="/perfil"
-        element={<ProtectedRoute Component={Profile} />}
+        path="/perfil/editar"
+        element={<ProtectedRoute Component={EditProfileView} />}
       />
     </Routes>
   );

@@ -5,28 +5,28 @@ import Navbar from "src/components/navbar";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { professorRoutes } from "src/services/professorRoutes";
 import {
+  BodyLink,
   Column,
   ContentContainer,
   PageContainer,
   Row,
-  Text,
   Title,
 } from "src/styles/sharedStyles";
 import PreviousArrow from "src/components/previous-arrow";
 import { studentRoutes } from "src/services/studentRoutes";
-import { fonts } from "src/styles/constants";
-import { format } from "src/utils/format";
-
-let data = [];
+import EditProfileItems from "src/components/edit-profile";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { icons } from "src/styles/icons";
+import { Navigate } from "react-router-dom";
 
 const ProfileView = () => {
   const id = Cookies.get("user");
   const access = Cookies.get("accessType");
-
   const desktop = useMediaQuery("(min-width: 768px)");
   const [edit, setEdit] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
 
   const getProfessor = async () => {
     const a = await professorRoutes.getProfById(id);
@@ -34,8 +34,11 @@ const ProfileView = () => {
     if (a) {
       setUser({
         ...user,
+        id: a.user._id,
         name: a.user.name,
-        date_of_birth: a.user.date_of_birth,
+        date_of_birth: new Date(a.user.date_of_birth).toLocaleDateString(
+          "pt-BR"
+        ),
         cpf: a.user.cpf,
         email: a.user.email,
         password: a.user.password,
@@ -47,40 +50,6 @@ const ProfileView = () => {
         studentsId: a.user.studentsId || null,
         drawsId: a.user.drawsId,
       });
-      data = [
-        {
-          label: "nome completo",
-          value: user.name,
-        },
-        {
-          label: "data de nascimento",
-          value: user.date_of_birth,
-        },
-        {
-          label: "cpf",
-          value: format.cpf(user.cpf),
-        },
-        {
-          label: "telefone",
-          value: user.phone,
-        },
-        {
-          label: "e-mail",
-          value: user.email,
-        },
-        {
-          label: "cep",
-          value: format.cep(user.cep),
-        },
-        {
-          label: "cidade",
-          value: user.city,
-        },
-        {
-          label: "estado",
-          value: user.uf,
-        },
-      ];
       setLoading(false);
     }
   };
@@ -93,7 +62,9 @@ const ProfileView = () => {
         ...user,
         id: a.user._id,
         name: a.user.name,
-        date_of_birth: new Date(a.user.date_of_birth).toLocaleDateString('pt-BR'),
+        date_of_birth: new Date(a.user.date_of_birth).toLocaleDateString(
+          "pt-BR"
+        ),
         cpf: a.user.cpf,
         email: a.user.email,
         password: a.user.password,
@@ -104,41 +75,8 @@ const ProfileView = () => {
         schoolId: a.user.schoolId,
         studentsId: a.user.studentsId || null,
         drawsId: a.user.drawsId,
+        address: a.user.address,
       });
-      data = [
-        {
-          label: "nome completo",
-          value: user.name,
-        },
-        {
-          label: "data de nascimento",
-          value: user.date_of_birth,
-        },
-        {
-          label: "cpf",
-          value: format.cpf(user.cpf),
-        },
-        {
-          label: "telefone",
-          value: user.cel,
-        },
-        {
-          label: "e-mail",
-          value: user.email,
-        },
-        {
-          label: "cep",
-          value: format.cep(user.cep),
-        },
-        {
-          label: "cidade",
-          value: user.city,
-        },
-        {
-          label: "estado",
-          value: user.uf,
-        },
-      ];
       setLoading(false);
     }
   };
@@ -156,35 +94,23 @@ const ProfileView = () => {
   } else {
     return (
       <PageContainer>
+        {edit && <Navigate to="editar" />}
         <Navbar currentPage={"Perfil"} />
         <ContentContainer>
           <Column style={{ gap: "1rem" }}>
-            <Title color="black">Perfil</Title>
+            <Row style={{ justifyContent: "center" }}>
+              <Title color="black">Perfil</Title>
+              <BodyLink>
+                <FontAwesomeIcon
+                  icon={icons.pen}
+                  onClick={() => setEdit(true)}
+                />
+              </BodyLink>
+            </Row>
             <Column width={desktop ? "50%" : "90%"}>
-              {data.map((item, index) => {
-                return (
-                  <Row
-                    key={index}
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                    }}
-                  >
-                    <Text
-                      size={"20px"}
-                      font={fonts.quicksand}
-                      style={{ textTransform: "uppercase", fontWeight: 600 }}
-                    >
-                      {item.label}:
-                    </Text>
-                    <Text size={"20px"} font={fonts.quicksand}>
-                      {item.value}
-                    </Text>
-                  </Row>
-                );
-              })}
+              <EditProfileItems user={user} />
             </Column>
-            <PreviousArrow width={desktop ? "60%" : "90%"} />
+            <PreviousArrow width={desktop ? "50%" : "90%"} />
           </Column>
         </ContentContainer>
       </PageContainer>
