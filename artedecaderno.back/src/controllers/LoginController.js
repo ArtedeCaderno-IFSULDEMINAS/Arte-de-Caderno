@@ -50,11 +50,45 @@ class LoginController {
                             subject: 'Código de Autenticação Arte de Caderno',
                             from: 'Equipe Arte de Caderno <artedecaderno.if@gmail.com>',
                             to: email,
-                            html: `<p>Seu código de autenticação é:</p>
-                            <p style="color: tomato; font-size: 25px; letter-spacing: 2px;">
-                              <b>${code.toUpperCase()}</b>
-                            </p>
-                            <p><b>Código expira em 10 minutos</b>.</p>`
+                            html: `<div style="position: relative;
+                            width: 90vw;
+                            max-width: 700px;
+                            background: #404040;
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 2px;
+                            padding: 20px;
+                            text-align: center;
+                            font-family: 'Raleway';">
+                
+                    <div style="width: 100%;
+                                height: 0;
+                                padding-bottom: 16.5%; /* Mantém a proporção da imagem (12.8/86 = 16.5%) */
+                                position: relative;
+                                background: url('https://i.imgur.com/MHJ4Oml.png') center/contain no-repeat;">
+                
+                    </div>
+                
+                    <div style="width: 100%;
+                                font-weight: 800;
+                                font-size: 6vw; /* Tamanho de fonte responsivo */
+                                color: #FFFFFF;
+                                margin-top: 20px;
+                                border: 1px solid #000000;
+                                text-shadow: 0px 0.2vw 0.2vw rgba(0, 0, 0, 0.25);">
+                        ${code.toUpperCase()}
+                    </div>
+                
+                    <div style="width: 100%;
+                    background: #EFEFEF;
+                    height: 0;
+                    padding-bottom: 16.5%; /* Mantém a proporção da imagem (12.8/86 = 16.5%) */
+                    position: relative;
+                    font-size: 2em; /* 1em é igual ao tamanho da fonte do elemento pai (nesse caso, 25 pixels) */
+                    color: #000000;">
+            Este é o seu código de verificação. Por favor, não compartilhe este código com mais ninguém. Ele é pessoal e válido por 10 minutos. Atenciosamente, Equipe Arte de Caderno
+        </div>
+        
+                </div>`
 
                         });
                         //console.log(mailSent);
@@ -83,11 +117,45 @@ class LoginController {
                             subject: 'Código de Autenticação Arte de Caderno', //remover estudante depois, apenas para teste
                             from: 'Equipe Arte de Caderno <artedecaderno.if@gmail.com>',
                             to: email,
-                            html: `<p>Seu código de autenticação é:</p>
-                            <p style="color: tomato; font-size: 25px; letter-spacing: 2px;">
-                              <b>${code}</b>
-                            </p>
-                            <p><b>Código expira em 10 minutos</b>.</p>`
+                            html: `<div style="position: relative;
+                            width: 90vw;
+                            max-width: 700px;
+                            background: #404040;
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 2px;
+                            padding: 20px;
+                            text-align: center;
+                            font-family: 'Raleway';">
+                
+                    <div style="width: 100%;
+                                height: 0;
+                                padding-bottom: 16.5%; /* Mantém a proporção da imagem (12.8/86 = 16.5%) */
+                                position: relative;
+                                background: url('https://i.imgur.com/MHJ4Oml.png') center/contain no-repeat;">
+                
+                    </div>
+                
+                    <div style="width: 100%;
+                                font-weight: 800;
+                                font-size: 6vw; /* Tamanho de fonte responsivo */
+                                color: #FFFFFF;
+                                margin-top: 20px;
+                                border: 1px solid #000000;
+                                text-shadow: 0px 0.2vw 0.2vw rgba(0, 0, 0, 0.25);">
+                        ${code.toUpperCase()}
+                    </div>
+                
+                    <div style="width: 100%;
+                    background: #EFEFEF;
+                    height: 0;
+                    padding-bottom: 16.5%; /* Mantém a proporção da imagem (12.8/86 = 16.5%) */
+                    position: relative;
+                    font-size: 2em; /* 1em é igual ao tamanho da fonte do elemento pai (nesse caso, 25 pixels) */
+                    color: #000000;">
+            Este é o seu código de verificação. Por favor, não compartilhe este código com mais ninguém. Ele é pessoal e válido por 10 minutos. Atenciosamente, Equipe Arte de Caderno
+        </div>
+        
+                </div>`
 
                         });
                         //console.log(mailSent);
