@@ -83,7 +83,7 @@ class LoginController {
                     height: 0;
                     padding-bottom: 16.5%; /* Mantém a proporção da imagem (12.8/86 = 16.5%) */
                     position: relative;
-                    font-size: 2em; /* 1em é igual ao tamanho da fonte do elemento pai (nesse caso, 25 pixels) */
+                    font-size: 1.7vw; 
                     color: #000000;">
             Este é o seu código de verificação. Por favor, não compartilhe este código com mais ninguém. Ele é pessoal e válido por 10 minutos. Atenciosamente, Equipe Arte de Caderno
         </div>
@@ -108,7 +108,7 @@ class LoginController {
                             code2factor: code,
                             createdAt: codeGeneratedAt,
                             //email:email
-                        }; //modificar o codigo de 2 fatores
+                        }; 
 
                         await Login.findOneAndUpdate({ username: userLogin.username}, updateCode);
 
@@ -150,7 +150,7 @@ class LoginController {
                     height: 0;
                     padding-bottom: 16.5%; /* Mantém a proporção da imagem (12.8/86 = 16.5%) */
                     position: relative;
-                    font-size: 2em; /* 1em é igual ao tamanho da fonte do elemento pai (nesse caso, 25 pixels) */
+                    font-size: 1.7vw; 
                     color: #000000;">
             Este é o seu código de verificação. Por favor, não compartilhe este código com mais ninguém. Ele é pessoal e válido por 10 minutos. Atenciosamente, Equipe Arte de Caderno
         </div>
