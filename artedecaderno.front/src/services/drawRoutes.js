@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { throwToast } from 'src/utils/toast';
 
 const token = Cookies.get('token')
 
@@ -6,16 +7,16 @@ export const drawRoutes = {
     postDraw: async function (draw) {
         let url = "http://localhost:8080/draw";
         const formData = new FormData()
-        formData.append('file', draw.image)
         formData.append('title', draw.title)
+        formData.append('image', draw.image)
         formData.append('category', draw.category)
         formData.append('author', draw.author)
-        formData.append('theme', draw.theme)
+
+        console.log(draw.image)
 
         let options = {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
             body: formData,
@@ -26,12 +27,13 @@ export const drawRoutes = {
             const b = await a.json()
 
             console.log(b)
-            // if (a.status !== 201) {
-            //     throwToast.error("Ocorreu um erro. Tente novamente!");
-            // } else {
-            //     throwToast.success("Obra cadastrado com sucesso!");
-            //     return true
-            // }
+            if (!a.ok) {
+                throwToast.error("Ocorreu um erro. Tente novamente!");
+                return false
+            }
+            throwToast.success("Obra cadastrado com sucesso!");
+            return true
+
         } catch (error) {
             console.error(error);
         }

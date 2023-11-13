@@ -61,4 +61,27 @@ export const studentRoutes = {
             console.error(error)
         }
     },
+    getDrawsByStudent: async function (student_id) {
+        const url = `http://localhost:8080/student/${student_id}/draws`
+        const options = {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        }
+        try {
+            const a = await fetch(url, options)
+            const b = await a.json()
+
+            if (!a.ok) {
+                throwToast.error("Algo deu errado. Tente novamente mais tarde");
+                return false
+            }
+
+            return b
+
+        } catch (error) {
+            return
+        }
+    }
 }

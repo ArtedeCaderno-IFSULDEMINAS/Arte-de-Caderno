@@ -19,7 +19,7 @@ import {
   PageContainer,
   Row,
   Select,
-  Title,
+  Title
 } from "src/styles/sharedStyles";
 
 const DrawSubmitView = () => {
@@ -29,6 +29,7 @@ const DrawSubmitView = () => {
     author: null,
     theme: null,
     category: null,
+    imageUrl: null,
     image: null,
   });
   const [user, setUser] = useState();
@@ -41,10 +42,12 @@ const DrawSubmitView = () => {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+    
     const imageUrl = URL.createObjectURL(file);
     setDraw((prevState) => ({
       ...prevState,
-      image: imageUrl,
+      imageUrl: imageUrl,
+      image: file,
     }));
   };
 
@@ -89,7 +92,9 @@ const DrawSubmitView = () => {
   }, []);
 
   const insertDraw = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    console.log(draw);
+
     const a = await drawRoutes.postDraw(draw);
     if (a) {
       navigate("/dashboard");
@@ -102,7 +107,7 @@ const DrawSubmitView = () => {
       <ContentContainer>
         <Title color={"black"}>Cadastrar Obra</Title>
         <Container width={desktop ? "60%" : "90%"} color={colors.lightGrey}>
-          <Form onSubmit={insertDraw} >
+          <Form onSubmit={insertDraw}>
             <Row>
               <InputColumn width={desktop ? "50%" : "100%"}>
                 <Label>Título:</Label>
@@ -191,7 +196,7 @@ const DrawSubmitView = () => {
                 />
               </InputColumn>
               <InputColumn width={desktop ? "50%" : "100%"}>
-                {draw.image && <img src={draw.image} height={"150px"} />}
+                {draw.imageUrl && <img src={draw.imageUrl} height={"150px"} />}
               </InputColumn>
             </Row>
             <Button>cadastrar</Button>

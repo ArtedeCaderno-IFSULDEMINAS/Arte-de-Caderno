@@ -5,6 +5,7 @@ import Navbar from "src/components/navbar";
 import { professorRoutes } from "src/services/professorRoutes";
 import { studentRoutes } from "src/services/studentRoutes";
 import { ContentContainer, PageContainer } from "src/styles/sharedStyles";
+import AdminDash from "src/views/dashboard/admin";
 import ProfessorDash from "src/views/dashboard/professor";
 import StudentDash from "src/views/dashboard/student";
 
@@ -64,7 +65,28 @@ const Dashboard = () => {
 
   const getEvaluator = async () => {};
 
-  const getAdmin = async () => {};
+  const getAdmin = async () => {
+    const a = await studentRoutes.getUserById(id);
+    if (a) {
+      setUser({
+        ...user,
+        id: a.user._id,
+        name: a.user.name,
+        date_of_birth: a.user.date_of_birth,
+        cpf: a.user.cpf,
+        email: a.user.email,
+        password: a.user.password,
+        cel: a.user.phone,
+        cep: a.user.cep,
+        city: a.user.city,
+        state: a.user.state,
+        schoolId: a.user.schoolId,
+        studentsId: a.user.studentsId || null,
+        drawsId: a.user.drawsId,
+      });
+      setLoading(false);
+    }
+  };
 
   useLayoutEffect(() => {
     document.title = "Arte de Caderno | Dashboard";
@@ -88,6 +110,7 @@ const Dashboard = () => {
         <ContentContainer>
           {access === "professor" && <ProfessorDash user={user} />}
           {access === "student" && <StudentDash user={user} />}
+          {access === "admin" && <AdminDash user={user} />}
         </ContentContainer>
       </PageContainer>
     );

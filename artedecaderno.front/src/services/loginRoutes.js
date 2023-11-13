@@ -42,7 +42,7 @@ export const loginRoutes = {
             return false
         } else {
             Cookies.set("user", b.user._id, { expires: 30, path: "/" });
-            Cookies.set("accessType", b.accessType, { expires: 30, path: "/" });
+            Cookies.set("accessType", "admin", { expires: 30, path: "/" });
             Cookies.set("token", b.token, { expires: 30, path: "/" });
             Cookies.set("isLogged", true, { expires: 30, path: "/" });
             return await b

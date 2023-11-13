@@ -2,9 +2,18 @@ import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { colors } from "src/styles/constants";
 import { Container, Row, Title } from "src/styles/sharedStyles";
 import DashboardCard from "./components/card";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const StudentDash = ({ user }) => {
   const desktop = useMediaQuery("(min-width: 768px)");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user?.accessType !== "student") {
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <Container width={desktop ? "85%" : "90%"} color={colors.lightGrey}>

@@ -16,6 +16,8 @@ import Profile from "src/pages/profile";
 import EditProfileView from "src/views/profile/edit-profile";
 import PasswordTip from "src/views/checkup/password-tip";
 import CheckupNewSchool from "src/pages/checkup/checkup-new-school";
+import StudentInfo from "src/pages/student-info";
+import InsertEvaluator from "src/pages/admin/insert-evaluator";
 
 const Rotas = () => {
   return (
@@ -46,6 +48,10 @@ const Rotas = () => {
         path="/meus-alunos"
         element={<ProtectedRoute Component={Students} />}
       />
+      <Route
+        path="/aluno/:id"
+        element={<ProtectedRoute Component={StudentInfo} />}
+      />
       <Route path="/perfil" element={<ProtectedRoute Component={Profile} />} />
       <Route
         path="/perfil/editar"
@@ -54,6 +60,10 @@ const Rotas = () => {
       <Route
         path="/escolas/nova" 
         element={<ProtectedRoute Component={CheckupNewSchool}/>}
+      />
+      <Route
+        path="/avaliadores/criar" 
+        element={<ProtectedRoute Component={InsertEvaluator}/>}
       />
     </Routes>
   );
