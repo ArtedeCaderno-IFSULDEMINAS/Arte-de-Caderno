@@ -15,6 +15,7 @@ import Students from "src/pages/students";
 import Profile from "src/pages/profile";
 import EditProfileView from "src/views/profile/edit-profile";
 import PasswordTip from "src/views/checkup/password-tip";
+import CheckupNewSchool from "src/pages/checkup/checkup-new-school";
 
 const Rotas = () => {
   return (
@@ -49,6 +50,10 @@ const Rotas = () => {
       <Route
         path="/perfil/editar"
         element={<ProtectedRoute Component={EditProfileView} />}
+      />
+      <Route
+        path="/escolas/nova" 
+        element={<ProtectedRoute Component={CheckupNewSchool}/>}
       />
     </Routes>
   );

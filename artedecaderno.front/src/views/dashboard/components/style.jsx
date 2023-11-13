@@ -6,7 +6,7 @@ const CardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: ${(p) => (p.desktop ? "300px" : "90%")} !important;
+  width: ${(p) => (p.desktop ? "300px" : "90%")};
   height: 200px;
   box-shadow: 0px 4px 50px 0px rgba(0, 0, 0, 0.25);
   border-radius: 12px;

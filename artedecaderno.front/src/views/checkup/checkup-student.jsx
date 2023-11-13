@@ -154,7 +154,7 @@ const CheckupStudentView = () => {
     return <Loading />;
   } else {
     return (
-      <PageContainer>
+      <PageContainer style={{marginTop: desktop ? "" : "1rem"}} >
         <Navbar />
         {redirect && <Navigate to="/dashboard" replace />}
         <ContentContainer>

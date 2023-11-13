@@ -12,6 +12,7 @@ const PreviousArrow = ({ navigate, width }) => {
       width={width}
       style={{
         justifyContent: "flex-start",
+        marginBottom: "1rem"
       }}
     >
       {navigate && navigateBack && <Navigate to={navigate} replace />}

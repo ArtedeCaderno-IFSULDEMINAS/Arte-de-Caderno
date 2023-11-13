@@ -50,7 +50,7 @@ const ProfessorDash = ({ user }) => {
           icon={"add_school"}
           title={"Cadastrar nova escola"}
           desktop={desktop}
-          path={"#"}
+          path={"/escolas/nova"}
         />
       </Row>
     </Container>

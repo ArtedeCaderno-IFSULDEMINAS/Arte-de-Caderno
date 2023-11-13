@@ -135,7 +135,6 @@ const CheckupView = () => {
   const nextPage = (e) => {
     e.preventDefault();
     const err = singUpValidation(user);
-    console.log(user);
 
     if (Object.keys(err).length === 0) {
       setRedirect(true);
