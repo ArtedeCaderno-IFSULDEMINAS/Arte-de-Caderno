@@ -135,6 +135,7 @@ const CheckupView = () => {
   const nextPage = (e) => {
     e.preventDefault();
     const err = singUpValidation(user);
+    console.log(err)
 
     if (Object.keys(err).length === 0) {
       setRedirect(true);
@@ -343,6 +344,7 @@ const CheckupView = () => {
             <Button type="submit">próximo</Button>
           </Form>
         </Container>
+        {redirect && navigate("escola") }
         <BodyLink
           style={{ textDecoration: "underline" }}
           onClick={() => {

@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Loading from "src/components/loading";
 import Navbar from "src/components/navbar";
 import { professorRoutes } from "src/services/professorRoutes";
@@ -66,7 +66,7 @@ const Dashboard = () => {
 
   const getAdmin = async () => {};
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.title = "Arte de Caderno | Dashboard";
     if (access === "professor") {
       getProfessor();
@@ -77,7 +77,7 @@ const Dashboard = () => {
     } else {
       getAdmin();
     }
-  }, []);
+  }, [loading]);
 
   if (loading) {
     return <Loading currentPage={"Dashboard"} />;

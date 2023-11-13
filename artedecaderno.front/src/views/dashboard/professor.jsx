@@ -8,7 +8,7 @@ const ProfessorDash = ({ user }) => {
   return (
     <Container width={desktop ? "85%" : "90%"} color={colors.lightGrey}>
       <Row style={{ marginBottom: "1rem" }}>
-        <Title color={"black"}>Olá, {user?.name}!</Title>
+        <Title color={"black"}>Olá, {user?.name.trim()}!</Title>
       </Row>
       <Row gap={"1rem"}>
         <DashboardCard
