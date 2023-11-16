@@ -4,16 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icons } from "src/styles/icons";
 import { Button } from "src/styles/sharedStyles";
 
-const TableRow = ({ index, data }) => {
+const TableRow = ({ index, data, path }) => {
   const navigate = useNavigate();
   return (
     <TR>
       <TD style={{ fontWeight: 600 }}>{index + 1}</TD>
       <TD style={{ textAlign: "left" }}>{data.name}</TD>
       <TD>{data.uf.toUpperCase()}</TD>
-      <TD style={{ textAlign: "left" }}>{data.email}</TD>
+      <TD >{data.email}</TD>
       <TD>
-        <Button width={"auto"} onClick={() => navigate(`/aluno/${data._id}`)}>
+        <Button width={"auto"} onClick={() => navigate(`/${path}/${data._id}`)}>
           <FontAwesomeIcon icon={icons.info} />
         </Button>
       </TD>

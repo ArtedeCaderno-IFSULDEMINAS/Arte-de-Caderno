@@ -18,6 +18,8 @@ import PasswordTip from "src/views/checkup/password-tip";
 import CheckupNewSchool from "src/pages/checkup/checkup-new-school";
 import StudentInfo from "src/pages/student-info";
 import InsertEvaluator from "src/pages/admin/insert-evaluator";
+import ResetPassword from "src/pages/reset-password";
+import MySchools from "src/pages/my-schools";
 
 const Rotas = () => {
   return (
@@ -31,6 +33,7 @@ const Rotas = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/seguranca" element={<TwoFactor />} />
       <Route path="/dicas-de-seguranca" element={<PasswordTip />} />
+      <Route path="esqueci-senha" element={<ResetPassword />} />
 
       <Route
         path="/dashboard"
@@ -58,12 +61,16 @@ const Rotas = () => {
         element={<ProtectedRoute Component={EditProfileView} />}
       />
       <Route
-        path="/escolas/nova" 
-        element={<ProtectedRoute Component={CheckupNewSchool}/>}
+        path="/escolas/nova"
+        element={<ProtectedRoute Component={CheckupNewSchool} />}
       />
       <Route
-        path="/avaliadores/criar" 
-        element={<ProtectedRoute Component={InsertEvaluator}/>}
+        path="/avaliadores/criar"
+        element={<ProtectedRoute Component={InsertEvaluator} />}
+      />
+      <Route
+        path="/minhas-escolas"
+        element={<ProtectedRoute Component={MySchools} />}
       />
     </Routes>
   );

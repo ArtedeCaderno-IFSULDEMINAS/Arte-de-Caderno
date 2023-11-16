@@ -19,8 +19,8 @@ const PasswordTip = () => {
     <ContentContainer>
       <Navbar />
       <Banner img={require("src/assets/img/login/background.png")}>
-        <Column style={{gap: "1rem"}}>
-          <Container width={desktop ? "60%" : "90%"}  >
+        <Column style={{ gap: "1rem" }}>
+          <Container width={desktop ? "60%" : "90%"}>
             <Title color="black">Dicas de segurança</Title>
             {passwordTips.map((tip, index) => (
               <Row
@@ -30,10 +30,10 @@ const PasswordTip = () => {
                   justifyContent: "flex-start",
                 }}
               >
-                <Text style={{ fontWeight: 600, width: "auto" }} align="left">
-                  {index + 1}. {tip.title}:
+                <Text style={{ fontWeight: 600 }} align="left">
+                  {index + 1}. {tip.title}: 
+                  <Text align="left" style={{fontWeight: 400}} >{tip.description}</Text>
                 </Text>
-                <Text align="left">{tip.description}</Text>
               </Row>
             ))}
           </Container>

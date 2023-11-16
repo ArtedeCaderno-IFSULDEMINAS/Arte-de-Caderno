@@ -1,16 +1,16 @@
 const requiredFields = [
-    'name',
+    'nome',
     'cpf',
-    'date_of_birth',
-    'email',
-    'password',
+    'nascimento',
+    'e-mail',
+    'senha',
     'perfil',
-    'cel',
+    'celular',
     'cep',
     'rua',
     'bairro',
     'uf',
-    'city',
+    'cidade',
     'numero'
 ]
 

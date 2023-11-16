@@ -34,6 +34,10 @@ const TwoFactorView = () => {
     }
   };
 
+  const resend = async () => {
+    const a = await loginRoutes.resend(user.cpf, user.password);
+  };
+
   return (
     <PageContainer>
       <Navbar />
@@ -55,7 +59,7 @@ const TwoFactorView = () => {
                 />
                 <Button onClick={logar}>enviar</Button>
               </Row>
-              <BodyLink>Reenviar código</BodyLink>
+              <BodyLink onClick={resend} >Reenviar código</BodyLink>
             </Container>
             <PreviousArrow width={desktop ? "60%" : "90%"} />
           </Column>

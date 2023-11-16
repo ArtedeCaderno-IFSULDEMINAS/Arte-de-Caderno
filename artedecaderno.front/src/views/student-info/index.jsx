@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "src/components/loading";
 import Navbar from "src/components/navbar";
@@ -42,9 +41,7 @@ const StudentInfoView = () => {
     if (a) {
       setDraws(a);
       setFlag(true);
-    } else {
-      setFlag(false);
-    }
+    } 
   };
 
   const getStudent = async () => {
@@ -57,7 +54,7 @@ const StudentInfoView = () => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     getStudent();
   }, []);
 
@@ -131,18 +128,23 @@ const StudentInfoView = () => {
               </Row>
             </Column>
             <Row>
-              <Row>
-                {draws.map((draw, index) => {
-                  return (
-                    <img
-                      src={require(`../../../../desenhos/${draw.linkImage}`) || draw.linkImage}
-                      alt={draw.title}
-                      key={index}
-                      height={"200px"}
-                    />
-                  );
-                })}
-              </Row>
+              {flag && (
+                <Row>
+                  {draws.map((draw, index) => {
+                    return (
+                      <img
+                        src={
+                          require(`../../../../desenhos/${draw.linkImage}`) ||
+                          draw.linkImage
+                        }
+                        alt={draw.title}
+                        key={index}
+                        height={"200px"}
+                      />
+                    );
+                  })}
+                </Row>
+              )}
 
               {!flag && (
                 <Text>

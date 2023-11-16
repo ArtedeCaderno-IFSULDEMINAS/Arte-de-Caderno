@@ -35,11 +35,11 @@ const ProfessorDash = ({ user }) => {
           path={"#"}
         />
         <DashboardCard
-          value={0}
+          value={user.schoolId.length}
           icon={"book"}
           title={"Escolas cadastradas"}
           desktop={desktop}
-          path={"#"}
+          path={"/minhas-escolas"}
         />
       </Row>
       <Row gap={"1rem"}>

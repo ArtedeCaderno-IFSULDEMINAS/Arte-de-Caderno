@@ -44,7 +44,6 @@ export const studentRoutes = {
         }
     },
     getUserById: async function (student_id) {
-        console.log(":: ", student_id)
         const url = `http://localhost:8080/student/${student_id}`
         const options = {
             method: 'GET',

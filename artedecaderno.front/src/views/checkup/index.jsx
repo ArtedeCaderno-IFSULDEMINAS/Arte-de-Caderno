@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "src/components/navbar";
 import PasswordModal from "src/components/password-modal";
 import { userContext } from "src/contexts/userContext";
-import singUpValidation from "src/hooks/signUpValidation";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { CEProutes } from "src/services/CEProutes";
 import { CPFroutes } from "src/services/CPFroutes";
@@ -32,7 +31,7 @@ import { throwToast } from "src/utils/toast";
 
 const CheckupView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [desabilitado, setDesabilitado] = useState({ rua: true, number: true });
   const [showPassword, setShowPassword] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -126,7 +125,7 @@ const CheckupView = () => {
   const checkCpf = async () => {
     const a = await CPFroutes.verifyCPF(aux.cpf);
     if (!a) {
-      return
+      return;
     } else {
       setUser((user) => ({ ...user, cpf: aux.cpf }));
     }
@@ -134,16 +133,8 @@ const CheckupView = () => {
 
   const nextPage = (e) => {
     e.preventDefault();
-    const err = singUpValidation(user);
-    console.log(err)
 
-    if (Object.keys(err).length === 0) {
-      setRedirect(true);
-      console.log(redirect);
-    } else {
-      throwToast.error(err[0]);
-      console.log(err);
-    }
+    setRedirect(true);
   };
 
   return (
@@ -344,11 +335,11 @@ const CheckupView = () => {
             <Button type="submit">próximo</Button>
           </Form>
         </Container>
-        {redirect && navigate("escola") }
+        {redirect && navigate("escola")}
         <BodyLink
           style={{ textDecoration: "underline" }}
           onClick={() => {
-            navigate("/dicas-de-seguranca")
+            navigate("/dicas-de-seguranca");
           }}
         >
           Como criar senhas fortes?

@@ -22,6 +22,26 @@ export const loginRoutes = {
         }
     },
 
+    resend: async function (user, pwd) {
+        let url = "http://localhost:8080/login";
+        let options = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: user.replace(/\D/g, ""),
+                password: pwd,
+            }),
+        };
+        const a = await fetch(url, options)
+
+        if (a.status !== 200) {
+            return false
+        } else {
+            throwToast.success("Código reenviado!")
+            return true
+        }
+    },
+
     logar: async function (user, pwd, code) {
         let url = "http://localhost:8080/login2fa"
         const options = {
@@ -38,16 +58,16 @@ export const loginRoutes = {
 
         if (a.status !== 200) {
             throwToast.error("Código incorreto!")
-            console.log(code)
             return false
         } else {
             Cookies.set("user", b.user._id, { expires: 30, path: "/" });
-            Cookies.set("accessType", "admin", { expires: 30, path: "/" });
+            Cookies.set("accessType", b.accessType, { expires: 30, path: "/" });
             Cookies.set("token", b.token, { expires: 30, path: "/" });
             Cookies.set("isLogged", true, { expires: 30, path: "/" });
             return await b
         }
     },
+
     forgotPassword: async function (user) {
         const url = "http://localhost:8080/forgotPassword"
         const cpf = user.replace(/\D/g, "")
@@ -73,6 +93,7 @@ export const loginRoutes = {
         }
 
     },
+
     resetPassword: async function (newCred) {
         const url = "http://localhost:8080/resetPassword"
         const options = {

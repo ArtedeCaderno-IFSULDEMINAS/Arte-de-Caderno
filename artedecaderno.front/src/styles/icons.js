@@ -1,5 +1,5 @@
 import { faInstagram, faTiktok } from "@fortawesome/free-brands-svg-icons"
-import { faBars, faBookOpen, faCircleArrowLeft, faCircleInfo, faCirclePlus, faCircleUser, faFileCirclePlus, faFloppyDisk, faGlobe, faImage, faMagnifyingGlassLocation, faPen, faUserGroup, faUserPlus, faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faBars, faBookOpen, faCircleArrowLeft, faCircleInfo, faCirclePlus, faCircleUser, faEye, faEyeSlash, faFileCirclePlus, faFloppyDisk, faGlobe, faImage, faMagnifyingGlassLocation, faPen, faUserGroup, faUserPlus, faXmark } from "@fortawesome/free-solid-svg-icons"
 
 export const icons = {
     instagram: faInstagram,
@@ -18,5 +18,7 @@ export const icons = {
     save: faFloppyDisk,
     cancel: faXmark,
     cep: faMagnifyingGlassLocation,
-    info: faCircleInfo
+    info: faCircleInfo,
+    eye: faEye,
+    eye_slash: faEyeSlash,
 }

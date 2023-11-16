@@ -6,7 +6,7 @@ import StudentInfoView from "src/views/student-info";
 const StudentInfo = () => {
   const navigate = useNavigate()
   useEffect(() => {
-    if(Cookies.get("access") !== "professor") {
+    if(Cookies.get("accessType") !== "professor") {
       navigate("/dashboard");
     }
       window.title = "Arte de Caderno | Estudante";

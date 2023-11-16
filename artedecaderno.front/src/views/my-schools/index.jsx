@@ -2,7 +2,6 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import Loading from "src/components/loading";
 import Navbar from "src/components/navbar";
-import PreviousArrow from "src/components/previous-arrow";
 import Table from "src/components/table";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { professorRoutes } from "src/services/professorRoutes";
@@ -12,24 +11,21 @@ import {
   Title,
 } from "src/styles/sharedStyles";
 
-const StudentsView = () => {
-  const id = Cookies.get("user");
-  const [loading, setLoading] = useState(true);
-  const [students, setStudents] = useState(null);
-
+const MySchoolsView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const getStudents = async () => {
-    const a = await professorRoutes.getStudents(id);
-    console.log(a);
+  const getSchools = async () => {
+    const a = await professorRoutes.getSchools(Cookies.get("user"));
     if (a) {
-      setStudents(a);
+      setData(a);
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    getStudents();
+    getSchools();
   }, []);
 
   if (loading) {
@@ -39,18 +35,17 @@ const StudentsView = () => {
       <PageContainer>
         <Navbar />
         <ContentContainer>
-          <Title color="black">Alunos Cadastrados</Title>
+          <Title color="black">Minhas escolas</Title>
           <Table
-            headers={["nº", "nome", "estado", "e-mail", " "]}
-            data={students}
+            headers={["nº", "nome", "UF", "e-mail", " "]}
             width={desktop ? "80%" : "90%"}
-            path={"aluno"}
+            data={data}
+            path={"escola"}
           />
-          <PreviousArrow navigate={"/dashboard"} width={desktop ? "80%" : "90%"} />
         </ContentContainer>
       </PageContainer>
     );
   }
 };
 
-export default StudentsView;
+export default MySchoolsView;
