@@ -7,15 +7,15 @@ import PreviousArrow from "src/components/previous-arrow";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { schoolRoutes } from "src/services/schoolRoutes";
 import { studentRoutes } from "src/services/studentRoutes";
-import { fonts } from "src/styles/constants";
+import { colors, fonts } from "src/styles/constants";
 import { icons } from "src/styles/icons";
 import {
-  Column,
+  Container,
   ContentContainer,
   PageContainer,
   Row,
   Text,
-  Title,
+  Title
 } from "src/styles/sharedStyles";
 import { format } from "src/utils/format";
 
@@ -69,7 +69,7 @@ const StudentInfoView = () => {
             Informações do Aluno:
           </Title>
           <Row width={desktop ? "80%" : "90%"}>
-            <Column width={desktop ? "80%" : "100%"}>
+            <Container color={colors.lightGrey} width={desktop ? "80%" : "100%"}>
               <Row style={{ justifyContent: "flex-start" }}>
                 <Text style={{ fontWeight: 600, textTransform: "uppercase" }}>
                   Nome Completo:
@@ -126,7 +126,7 @@ const StudentInfoView = () => {
                 </Text>
                 <Text>{data.school}</Text>
               </Row>
-            </Column>
+            </Container>
             <Row>
               {flag && (
                 <Row>

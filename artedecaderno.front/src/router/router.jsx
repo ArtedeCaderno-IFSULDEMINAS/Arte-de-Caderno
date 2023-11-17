@@ -20,6 +20,8 @@ import StudentInfo from "src/pages/student-info";
 import InsertEvaluator from "src/pages/admin/insert-evaluator";
 import ResetPassword from "src/pages/reset-password";
 import MySchools from "src/pages/my-schools";
+import School from "src/pages/school";
+import RateDraw from "src/pages/rate-draw";
 
 const Rotas = () => {
   return (
@@ -71,6 +73,14 @@ const Rotas = () => {
       <Route
         path="/minhas-escolas"
         element={<ProtectedRoute Component={MySchools} />}
+      />
+      <Route
+        path="/escola/:id"
+        element={<ProtectedRoute Component={School} />}
+      />
+      <Route
+        path="/avaliar/:id"
+        element={<ProtectedRoute Component={RateDraw} />}
       />
     </Routes>
   );

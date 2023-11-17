@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { useContext, useState } from "react";
 import { Banner } from "src/components/banner";
 import Navbar from "src/components/navbar";
@@ -17,12 +16,12 @@ import {
   PageContainer,
   Row,
   Text,
-  Title,
+  Title
 } from "src/styles/sharedStyles";
 import { format } from "src/utils/format";
 import { userContext } from "src/contexts/userContext";
 import { Link, Navigate } from "react-router-dom";
-import { socialMediaColors, colors } from "src/styles/constants";
+import { colors } from "src/styles/constants";
 import { loginRoutes } from "src/services/loginRoutes";
 
 const LoginView = () => {
@@ -110,32 +109,7 @@ const LoginView = () => {
               >
                 Entrar
               </Button>
-              <Button
-                width={desktop ? "80%" : "100%"}
-                bg={socialMediaColors.facebook}
-                hover={socialMediaColors.hFacebook}
-                color={colors.white}
-                textTransform={"none"}
-              >
-                <FontAwesomeIcon
-                  icon={faFacebook}
-                  style={{ fontSize: "16px", marginRight: "5px" }}
-                />
-                Entrar com Facebook
-              </Button>
-              <Button
-                width={desktop ? "80%" : "100%"}
-                bg={socialMediaColors.google}
-                hover={socialMediaColors.hGoogle}
-                color={colors.white}
-                textTransform={"none"}
-              >
-                <FontAwesomeIcon
-                  icon={faGoogle}
-                  style={{ fontSize: "16px", marginRight: "5px" }}
-                />{" "}
-                Entrar com Google
-              </Button>
+             
             </Form>
             <Text style={{ display: "flex", alignItems: "center", gap: "5px" }}>
               Não tem uma conta?{" "}

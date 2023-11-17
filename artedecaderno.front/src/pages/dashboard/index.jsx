@@ -2,10 +2,12 @@ import Cookies from "js-cookie";
 import { useLayoutEffect, useState } from "react";
 import Loading from "src/components/loading";
 import Navbar from "src/components/navbar";
+import { evaluatorRoutes } from "src/services/evaluatorRoutes";
 import { professorRoutes } from "src/services/professorRoutes";
 import { studentRoutes } from "src/services/studentRoutes";
 import { ContentContainer, PageContainer } from "src/styles/sharedStyles";
 import AdminDash from "src/views/dashboard/admin";
+import EvaluatorDash from "src/views/dashboard/evaluator";
 import ProfessorDash from "src/views/dashboard/professor";
 import StudentDash from "src/views/dashboard/student";
 
@@ -17,7 +19,6 @@ const Dashboard = () => {
 
   const getProfessor = async () => {
     const a = await professorRoutes.getProfById(id);
-    console.log(a);
     if (a) {
       setUser({
         ...user,
@@ -41,7 +42,6 @@ const Dashboard = () => {
 
   const getStudent = async () => {
     const a = await studentRoutes.getUserById(id);
-    console.log(a);
     if (a) {
       setUser({
         ...user,
@@ -63,7 +63,20 @@ const Dashboard = () => {
     }
   };
 
-  const getEvaluator = async () => {};
+  const getEvaluator = async () => {
+    const a = await evaluatorRoutes.getEvaluatorById(id);
+    if (a) {
+      setUser({
+        ...user,
+        id: a.user._id,
+        name: a.user.name,
+        cpf: a.user.cpf,
+        email: a.user.email,
+        draws: a.user.draws,
+      });
+      setLoading(false);
+    }
+  };
 
   const getAdmin = async () => {
     const a = await studentRoutes.getUserById(id);
@@ -111,6 +124,7 @@ const Dashboard = () => {
           {access === "professor" && <ProfessorDash user={user} />}
           {access === "student" && <StudentDash user={user} />}
           {access === "admin" && <AdminDash user={user} />}
+          {access === "evaluator" && <EvaluatorDash user={user} />}
         </ContentContainer>
       </PageContainer>
     );

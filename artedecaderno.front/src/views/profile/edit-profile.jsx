@@ -49,7 +49,7 @@ const EditProfileView = () => {
 
   const navigate = useNavigate();
   const access = Cookies.get("accessType");
-  const id = Cookies.get("id");
+  const id = Cookies.get("user");
 
   const getProfessor = async () => {
     const a = await professorRoutes.getProfById(id);
@@ -77,7 +77,6 @@ const EditProfileView = () => {
 
   const getStudent = async () => {
     const a = await studentRoutes.getUserById(id);
-    console.log(a);
     if (a) {
       setUser({
         ...user,
@@ -164,14 +163,20 @@ const EditProfileView = () => {
         email: newUser?.email || user.email,
         phone: newUser?.cel || user.cel,
         cep: newUser?.cep || user.cep,
-        city: newUser?.city || user.city,
-        uf: newUser?.state || user.state,
+        city: newUser?.cidade || user.city,
+        uf: newUser?.uf || user.state,
         schoolId: user.schoolId,
+        cpf: user.cpf,
+        bairro: newUser?.bairro || user.bairro,
+        rua: newUser?.rua || user.rua,
+        numero: newUser?.numero || user.numero,
+        complemento: newUser?.complemento || user?.complemento,
+        id: user.id,
     }
-    const a = await professorRoutes.updateProfile(id, updated);
+    const a = await professorRoutes.updateProfile(updated);
     if (a) {
       throwToast.success("Perfil atualizado com sucesso!");
-      navigate("/profile");
+      navigate("/perfil");
     }
   };
 

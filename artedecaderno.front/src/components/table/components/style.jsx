@@ -4,7 +4,7 @@ import styled from "styled-components";
 const TableContainer = styled.div`
   width: ${(props) => props.width || "100%"};
   margin-bottom: 20px;
-  height: 60vh;
+  height: 50vh;
   max-height: 60vh;
   border-radius: 5px;
   overflow-y: scroll;

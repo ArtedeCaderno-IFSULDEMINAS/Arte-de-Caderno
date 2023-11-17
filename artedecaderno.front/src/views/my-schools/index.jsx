@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import Loading from "src/components/loading";
 import Navbar from "src/components/navbar";
+import PreviousArrow from "src/components/previous-arrow";
 import Table from "src/components/table";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { professorRoutes } from "src/services/professorRoutes";
@@ -42,6 +43,7 @@ const MySchoolsView = () => {
             data={data}
             path={"escola"}
           />
+          <PreviousArrow width={desktop ? "80%" : "90%"} />
         </ContentContainer>
       </PageContainer>
     );

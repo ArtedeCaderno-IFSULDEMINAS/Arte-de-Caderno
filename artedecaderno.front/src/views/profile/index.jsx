@@ -7,6 +7,7 @@ import { professorRoutes } from "src/services/professorRoutes";
 import {
   BodyLink,
   Column,
+  Container,
   ContentContainer,
   PageContainer,
   Row,
@@ -18,6 +19,7 @@ import EditProfileItems from "src/components/edit-profile";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icons } from "src/styles/icons";
 import { Navigate } from "react-router-dom";
+import { colors } from "src/styles/constants";
 
 const ProfileView = () => {
   const id = Cookies.get("user");
@@ -97,21 +99,22 @@ const ProfileView = () => {
         {edit && <Navigate to="editar" />}
         <Navbar currentPage={"Perfil"} />
         <ContentContainer>
-          <Column style={{ gap: "1rem" }}>
-            <Row style={{ justifyContent: "center" }}>
-              <Title color="black">Perfil</Title>
-              <BodyLink>
-                <FontAwesomeIcon
-                  icon={icons.pen}
-                  onClick={() => setEdit(true)}
-                />
-              </BodyLink>
-            </Row>
+          <Row style={{ justifyContent: "center" }}>
+            <Title color="black">Perfil</Title>
+            <BodyLink>
+              <FontAwesomeIcon icon={icons.pen} onClick={() => setEdit(true)} />
+            </BodyLink>
+          </Row>
+          <Container
+            width={desktop ? "80%" : "90%"}
+            color={colors.lightGrey}
+            style={{ gap: "1rem" }}
+          >
             <Column width={desktop ? "50%" : "90%"}>
               <EditProfileItems user={user} />
             </Column>
-            <PreviousArrow width={desktop ? "50%" : "90%"} />
-          </Column>
+          </Container>
+          <PreviousArrow width={desktop ? "80%" : "90%"} />
         </ContentContainer>
       </PageContainer>
     );
