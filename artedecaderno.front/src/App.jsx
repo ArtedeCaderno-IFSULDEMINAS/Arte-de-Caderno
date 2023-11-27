@@ -4,6 +4,7 @@ import { useState } from "react";
 import { userContext } from "./contexts/userContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import GlobalStyle from "./globalStyles";
 
 const initialState = {
   cpf: null,
@@ -28,12 +29,12 @@ const initialState = {
 const App = () => {
   const [user, setUser] = useState({ initialState });
 
-
   return (
     <>
       <Router>
+        <GlobalStyle />
         <userContext.Provider value={{ user, setUser }}>
-            <Rotas />
+          <Rotas />
         </userContext.Provider>
       </Router>
       <ToastContainer
