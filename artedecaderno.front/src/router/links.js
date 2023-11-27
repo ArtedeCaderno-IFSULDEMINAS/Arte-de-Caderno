@@ -12,3 +12,14 @@ export const links = [
         path: "/sobre"
     }
 ]
+
+export const loggedLinks = [
+    {
+        text: "Dashboard",
+        path: "/dashboard"
+    },
+    {
+        text: "Perfil",
+        path: "/perfil"
+    }
+]

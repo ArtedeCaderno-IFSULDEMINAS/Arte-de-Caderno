@@ -17,10 +17,31 @@ export const loginRoutes = {
         if (a.status !== 200) {
             return false
         } else {
+            throwToast.info("Um código foi enviado para o seu e-mail!")
             return true
         }
     },
-    
+
+    resend: async function (user, pwd) {
+        let url = "http://localhost:8080/login";
+        let options = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: user.replace(/\D/g, ""),
+                password: pwd,
+            }),
+        };
+        const a = await fetch(url, options)
+
+        if (a.status !== 200) {
+            return false
+        } else {
+            throwToast.success("Código reenviado!")
+            return true
+        }
+    },
+
     logar: async function (user, pwd, code) {
         let url = "http://localhost:8080/login2fa"
         const options = {
@@ -37,7 +58,6 @@ export const loginRoutes = {
 
         if (a.status !== 200) {
             throwToast.error("Código incorreto!")
-            console.log(code)
             return false
         } else {
             Cookies.set("user", b.user._id, { expires: 30, path: "/" });
@@ -47,6 +67,7 @@ export const loginRoutes = {
             return await b
         }
     },
+
     forgotPassword: async function (user) {
         const url = "http://localhost:8080/forgotPassword"
         const cpf = user.replace(/\D/g, "")
@@ -72,6 +93,7 @@ export const loginRoutes = {
         }
 
     },
+
     resetPassword: async function (newCred) {
         const url = "http://localhost:8080/resetPassword"
         const options = {

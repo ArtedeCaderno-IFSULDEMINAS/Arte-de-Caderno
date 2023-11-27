@@ -42,10 +42,13 @@ const NavLink = styled.p`
     text-decoration: underline;
     opacity: 1;
   }
+
+  
+
 `;
 
 const NavDrop = styled.div`
-  align-items: center;
+  align-items: end;
   justify-content: space-evenly;
   display: flex;
   flex-direction: column;

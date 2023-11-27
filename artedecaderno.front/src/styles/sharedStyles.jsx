@@ -15,6 +15,11 @@ const Row = styled.div`
   justify-content: space-evenly;
   width: ${(p) => p.width || "100%"};
   gap: ${(p) => p.gap || "5px"};
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column
+  }
+
 `;
 
 const PageContainer = styled(Column)`
@@ -28,6 +33,11 @@ const ContentContainer = styled(PageContainer)`
   margin-top: 70px;
   min-height: calc(100vh - 70px);
   width: 100vw;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 5rem;
+  }
+
 `;
 
 const Title = styled.h1`
@@ -66,6 +76,7 @@ const Container = styled.div`
   gap: 1rem;
   padding: 1.5rem 1rem;
   width: ${(p) => p.width || "100%"};
+  border-radius: 6px;
 `;
 
 const Text = styled.p`
@@ -112,6 +123,7 @@ const Select = styled.select`
 
 const Option = styled.option`
   padding: 5px;
+  height: 30px;
 `;
 
 const InputColumn = styled(Column)`
