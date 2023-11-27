@@ -2,23 +2,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Banner } from "src/components/banner";
-import Navbar from "src/components/navbar";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { loginRoutes } from "src/services/loginRoutes";
 import { icons } from "src/styles/icons";
+import Layout from "src/styles/layout";
 import {
   BodyLink,
   Button,
   Container,
-  ContentContainer,
   Form,
   Input,
   InputColumn,
   Label,
-  PageContainer,
   Row,
   Text,
-  Title,
+  Title
 } from "src/styles/sharedStyles";
 import { checkPassword } from "src/utils/checkPassword";
 import { format } from "src/utils/format";
@@ -66,7 +64,9 @@ const ResetPasswordView = () => {
     const cpf = change.username.replace(/\D/g, "");
     let a;
     if (change.pwd === null) {
-      throwToast.warning("Insira e confirme sua nova senha atendendo aos critérios de segurança.");
+      throwToast.warning(
+        "Insira e confirme sua nova senha atendendo aos critérios de segurança."
+      );
       return;
     }
 
@@ -78,105 +78,100 @@ const ResetPasswordView = () => {
   };
 
   return (
-    <PageContainer>
-      <Navbar />
-      <ContentContainer>
-        <Banner img={require("src/assets/img/login/background.png")}>
-          <Container width={desktop ? "30%" : "90%"}>
-            <Title color="black">Recuperar Senha</Title>
-            <Text style={{ textAlign: "center" }}>
-              Insira o CPF cadastrado:
-            </Text>
-            <Form>
-              <Row style={{ flexDirection: "row", alignItems: "end" }}>
-                <InputColumn>
-                  <Label>CPF:</Label>
-                  <Input
-                    type="text"
-                    onChange={handleCPF}
-                    required
-                    value={change.username}
-                    disabled={ok}
-                  />
-                </InputColumn>
-                <Button
-                  type="submit"
-                  style={{ margin: 0, display: ok ? "none" : "block" }}
-                  onClick={sendMail}
-                >
-                  Enviar
-                </Button>
-              </Row>
-              {ok && (
-                <>
-                  <Row>
-                    <InputColumn>
-                      <Label>Código enviado:</Label>
-                      <Input
-                        type="text"
-                        onChange={handleChange}
-                        onPaste={handleChange}
-                        required
-                        value={change.token}
-                      />
-                    </InputColumn>
-                  </Row>
-                  <Row>
-                    <InputColumn>
-                      <Label>Nova senha:</Label>
-                      <Row style={{ flexDirection: "row" }}>
-                        <Input
-                          type={showPwd ? "text" : "password"}
-                          onChange={(e) =>
-                            setAuxPwd({ ...auxPwd, pwd1: e.target.value })
-                          }
-                          required
-                          value={auxPwd.pwd1}
-                        />
-                        <Button
-                          width={"auto"}
-                          type="button"
-                          onClick={() => setShowPwd(!showPwd)}
-                        >
-                          <FontAwesomeIcon
-                            icon={showPwd ? icons.eye_slash : icons.eye}
-                          />
-                        </Button>
-                      </Row>
-                    </InputColumn>
-                  </Row>
-                  <Row>
-                    <InputColumn>
-                      <Label>Confirmar nova senha:</Label>
+    <Layout>
+      <Banner img={require("src/assets/img/login/background.png")}>
+        <Container width={desktop ? "30%" : "90%"}>
+          <Title color="black">Recuperar Senha</Title>
+          <Text style={{ textAlign: "center" }}>Insira o CPF cadastrado:</Text>
+          <Form>
+            <Row style={{ flexDirection: "row", alignItems: "end" }}>
+              <InputColumn>
+                <Label>CPF:</Label>
+                <Input
+                  type="text"
+                  onChange={handleCPF}
+                  required
+                  value={change.username}
+                  disabled={ok}
+                />
+              </InputColumn>
+              <Button
+                type="submit"
+                style={{ margin: 0, display: ok ? "none" : "block" }}
+                onClick={sendMail}
+              >
+                Enviar
+              </Button>
+            </Row>
+            {ok && (
+              <>
+                <Row>
+                  <InputColumn>
+                    <Label>Código enviado:</Label>
+                    <Input
+                      type="text"
+                      onChange={handleChange}
+                      onPaste={handleChange}
+                      required
+                      value={change.token}
+                    />
+                  </InputColumn>
+                </Row>
+                <Row>
+                  <InputColumn>
+                    <Label>Nova senha:</Label>
+                    <Row style={{ flexDirection: "row" }}>
                       <Input
                         type={showPwd ? "text" : "password"}
                         onChange={(e) =>
-                          setAuxPwd({ ...auxPwd, pwd2: e.target.value })
+                          setAuxPwd({ ...auxPwd, pwd1: e.target.value })
                         }
                         required
-                        value={auxPwd.pwd2}
-                        onBlur={checkPwd}
+                        value={auxPwd.pwd1}
                       />
-                    </InputColumn>
-                  </Row>
-                  <BodyLink
-                    style={{ textDecoration: "underline" }}
-                    onClick={() => {
-                      navigate("/dicas-de-seguranca");
-                    }}
-                  >
-                    Como criar senhas fortes?
-                  </BodyLink>
-                  <Button type="button" width={"100%"} onClick={reset}>
-                    Enviar
-                  </Button>
-                </>
-              )}
-            </Form>
-          </Container>
-        </Banner>
-      </ContentContainer>
-    </PageContainer>
+                      <Button
+                        width={"auto"}
+                        type="button"
+                        onClick={() => setShowPwd(!showPwd)}
+                      >
+                        <FontAwesomeIcon
+                          icon={showPwd ? icons.eye_slash : icons.eye}
+                        />
+                      </Button>
+                    </Row>
+                  </InputColumn>
+                </Row>
+                <Row>
+                  <InputColumn>
+                    <Label>Confirmar nova senha:</Label>
+                    <Input
+                      type={showPwd ? "text" : "password"}
+                      onChange={(e) =>
+                        setAuxPwd({ ...auxPwd, pwd2: e.target.value })
+                      }
+                      required
+                      value={auxPwd.pwd2}
+                      onBlur={checkPwd}
+                    />
+                  </InputColumn>
+                </Row>
+                <BodyLink
+                  style={{ textDecoration: "underline" }}
+                  onClick={() => {
+                    navigate("/dicas-de-seguranca");
+                  }}
+                >
+                  Como criar senhas fortes?
+                </BodyLink>
+                <Button type="button" width={"100%"} onClick={reset}>
+                  Enviar
+                </Button>
+              </>
+            )}
+          </Form>
+        </Container>
+      </Banner>
+    </Layout>
   );
 };
 

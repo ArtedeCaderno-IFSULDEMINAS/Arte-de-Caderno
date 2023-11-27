@@ -1,25 +1,23 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
-import { Navigate} from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Loading from "src/components/loading";
-import Navbar from "src/components/navbar";
 import PreviousArrow from "src/components/previous-arrow";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { CEProutes } from "src/services/CEProutes";
 import { CPFroutes } from "src/services/CPFroutes";
 import { professorRoutes } from "src/services/professorRoutes";
 import { colors } from "src/styles/constants";
+import Layout from "src/styles/layout";
 import {
   Button,
   Column,
   Container,
-  ContentContainer,
   Form,
   Input,
   InputColumn,
   Label,
   Option,
-  PageContainer,
   Row,
   Select,
   Title
@@ -154,10 +152,9 @@ const CheckupStudentView = () => {
     return <Loading />;
   } else {
     return (
-      <PageContainer style={{marginTop: desktop ? "" : "1rem"}} >
-        <Navbar />
+      <Layout>
         {redirect && <Navigate to="/dashboard" replace />}
-        <ContentContainer>
+        <>
           <Title color={"black"}>Cadastrar Estudante</Title>
           <Column width={desktop ? "60%" : "90%"} style={{ gap: "1rem" }}>
             <Container color={colors.lightGrey}>
@@ -299,8 +296,8 @@ const CheckupStudentView = () => {
             </Container>
             <PreviousArrow navigate={"/dashboard"} />
           </Column>
-        </ContentContainer>
-      </PageContainer>
+        </>
+      </Layout>
     );
   }
 };

@@ -15,6 +15,7 @@ const EditProfileItems = ({ user }) => {
   };
 
   useEffect(() => {
+    console.log(user)
     getSchool();
   }, []);
 
@@ -153,26 +154,10 @@ const EditProfileItems = ({ user }) => {
           cidade:
         </Text>
         <Text size={"20px"} font={fonts.quicksand}>
-          {user.city}
+          {user.city} - {user.uf}
         </Text>
       </Row>
-      <Row
-        style={{
-          flexDirection: "row",
-          justifyContent: "flex-start",
-        }}
-      >
-        <Text
-          size={"20px"}
-          font={fonts.quicksand}
-          style={{ textTransform: "uppercase", fontWeight: 600 }}
-        >
-          uf:
-        </Text>
-        <Text size={"20px"} font={fonts.quicksand}>
-          {user.uf}
-        </Text>
-      </Row>
+      
       <Row
         style={{
           flexDirection: "row",

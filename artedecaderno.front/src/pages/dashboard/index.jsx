@@ -1,11 +1,10 @@
 import Cookies from "js-cookie";
 import { useLayoutEffect, useState } from "react";
 import Loading from "src/components/loading";
-import Navbar from "src/components/navbar";
 import { evaluatorRoutes } from "src/services/evaluatorRoutes";
 import { professorRoutes } from "src/services/professorRoutes";
 import { studentRoutes } from "src/services/studentRoutes";
-import { ContentContainer, PageContainer } from "src/styles/sharedStyles";
+import Layout from "src/styles/layout";
 import AdminDash from "src/views/dashboard/admin";
 import EvaluatorDash from "src/views/dashboard/evaluator";
 import ProfessorDash from "src/views/dashboard/professor";
@@ -112,21 +111,18 @@ const Dashboard = () => {
     } else {
       getAdmin();
     }
-  }, [loading]);
+  }, []);
 
   if (loading) {
     return <Loading currentPage={"Dashboard"} />;
   } else {
     return (
-      <PageContainer>
-        <Navbar currentPage={"Dashboard"} />
-        <ContentContainer>
-          {access === "professor" && <ProfessorDash user={user} />}
-          {access === "student" && <StudentDash user={user} />}
-          {access === "admin" && <AdminDash user={user} />}
-          {access === "evaluator" && <EvaluatorDash user={user} />}
-        </ContentContainer>
-      </PageContainer>
+      <Layout currentPage={"Dashboard"}>
+        {access === "professor" && <ProfessorDash user={user} />}
+        {access === "student" && <StudentDash user={user} />}
+        {access === "admin" && <AdminDash user={user} />}
+        {access === "evaluator" && <EvaluatorDash user={user} />}
+      </Layout>
     );
   }
 };

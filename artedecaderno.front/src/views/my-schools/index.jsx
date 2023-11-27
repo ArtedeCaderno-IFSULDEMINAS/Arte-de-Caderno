@@ -1,15 +1,13 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import Loading from "src/components/loading";
-import Navbar from "src/components/navbar";
 import PreviousArrow from "src/components/previous-arrow";
 import Table from "src/components/table";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { professorRoutes } from "src/services/professorRoutes";
+import Layout from "src/styles/layout";
 import {
-  ContentContainer,
-  PageContainer,
-  Title,
+  Title
 } from "src/styles/sharedStyles";
 
 const MySchoolsView = () => {
@@ -33,19 +31,16 @@ const MySchoolsView = () => {
     return <Loading />;
   } else {
     return (
-      <PageContainer>
-        <Navbar />
-        <ContentContainer>
-          <Title color="black">Minhas escolas</Title>
-          <Table
-            headers={["nº", "nome", "UF", "e-mail", " "]}
-            width={desktop ? "80%" : "90%"}
-            data={data}
-            path={"escola"}
-          />
-          <PreviousArrow width={desktop ? "80%" : "90%"} />
-        </ContentContainer>
-      </PageContainer>
+      <Layout>
+        <Title color="black">Minhas escolas</Title>
+        <Table
+          headers={["nº", "nome", "UF", "e-mail", " "]}
+          width={desktop ? "80%" : "90%"}
+          data={data}
+          path={"escola"}
+        />
+        <PreviousArrow width={desktop ? "80%" : "90%"} />
+      </Layout>
     );
   }
 };

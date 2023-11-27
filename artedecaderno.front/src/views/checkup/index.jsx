@@ -2,24 +2,22 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "src/components/navbar";
 import PasswordModal from "src/components/password-modal";
 import { userContext } from "src/contexts/userContext";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { CEProutes } from "src/services/CEProutes";
 import { CPFroutes } from "src/services/CPFroutes";
 import { colors } from "src/styles/constants";
+import Layout from "src/styles/layout";
 import {
   BodyLink,
   Button,
   Container,
-  ContentContainer,
   Form,
   Input,
   InputColumn,
   Label,
   Option,
-  PageContainer,
   Row,
   Select,
   Text,
@@ -138,13 +136,9 @@ const CheckupView = () => {
   };
 
   return (
-    <PageContainer>
-      <Navbar />
-      <ContentContainer
-        style={{
-          padding: desktop ? "0" : "1rem 0",
-        }}
-      >
+    <Layout>
+      {showModal && <PasswordModal />}
+      <>
         <Title color={colors.black} style={{ fontWeight: 500 }}>
           Cadastro de usuários
         </Title>
@@ -344,9 +338,8 @@ const CheckupView = () => {
         >
           Como criar senhas fortes?
         </BodyLink>
-      </ContentContainer>
-      {showModal && <PasswordModal />}
-    </PageContainer>
+      </>
+    </Layout>
   );
 };
 

@@ -1,18 +1,16 @@
 import { useState } from "react";
-import Navbar from "src/components/navbar";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { CPFroutes } from "src/services/CPFroutes";
 import { colors } from "src/styles/constants";
+import Layout from "src/styles/layout";
 import {
   Container,
-  ContentContainer,
   Form,
   Input,
   InputColumn,
   Label,
-  PageContainer,
   Row,
-  Title,
+  Title
 } from "src/styles/sharedStyles";
 import { format } from "src/utils/format";
 
@@ -52,9 +50,8 @@ const InsertEvaluatorView = () => {
   };
 
   return (
-    <PageContainer>
-      <Navbar />
-      <ContentContainer>
+    <Layout>
+      <>
         <Title color="black">Cadastrar avaliador</Title>
         <Container width={desktop ? "60%" : "90%"} color={colors.lightGrey}>
           <Form>
@@ -103,8 +100,8 @@ const InsertEvaluatorView = () => {
             </Row>
           </Form>
         </Container>
-      </ContentContainer>
-    </PageContainer>
+      </>
+    </Layout>
   );
 };
 

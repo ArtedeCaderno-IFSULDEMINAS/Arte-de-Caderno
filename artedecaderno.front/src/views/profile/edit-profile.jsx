@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "src/components/navbar";
 import PreviousArrow from "src/components/previous-arrow";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { CEProutes } from "src/services/CEProutes";
@@ -10,18 +9,17 @@ import { professorRoutes } from "src/services/professorRoutes";
 import { studentRoutes } from "src/services/studentRoutes";
 import { colors } from "src/styles/constants";
 import { icons } from "src/styles/icons";
+import Layout from "src/styles/layout";
 import {
   Button,
   Column,
   Container,
-  ContentContainer,
   Form,
   Input,
   InputColumn,
   Label,
-  PageContainer,
   Row,
-  Title,
+  Title
 } from "src/styles/sharedStyles";
 import { format } from "src/utils/format";
 import { throwToast } from "src/utils/toast";
@@ -159,20 +157,20 @@ const EditProfileView = () => {
 
   const updateProf = async () => {
     const updated = {
-        name: newUser?.nome || user.name,
-        email: newUser?.email || user.email,
-        phone: newUser?.cel || user.cel,
-        cep: newUser?.cep || user.cep,
-        city: newUser?.cidade || user.city,
-        uf: newUser?.uf || user.state,
-        schoolId: user.schoolId,
-        cpf: user.cpf,
-        bairro: newUser?.bairro || user.bairro,
-        rua: newUser?.rua || user.rua,
-        numero: newUser?.numero || user.numero,
-        complemento: newUser?.complemento || user?.complemento,
-        id: user.id,
-    }
+      name: newUser?.nome || user.name,
+      email: newUser?.email || user.email,
+      phone: newUser?.cel || user.cel,
+      cep: newUser?.cep || user.cep,
+      city: newUser?.cidade || user.city,
+      uf: newUser?.uf || user.state,
+      schoolId: user.schoolId,
+      cpf: user.cpf,
+      bairro: newUser?.bairro || user.bairro,
+      rua: newUser?.rua || user.rua,
+      numero: newUser?.numero || user.numero,
+      complemento: newUser?.complemento || user?.complemento,
+      id: user.id,
+    };
     const a = await professorRoutes.updateProfile(updated);
     if (a) {
       throwToast.success("Perfil atualizado com sucesso!");
@@ -192,108 +190,105 @@ const EditProfileView = () => {
   };
 
   return (
-    <PageContainer>
-      <Navbar />
-      <ContentContainer>
-        <Column style={{ gap: "1rem" }}>
-          <Title color="black">Editar Perfil</Title>
-          <Container color={colors.lightGrey} width={desktop ? "60%" : "90%"}>
-            <Form onSubmit={postUpdate}>
-              <Row>
-                <InputColumn width={desktop ? "80%" : "100%"}>
-                  <Label>Nome:</Label>
-                  <Input
-                    name="nome"
-                    value={newUser.nome}
-                    onChange={handleChange}
-                  />
-                </InputColumn>
-                <InputColumn width={desktop ? "20%" : "100%"}>
-                  <Label>CEP:</Label>
-                  <Row style={{ flexDirection: "row" }}>
-                    <Input value={newUser.cep} onChange={handleCep} />
-                    <Button type="button" width={"auto"} onClick={getCep}>
-                      <FontAwesomeIcon icon={icons.cep} />
-                    </Button>
-                  </Row>
-                </InputColumn>
-              </Row>
-              {showData && (
-                <>
-                  <Row>
-                    <InputColumn width={desktop ? "60%" : "100%"}>
-                      <Label>Rua:</Label>
-                      <Input
-                        value={newUser.rua}
-                        name="rua"
-                        disabled={desabilitado.rua}
-                        onChange={handleChange}
-                      />
-                    </InputColumn>
-                    <InputColumn width={desktop ? "20%" : "100%"}>
-                      <Label>Número:</Label>
-                      <Input
-                        value={newUser.numero}
-                        name="numero"
-                        disabled={desabilitado.number}
-                        onChange={handleChange}
-                      />
-                    </InputColumn>
-                    <InputColumn width={desktop ? "20%" : "100%"}>
-                      <Label>Complemento:</Label>
-                      <Input
-                        value={newUser.complemento}
-                        disabled={desabilitado.number}
-                        name="complemento"
-                        onChange={handleChange}
-                      />
-                    </InputColumn>
-                  </Row>
-                  <Row>
-                    <InputColumn width={desktop ? "50%" : "100%"}>
-                      <Label>Bairro:</Label>
-                      <Input
-                        value={newUser.bairro}
-                        disabled={desabilitado.rua}
-                        name="bairro"
-                        onChange={handleChange}
-                      />
-                    </InputColumn>
-                    <InputColumn width={desktop ? "40%" : "100%"}>
-                      <Label>Cidade:</Label>
-                      <Input value={newUser.cidade} disabled />
-                    </InputColumn>
-                    <InputColumn width={desktop ? "10%" : "100%"}>
-                      <Label>UF:</Label>
-                      <Input value={newUser.uf} disabled />
-                    </InputColumn>
-                  </Row>
-                </>
-              )}
-              <Row>
-                <InputColumn width={desktop ? "50%" : "100%"}>
-                  <Label>Email:</Label>
-                  <Input
-                    name="email"
-                    value={newUser.email}
-                    onChange={handleChange}
-                  />
-                </InputColumn>
-                <InputColumn width={desktop ? "50%" : "100%"}>
-                  <Label>Telefone:</Label>
-                  <Input value={newUser.cel} onChange={handleCel} />
-                </InputColumn>
-              </Row>
-              <Button style={{ gap: "5px" }}>
-                Salvar
-                <FontAwesomeIcon icon={icons.save} />
-              </Button>
-            </Form>
-          </Container>
-          <PreviousArrow width={desktop ? "60%" : "90%"} />
-        </Column>
-      </ContentContainer>
-    </PageContainer>
+    <Layout>
+      <Column style={{ gap: "1rem" }}>
+        <Title color="black">Editar Perfil</Title>
+        <Container color={colors.lightGrey} width={desktop ? "60%" : "90%"}>
+          <Form onSubmit={postUpdate}>
+            <Row>
+              <InputColumn width={desktop ? "80%" : "100%"}>
+                <Label>Nome:</Label>
+                <Input
+                  name="nome"
+                  value={newUser.nome}
+                  onChange={handleChange}
+                />
+              </InputColumn>
+              <InputColumn width={desktop ? "20%" : "100%"}>
+                <Label>CEP:</Label>
+                <Row style={{ flexDirection: "row" }}>
+                  <Input value={newUser.cep} onChange={handleCep} />
+                  <Button type="button" width={"auto"} onClick={getCep}>
+                    <FontAwesomeIcon icon={icons.cep} />
+                  </Button>
+                </Row>
+              </InputColumn>
+            </Row>
+            {showData && (
+              <>
+                <Row>
+                  <InputColumn width={desktop ? "60%" : "100%"}>
+                    <Label>Rua:</Label>
+                    <Input
+                      value={newUser.rua}
+                      name="rua"
+                      disabled={desabilitado.rua}
+                      onChange={handleChange}
+                    />
+                  </InputColumn>
+                  <InputColumn width={desktop ? "20%" : "100%"}>
+                    <Label>Número:</Label>
+                    <Input
+                      value={newUser.numero}
+                      name="numero"
+                      disabled={desabilitado.number}
+                      onChange={handleChange}
+                    />
+                  </InputColumn>
+                  <InputColumn width={desktop ? "20%" : "100%"}>
+                    <Label>Complemento:</Label>
+                    <Input
+                      value={newUser.complemento}
+                      disabled={desabilitado.number}
+                      name="complemento"
+                      onChange={handleChange}
+                    />
+                  </InputColumn>
+                </Row>
+                <Row>
+                  <InputColumn width={desktop ? "50%" : "100%"}>
+                    <Label>Bairro:</Label>
+                    <Input
+                      value={newUser.bairro}
+                      disabled={desabilitado.rua}
+                      name="bairro"
+                      onChange={handleChange}
+                    />
+                  </InputColumn>
+                  <InputColumn width={desktop ? "40%" : "100%"}>
+                    <Label>Cidade:</Label>
+                    <Input value={newUser.cidade} disabled />
+                  </InputColumn>
+                  <InputColumn width={desktop ? "10%" : "100%"}>
+                    <Label>UF:</Label>
+                    <Input value={newUser.uf} disabled />
+                  </InputColumn>
+                </Row>
+              </>
+            )}
+            <Row>
+              <InputColumn width={desktop ? "50%" : "100%"}>
+                <Label>Email:</Label>
+                <Input
+                  name="email"
+                  value={newUser.email}
+                  onChange={handleChange}
+                />
+              </InputColumn>
+              <InputColumn width={desktop ? "50%" : "100%"}>
+                <Label>Telefone:</Label>
+                <Input value={newUser.cel} onChange={handleCel} />
+              </InputColumn>
+            </Row>
+            <Button style={{ gap: "5px" }}>
+              Salvar
+              <FontAwesomeIcon icon={icons.save} />
+            </Button>
+          </Form>
+        </Container>
+        <PreviousArrow width={desktop ? "60%" : "90%"} />
+      </Column>
+    </Layout>
   );
 };
 

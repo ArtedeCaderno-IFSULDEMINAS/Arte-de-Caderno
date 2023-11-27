@@ -22,6 +22,7 @@ import ResetPassword from "src/pages/reset-password";
 import MySchools from "src/pages/my-schools";
 import School from "src/pages/school";
 import RateDraw from "src/pages/rate-draw";
+import Loading from "src/components/loading";
 
 const Rotas = () => {
   return (
@@ -40,6 +41,7 @@ const Rotas = () => {
       <Route
         path="/dashboard"
         element={<ProtectedRoute Component={Dashboard} />}
+        loader={<Loading/>}
       />
       <Route
         path="/cadastrar-desenho"

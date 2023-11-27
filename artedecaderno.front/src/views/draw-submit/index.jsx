@@ -1,22 +1,20 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "src/components/navbar";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { drawRoutes } from "src/services/drawRoutes";
 import { professorRoutes } from "src/services/professorRoutes";
 import { studentRoutes } from "src/services/studentRoutes";
 import { colors } from "src/styles/constants";
+import Layout from "src/styles/layout";
 import {
   Button,
   Container,
-  ContentContainer,
   Form,
   Input,
   InputColumn,
   Label,
   Option,
-  PageContainer,
   Row,
   Select,
   Title
@@ -42,7 +40,7 @@ const DrawSubmitView = () => {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    
+
     const imageUrl = URL.createObjectURL(file);
     setDraw((prevState) => ({
       ...prevState,
@@ -102,9 +100,8 @@ const DrawSubmitView = () => {
   };
 
   return (
-    <PageContainer>
-      <Navbar />
-      <ContentContainer>
+    <Layout>
+      <>
         <Title color={"black"}>Cadastrar Obra</Title>
         <Container width={desktop ? "60%" : "90%"} color={colors.lightGrey}>
           <Form onSubmit={insertDraw}>
@@ -202,8 +199,8 @@ const DrawSubmitView = () => {
             <Button>cadastrar</Button>
           </Form>
         </Container>
-      </ContentContainer>
-    </PageContainer>
+      </>
+    </Layout>
   );
 };
 

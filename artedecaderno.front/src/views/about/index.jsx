@@ -1,49 +1,36 @@
 import { Banner } from "src/components/banner";
-import Navbar from "src/components/navbar";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
-import {
-  Container,
-  ContentContainer,
-  PageContainer,
-  BodyLink,
-} from "src/styles/sharedStyles";
-import Footer from "src/components/footer";
+import { Container, Column } from "src/styles/sharedStyles";
 import { useState } from "react";
 import AboutText from "./components/about";
-import TeamText from "../team";
+import Layout from "src/styles/layout";
+import { SliderItem, SliderWrapper } from "src/components/slider/components";
+import { teammates } from "src/utils/teammates";
+import TeamMembers from "./components/team";
 
 const AboutView = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
   const [currentPage, setCurrentPage] = useState("about");
 
   return (
-    <PageContainer>
-      <Navbar currentPage={"Sobre"} />
-      <ContentContainer>
-        <Banner img={require("src/assets/img/about/background.jpg")}>
-          <Container width={desktop ? "50%" : "90%"} style={{ gap: "2rem" }}>
-            {currentPage === "about" && (
-              <>
-                <AboutText desktop={desktop} setCurrentPage={setCurrentPage} />
-                <BodyLink onClick={() => setCurrentPage("team")} style={{textDecoration: "underline", opacity: 1}} >
-                  Conheça nossa equipe
-                </BodyLink>
-              </>
-            )}
-
-            {currentPage === "team" && (
-              <>
-                <TeamText desktop={desktop} />
-                <BodyLink onClick={() => setCurrentPage("about")}>
-                  Voltar
-                </BodyLink>
-              </>
-            )}
-          </Container>
-        </Banner>
-        <Footer />
-      </ContentContainer>
-    </PageContainer>
+    <Layout currentPage={"Sobre"}>
+      <Banner img={require("src/assets/img/about/background.jpg")}>
+        <Container width={desktop ? "50%" : "90%"} style={{ gap: "2rem" }}>
+          <AboutText desktop={desktop} setCurrentPage={setCurrentPage} />
+          <Column>
+            <SliderWrapper>
+              {teammates.map((teammate, index) => {
+                return (
+                  <SliderItem key={index} height={"150px"} >
+                    <TeamMembers teammate={teammate} />
+                  </SliderItem>
+                );
+              })}
+            </SliderWrapper>
+          </Column>
+        </Container>
+      </Banner>
+    </Layout>
   );
 };
 

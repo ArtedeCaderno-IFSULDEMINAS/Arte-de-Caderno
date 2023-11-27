@@ -2,11 +2,10 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "src/components/loading";
-import Navbar from "src/components/navbar";
-import PreviousArrow from "src/components/previous-arrow";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { drawToRate } from "src/mocks/draw-rate";
 import { fonts } from "src/styles/constants";
+import Layout from "src/styles/layout";
 import {
   Button,
   Column,
@@ -15,10 +14,9 @@ import {
   Input,
   InputColumn,
   Label,
-  PageContainer,
   Row,
   Text,
-  Title,
+  Title
 } from "src/styles/sharedStyles";
 import { throwToast } from "src/utils/toast";
 
@@ -42,22 +40,21 @@ const RateDrawView = () => {
     e.preventDefault();
     setLoading(true);
     drawToRate.review.push({
-        "numberOfAlertsEvaluator": 0,
-        "evaluator": Cookies.get("user"),
-        "_id": drawToRate._id
-    })
+      numberOfAlertsEvaluator: 0,
+      evaluator: Cookies.get("user"),
+      _id: drawToRate._id,
+    });
 
-    console.log(drawToRate.review)
+    console.log(drawToRate.review);
     throwToast.success("Avaliação enviada com sucesso!");
     navigate("/dashboard");
-  }
+  };
 
   if (loading) {
     return <Loading />;
   } else {
     return (
-      <PageContainer>
-        <Navbar />
+      <Layout>
         <Title color="black">Avaliar Desenho</Title>
         <Row width={desktop ? "60%" : "90%"}>
           <Column width={desktop ? "40%" : "100%"}>
@@ -92,7 +89,7 @@ const RateDrawView = () => {
               Título:{" "}
               <Text style={{ fontWeight: 400 }}>{drawToRate.title}</Text>
             </Text>
-            <Form onSubmit={send} >
+            <Form onSubmit={send}>
               <InputColumn>
                 <Label>Faça sua avaliação na faixa de 0 a 100:</Label>
                 <Input
@@ -103,7 +100,9 @@ const RateDrawView = () => {
                   style={{ width: "200px" }}
                 />
               </InputColumn>
-              <Button type="submit" style={{alignSelf: "flex-start"}} >Enviar</Button>
+              <Button type="submit" style={{ alignSelf: "flex-start" }}>
+                Enviar
+              </Button>
               <Text style={{ fontWeight: 600, display: "flex" }}>
                 Atenção:{" "}
                 <Text font={fonts.raleway} style={{ fontWeight: 400 }}>
@@ -113,8 +112,7 @@ const RateDrawView = () => {
             </Form>
           </Container>
         </Row>
-        <PreviousArrow width={desktop ? "60%" : "90%"} />
-      </PageContainer>
+      </Layout>
     );
   }
 };

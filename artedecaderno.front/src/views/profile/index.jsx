@@ -1,17 +1,14 @@
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import Loading from "src/components/loading";
-import Navbar from "src/components/navbar";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { professorRoutes } from "src/services/professorRoutes";
 import {
   BodyLink,
   Column,
   Container,
-  ContentContainer,
-  PageContainer,
   Row,
-  Title,
+  Title
 } from "src/styles/sharedStyles";
 import PreviousArrow from "src/components/previous-arrow";
 import { studentRoutes } from "src/services/studentRoutes";
@@ -20,6 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icons } from "src/styles/icons";
 import { Navigate } from "react-router-dom";
 import { colors } from "src/styles/constants";
+import Layout from "src/styles/layout";
 
 const ProfileView = () => {
   const id = Cookies.get("user");
@@ -47,10 +45,11 @@ const ProfileView = () => {
         cel: a.user.phone,
         cep: a.user.cep,
         city: a.user.city,
-        state: a.user.state,
+        uf: a.user.uf,
         schoolId: a.user.schoolId,
         studentsId: a.user.studentsId || null,
         drawsId: a.user.drawsId,
+        address: a.user.address,
       });
       setLoading(false);
     }
@@ -95,28 +94,25 @@ const ProfileView = () => {
     return <Loading currentPage={"Perfil"} />;
   } else {
     return (
-      <PageContainer>
+      <Layout currentPage={"Perfil"} >
         {edit && <Navigate to="editar" />}
-        <Navbar currentPage={"Perfil"} />
-        <ContentContainer>
-          <Row style={{ justifyContent: "center" }}>
-            <Title color="black">Perfil</Title>
-            <BodyLink>
-              <FontAwesomeIcon icon={icons.pen} onClick={() => setEdit(true)} />
-            </BodyLink>
-          </Row>
-          <Container
-            width={desktop ? "80%" : "90%"}
-            color={colors.lightGrey}
-            style={{ gap: "1rem" }}
-          >
-            <Column width={desktop ? "50%" : "90%"}>
-              <EditProfileItems user={user} />
-            </Column>
-          </Container>
-          <PreviousArrow width={desktop ? "80%" : "90%"} />
-        </ContentContainer>
-      </PageContainer>
+        <Row style={{ justifyContent: "center" }}>
+          <Title color="black">Perfil</Title>
+          <BodyLink>
+            <FontAwesomeIcon icon={icons.pen} onClick={() => setEdit(true)} />
+          </BodyLink>
+        </Row>
+        <Container
+          width={desktop ? "80%" : "90%"}
+          color={colors.lightGrey}
+          style={{ gap: "1rem" }}
+        >
+          <Column width={desktop ? "60%" : "90%"}>
+            <EditProfileItems user={user} />
+          </Column>
+        </Container>
+        <PreviousArrow width={desktop ? "80%" : "90%"} />
+      </Layout>
     );
   }
 };

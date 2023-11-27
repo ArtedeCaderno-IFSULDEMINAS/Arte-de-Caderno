@@ -60,8 +60,8 @@ export const loginRoutes = {
             throwToast.error("Código incorreto!")
             return false
         } else {
-            Cookies.set("user", "6556916b4f0bb9589918eadc", { expires: 30, path: "/" });
-            Cookies.set("accessType", "evaluator", { expires: 30, path: "/" });
+            Cookies.set("user", b.user._id, { expires: 30, path: "/" });
+            Cookies.set("accessType", b.accessType, { expires: 30, path: "/" });
             Cookies.set("token", b.token, { expires: 30, path: "/" });
             Cookies.set("isLogged", true, { expires: 30, path: "/" });
             return await b
