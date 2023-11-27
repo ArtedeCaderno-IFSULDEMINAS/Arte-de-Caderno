@@ -37,6 +37,7 @@ const NavLink = styled.p`
   font-family: ${fonts.raleway} !important;
   font-size: 16px;
   opacity: 0.7;
+  padding: .5rem 2rem;
 
   &:hover {
     cursor: pointer;
