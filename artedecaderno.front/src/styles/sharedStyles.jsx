@@ -33,6 +33,8 @@ const ContentContainer = styled(PageContainer)`
   margin-top: 70px;
   min-height: calc(100vh - 70px);
   width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden !important;
 
   @media screen and (max-width: 768px) {
     margin-top: 5rem;
