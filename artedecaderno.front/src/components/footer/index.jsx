@@ -8,7 +8,7 @@ const Footer = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
 
   return (
-    <Row style={{ backgroundColor: colors.lightGrey, padding: "1.5rem" }}>
+    <Row style={{ backgroundColor: colors.lightGrey, padding: "1.5rem" }} width={"100vw"} >
       <Row width={desktop ? "50%" : "100%"}>
         <Column width={desktop ? "50%" : "100%"}>
           <Text

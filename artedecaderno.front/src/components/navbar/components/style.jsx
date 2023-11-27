@@ -26,6 +26,7 @@ const NavbarRow = styled(Row)`
   left: 0;
   z-index: 99999;
   justify-content: space-between;
+  overflow-x: hidden;
 `;
 
 const MenuContainer = styled(Row)`
