@@ -1,14 +1,16 @@
 import { links } from "src/router/links";
 import { MenuContainer, NavDrop, NavLink, NavbarRow } from "./components/style";
 import { Link } from "react-router-dom";
-import { faBars} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faCircleUser} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "src/hooks/useMediaQuery";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 const Navbar = ({ currentPage }) => {
   const desktop = useMediaQuery("(min-width: 768px)");
   const [sidebar, setSidebar] = useState(false);
+  const isLogged = Cookies.get("isLogged")
 
   return (
     <NavbarRow
@@ -31,7 +33,7 @@ const Navbar = ({ currentPage }) => {
         <>
           <MenuContainer
             width={"40%"}
-            style={{ alignItems: "end", height: "60px" }}
+            style={{ height: "60px" }}
           >
             {links.map((link) => {
               return (
@@ -50,11 +52,12 @@ const Navbar = ({ currentPage }) => {
               );
             })}
           </MenuContainer>
-          <MenuContainer
+        {desktop && !isLogged && (
+            <MenuContainer
             width={"30%"}
             style={{ justifyContent: "center", gap: "5px" }}
           >
-            {/* <FontAwesomeIcon icon={faCircleUser} className="fa-xl" />
+            <FontAwesomeIcon icon={faCircleUser} className="fa-xl" />
             <Link
               to={"/login"}
               style={{ textDecoration: "none", color: "black" }}
@@ -67,8 +70,9 @@ const Navbar = ({ currentPage }) => {
               style={{ textDecoration: "none", color: "black" }}
             >
               <NavLink>Cadastrar</NavLink>
-            </Link> */}
+            </Link> 
           </MenuContainer>
+        )}
         </>
       )}
 

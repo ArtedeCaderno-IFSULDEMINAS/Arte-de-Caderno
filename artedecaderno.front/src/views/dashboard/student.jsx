@@ -22,11 +22,11 @@ const StudentDash = ({ user }) => {
       </Row>
       <Row gap={"1rem"}>
         <DashboardCard
-          value={0}
+          value={user.drawsId.length}
           icon={"draw"}
           title={"Desenhos cadastrados"}
           desktop={desktop}
-          path={"#"}
+          path={`/meus-desenhos/${user.id}`}
         />
         <DashboardCard
           icon={"add_draw"}
