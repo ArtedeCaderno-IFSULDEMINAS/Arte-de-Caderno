@@ -33,11 +33,6 @@ const ContentContainer = styled(PageContainer)`
   margin-top: 70px;
   min-height: calc(100vh - 70px);
   width: 100vw;
-
-  @media screen and (max-width: 768px) {
-    margin-top: 5rem;
-  }
-
 `;
 
 const Title = styled.h1`
