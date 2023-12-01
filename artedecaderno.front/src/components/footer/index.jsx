@@ -8,7 +8,10 @@ const Footer = () => {
   const desktop = useMediaQuery("(min-width: 768px)");
 
   return (
-    <Row style={{ backgroundColor: colors.lightGrey, padding: "1.5rem" }} width={"100vw"} >
+    <Row
+      style={{ backgroundColor: colors.lightGrey, padding: "1.5rem" }}
+      width={"100vw"}
+    >
       <Row width={desktop ? "50%" : "100%"}>
         <Column width={desktop ? "50%" : "100%"}>
           <Text
@@ -17,7 +20,14 @@ const Footer = () => {
           >
             siga-nos
           </Text>
-          <Row style={{ justifyContent: "center" }} gap={"1rem"}>
+          <Row
+            style={{
+              justifyContent: "center",
+              flexDirection: "row",
+              marginBottom: "1rem",
+            }}
+            gap={"1rem"}
+          >
             <a
               href="https://instagram.com/laboratorio.voa?igshid=MzRlODBiNWFlZA=="
               target="_blank"
@@ -48,7 +58,10 @@ const Footer = () => {
               style={{ textDecoration: "none" }}
             >
               <BodyLink>
-                <FontAwesomeIcon icon={icons.web} style={{ fontSize: "20px" }} />
+                <FontAwesomeIcon
+                  icon={icons.web}
+                  style={{ fontSize: "20px" }}
+                />
               </BodyLink>
             </a>
           </Row>

@@ -23,6 +23,7 @@ import MySchools from "src/pages/my-schools";
 import School from "src/pages/school";
 import RateDraw from "src/pages/rate-draw";
 import Loading from "src/components/loading";
+import MyDraws from "src/pages/my-draws";
 
 const Rotas = () => {
   return (
@@ -83,6 +84,10 @@ const Rotas = () => {
       <Route
         path="/avaliar/:id"
         element={<ProtectedRoute Component={RateDraw} />}
+      />
+      <Route
+        path="/meus-desenhos/:id"
+        element={<ProtectedRoute Component={MyDraws} />}
       />
     </Routes>
   );
