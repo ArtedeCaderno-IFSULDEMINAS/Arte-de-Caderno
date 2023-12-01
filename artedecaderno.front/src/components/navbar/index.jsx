@@ -33,7 +33,7 @@ const Navbar = ({ currentPage }) => {
         <>
           <MenuContainer
             width={"40%"}
-            style={{ alignItems: "end", height: "60px" }}
+            style={{ height: "60px" }}
           >
             {links.map((link) => {
               return (
