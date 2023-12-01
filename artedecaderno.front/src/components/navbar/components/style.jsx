@@ -49,7 +49,7 @@ const NavDrop = styled.div`
   width: 100vw;
   z-index: 99999;
   gap: 1rem;
-  padding: 5px 0;
+  padding: 5px 1rem;
 
   -webkit-animation: ${slideBottom} 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: ${slideBottom} 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
